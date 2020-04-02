@@ -1,20 +1,59 @@
 <?php
+require_once 'core/init.php';
 
-include_once("functions.php");
-include_once(functions::$private_directory."/header.php");
-include_once(functions::$private_directory."/home.php");
-include_once(functions::$private_directory."/welcome.php");
-include_once(functions::$private_directory."/my-tabs.php");
-include_once(functions::$private_directory."/feature.php");
-include_once(functions::$private_directory."/home-gallery.php");
-//include_once(functions::$private_directory."/testimonials.php");
-include_once(functions::$private_directory."/footer.php");
+$States = $user->get('States');
+$District = $user->get('District');
+$Townships = $user->get('Townships');
 
 
-
-
-
+$statePositiveData = array();
+$StatePositives = $user->getPositives('States');
+$DistrictPositives = $user->getPositives('District');
+$TownshipPositives = $user->getPositives('Townships');
+echo json_encode($TownshipPositives);
+die();
 
 
 
 
+$statesData = array();
+$districtData = array();
+$townshipData = array();
+
+foreach ($States as $state=>$sta) {
+    array_push($statesData, $sta['name']);
+};
+
+foreach ($District as $district=>$dist) {
+    array_push($districtData, $dist['name']);
+};
+
+foreach ($Townships as $township=>$town) {
+    array_push($townshipData, $town['name']);
+};
+
+echo json_encode($statesData);
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Hello
+<script>
+     var divisions =  <?php echo json_encode($statesData); ?>;
+    console.log(divisions);
+
+     var khayines =  <?php echo json_encode($districtData); ?>;
+     console.log(khayines);
+
+     var townships =  <?php echo json_encode($townshipData); ?>;
+     console.log(townships);
+</script>
+</body>
+</html>

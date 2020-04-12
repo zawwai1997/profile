@@ -17,18 +17,10 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
     $lab_pending = $user->checkInput($_POST['lab_pending']);
 
 
+    $hospital_id = $user->getHospitalId($hospital_name);
 
-    $hospital_id = $user->create_get_last_id('Hospitals', array(
-        'name' => $hospital_name,
-        'zawgyi' => $hospital_zawgyi,
-        'unicode' => $hospital_unicode,
-        'township_id' => $township_id,
-        'lon' => $longitude,
-        'lat' => $latitude
-    ));
-
-
-    if ($hospital_id) {
+    if($hospital_id){
+        $hospital_id = $hospital_id[0]['id'];
 
         if($pui) {
             for($i = 0 ;$i < $pui ; $i++){
@@ -74,16 +66,76 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                 ));
             }
         }
-
         flash('success', "Successfully Added");
         header("location:../add-hospital.php");
         exit();
+    }else{
+        $hospital_id = $user->create_get_last_id('Hospitals', array(
+            'name' => $hospital_name,
+            'zawgyi' => $hospital_zawgyi,
+            'unicode' => $hospital_unicode,
+            'township_id' => $township_id,
+            'lon' => $longitude,
+            'lat' => $latitude
+        ));
+        if ($hospital_id) {
 
-    } else {
-        flash('success', "Failed to Add");
-        header("location:../add-hospital.php");
-        exit();
+            if($pui) {
+                for($i = 0 ;$i < $pui ; $i++){
+                    $final_result = $user->create('Patients', array(
+                        'name' => "Name Blank",
+                        'age' => 0,
+                        'gender'=>3,
+                        'suffer_type_id'=>1,
+                        'hospital_id'=>$hospital_id
+                    ));
+                }
+            }
+            if($suspected) {
+                for($i = 0 ;$i < $suspected ; $i++){
+                    $final_result = $user->create('Patients', array(
+                        'name' => "Name Blank",
+                        'age' => 0,
+                        'gender'=>3,
+                        'suffer_type_id'=>2,
+                        'hospital_id'=>$hospital_id
+                    ));
+                }
+            }
+            if($lab_negative) {
+                for($i = 0 ;$i < $lab_negative ; $i++){
+                    $final_result = $user->create('Patients', array(
+                        'name' => "Name Blank",
+                        'age' => 0,
+                        'gender'=>3,
+                        'suffer_type_id'=>3,
+                        'hospital_id'=>$hospital_id
+                    ));
+                }
+            }
+            if($lab_pending) {
+                for($i = 0 ;$i < $lab_pending ; $i++){
+                    $final_result = $user->create('Patients', array(
+                        'name' => "Name Blank",
+                        'age' => 0,
+                        'gender'=>3,
+                        'suffer_type_id'=>4,
+                        'hospital_id'=>$hospital_id
+                    ));
+                }
+            }
+
+            flash('success', "Successfully Added");
+            header("location:../add-hospital.php");
+            exit();
+
+        } else {
+            flash('success', "Failed to Add");
+            header("location:../add-hospital.php");
+            exit();
+        }
     }
+
 
 
 } else {

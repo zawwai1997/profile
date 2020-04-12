@@ -88,6 +88,16 @@ class User {
         }
     }
 
+    public function getHospitalId($hospital_name){
+        $query = "SELECT id FROM Hospitals WHERE name = :name";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':name', $hospital_name, PDO::PARAM_STR);
+        $stmt->execute();
+
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function getPositives($val){
         $query = "SELECT $val.name , Count($val.name) as number from States, Patients, Hospitals , Townships, District where Patients.hospital_id = Hospitals.id and Hospitals.township_id = Townships.id AND Townships.district_id = District.id AND District.state_id = States.id AND (Patients.suffer_type_id = 9 or Patients.suffer_type_id=7) group by $val.name ";

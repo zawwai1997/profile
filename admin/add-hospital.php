@@ -132,13 +132,13 @@ if (isset($_SESSION['email'])) {
                         <div class="form-group col-md-6">
                             <label for="latitude">Latitude</label>
                             <input type="number" name="latitude" class="form-control" id="latitude"
-                                   placeholder="19.xxxxx" step="0.0000000001" required>
+                                   placeholder="19.xxxxx" step="0.0000000000001" required>
                         </div>
                         <!--For Longitude-->
                         <div class="form-group col-md-6">
                             <label for="longitude">Longitude</label>
                             <input type="number" name="longitude" class="form-control" id="longitude"
-                                   placeholder="93.xxxxx" step="0.0000000001" required>
+                                   placeholder="93.xxxxx" step="0.0000000000001" required>
                         </div>
 
                     </div>

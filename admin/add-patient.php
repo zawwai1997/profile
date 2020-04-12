@@ -84,7 +84,7 @@ if (isset($_SESSION['email'])) {
                     <!--                Hospital Name-->
                     <div class="form-group col-md-6">
                         <label for="name">Hospital</label>
-                        <select class="browser-default custom-select" name="hospital_name">
+                        <select class="browser-default custom-select select2" name="hospital_name">
                             <?php foreach ($Hospitals as $hospital => $hos) { ?>
                                 <option selected value="<?php echo $hos['id'] ?>"><?php echo $hos['name'] ?></option>
                             <?php } ?>

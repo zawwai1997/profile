@@ -1723,6 +1723,8 @@ window.onload = function() {
             ]
         ];
 
+
+
         var townships_mm = [
         [
           "yangon-gp",
@@ -3600,6 +3602,15 @@ window.onload = function() {
         var covid_tines =
         [{"name":"div-chin","puinsuspect":0,"pui":"0","suspected":"0","lab_negative":"0","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","total_cases":1},{"name":"div-mandalay","puinsuspect":92,"pui":"89","suspected":"3","lab_negative":"100","lab_pending":"10","die":"0","recovered":"0","lab_confirmed":"2","total_cases":204},{"name":"div-yangon","puinsuspect":0,"pui":"0","suspected":"0","lab_negative":"0","lab_pending":"0","die":"1","recovered":"0","lab_confirmed":"11","total_cases":12},{"name":"div-nshan","puinsuspect":0,"pui":"0","suspected":"0","lab_negative":"0","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","total_cases":1}];
 
+
+        var maxDivPos = 13;
+        var maxKyPos = 14;
+        var maxTsPos = 15;
+        var maxDivSus = 16;
+        var maxKySus = 17;
+        var maxTsSus = 18;
+
+
         function tsModeConfirm(zawvids_positives) {
 
         }
@@ -4022,38 +4033,37 @@ window.onload = function() {
                                         info[0] +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
+                                        'စစ်ဆေး(တွေ့ရှိ)' +
+                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                            '0' +
+                                        '</span>' +
+                                    '</p>' +
+                                    '<p class="font-size-sm text-muted mb-0">' +
                                         'စောင့်ကြည့်/သံသယ' +
-                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                            '0' +
-                                        '</span>' +
-                                    '</p>' +
-
-                                    '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(မတွေ့)' +
-                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                            '0' +
-                                        '</span>' +
-                                    '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             '0' +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
                                         'သေဆုံး' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-dark-soft" bis_skin_checked="1">' +
+                                            '0' +
+                                        '</span>' +
+                                    '</p>' +
+                                    '<p class="font-size-sm text-muted mb-0">' +
+                                        'စစ်ဆေး(စောင့်ဆိုင်း)' +
+                                        '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                             '0' +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
                                         'ပြန်လည်ကောင်းမွန်' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
                                             '0' +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(တွေ့ရှိ)' +
+                                        'စစ်ဆေး(မတွေ့)' +
                                         '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                             '0' +
                                         '</span>' +
@@ -4084,40 +4094,39 @@ window.onload = function() {
                                         info[0] +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
+                                        'စစ်ဆေး(တွေ့ရှိ)' +
+                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                            info[6] +
+                                        '</span>' +
+                                    '</p>' +
+                                    '<p class="font-size-sm text-muted mb-0">' +
                                         'စောင့်ကြည့်/သံသယ' +
-                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             info[1] +
-                                        '</span>' +
-                                    '</p>' +
-
-                                    '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(မတွေ့)' +
-                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                            info[2] +
-                                        '</span>' +
-                                    '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                            info[3] +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
                                         'သေဆုံး' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-dark-soft" bis_skin_checked="1">' +
                                             info[4] +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
+                                        'စစ်ဆေး(စောင့်ဆိုင်း)' +
+                                        '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
+                                            info[3] +
+                                        '</span>' +
+                                    '</p>' +
+                                    '<p class="font-size-sm text-muted mb-0">' +
                                         'ပြန်လည်ကောင်းမွန်' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
                                             info[5] +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(တွေ့ရှိ)' +
+                                        'စစ်ဆေး(မတွေ့)' +
                                         '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                            info[6] +
+                                            info[2] +
                                         '</span>' +
                                     '</p>'
                                 );
@@ -4141,38 +4150,37 @@ window.onload = function() {
                                         info[0] +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
+                                        'စစ်ဆေး(တွေ့ရှိ)' +
+                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                            '0' +
+                                        '</span>' +
+                                    '</p>' +
+                                    '<p class="font-size-sm text-muted mb-0">' +
                                         'စောင့်ကြည့်/သံသယ' +
-                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                            '0' +
-                                        '</span>' +
-                                    '</p>' +
-
-                                    '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(မတွေ့)' +
-                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                            '0' +
-                                        '</span>' +
-                                    '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             '0' +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
                                         'သေဆုံး' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-dark-soft" bis_skin_checked="1">' +
+                                            '0' +
+                                        '</span>' +
+                                    '</p>' +
+                                    '<p class="font-size-sm text-muted mb-0">' +
+                                        'စစ်ဆေး(စောင့်ဆိုင်း)' +
+                                        '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                             '0' +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
                                         'ပြန်လည်ကောင်းမွန်' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
                                             '0' +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(တွေ့ရှိ)' +
+                                        'စစ်ဆေး(မတွေ့)' +
                                         '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                             '0' +
                                         '</span>' +
@@ -4203,40 +4211,39 @@ window.onload = function() {
                                         info[0] +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
+                                        'စစ်ဆေး(တွေ့ရှိ)' +
+                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                            info[6] +
+                                        '</span>' +
+                                    '</p>' +
+                                    '<p class="font-size-sm text-muted mb-0">' +
                                         'စောင့်ကြည့်/သံသယ' +
-                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             info[1] +
-                                        '</span>' +
-                                    '</p>' +
-
-                                    '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(မတွေ့)' +
-                                        '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                            info[2] +
-                                        '</span>' +
-                                    '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                            info[3] +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
                                         'သေဆုံး' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-dark-soft" bis_skin_checked="1">' +
                                             info[4] +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
+                                        'စစ်ဆေး(စောင့်ဆိုင်း)' +
+                                        '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
+                                            info[3] +
+                                        '</span>' +
+                                    '</p>' +
+                                    '<p class="font-size-sm text-muted mb-0">' +
                                         'ပြန်လည်ကောင်းမွန်' +
-                                        '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                        '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
                                             info[5] +
                                         '</span>' +
                                     '</p>' +
                                     '<p class="font-size-sm text-muted mb-0">' +
-                                        'စစ်ဆေး(တွေ့ရှိ)' +
+                                        'စစ်ဆေး(မတွေ့)' +
                                         '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                            info[6] +
+                                            info[2] +
                                         '</span>' +
                                     '</p>'
                                 );
@@ -4257,40 +4264,39 @@ window.onload = function() {
                                     info[0] +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
+                                    'စစ်ဆေး(တွေ့ရှိ)' +
+                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                        info[6] +
+                                    '</span>' +
+                                '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
                                     'စောင့်ကြည့်/သံသယ' +
-                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
-                                    '</span>' +
-                                '</p>' +
-
-                                '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(မတွေ့)' +
-                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                        info[2] +
-                                    '</span>' +
-                                '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                        info[3] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
                                     'သေဆုံး' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-dark-soft" bis_skin_checked="1">' +
                                         info[4] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
+                                    'စစ်ဆေး(စောင့်ဆိုင်း)' +
+                                    '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
+                                        info[3] +
+                                    '</span>' +
+                                '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
                                     'ပြန်လည်ကောင်းမွန်' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
                                         info[5] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(တွေ့ရှိ)' +
+                                    'စစ်ဆေး(မတွေ့)' +
                                     '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                        info[6] +
+                                        info[2] +
                                     '</span>' +
                                 '</p>'
                             );
@@ -4307,40 +4313,39 @@ window.onload = function() {
                                     info[0] +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
+                                    'စစ်ဆေး(တွေ့ရှိ)' +
+                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                        info[6] +
+                                    '</span>' +
+                                '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
                                     'စောင့်ကြည့်/သံသယ' +
-                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
-                                    '</span>' +
-                                '</p>' +
-
-                                '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(မတွေ့)' +
-                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                        info[2] +
-                                    '</span>' +
-                                '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                        info[3] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
                                     'သေဆုံး' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-dark-soft" bis_skin_checked="1">' +
                                         info[4] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
+                                    'စစ်ဆေး(စောင့်ဆိုင်း)' +
+                                    '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
+                                        info[3] +
+                                    '</span>' +
+                                '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
                                     'ပြန်လည်ကောင်းမွန်' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
                                         info[5] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(တွေ့ရှိ)' +
+                                    'စစ်ဆေး(မတွေ့)' +
                                     '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                        info[6] +
+                                        info[2] +
                                     '</span>' +
                                 '</p>'
                             );
@@ -4359,40 +4364,39 @@ window.onload = function() {
                                     info[0] +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
+                                    'စစ်ဆေး(တွေ့ရှိ)' +
+                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                        info[6] +
+                                    '</span>' +
+                                '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
                                     'စောင့်ကြည့်/သံသယ' +
-                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
-                                    '</span>' +
-                                '</p>' +
-
-                                '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(မတွေ့)' +
-                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                        info[2] +
-                                    '</span>' +
-                                '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                        info[3] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
                                     'သေဆုံး' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-dark-soft" bis_skin_checked="1">' +
                                         info[4] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
+                                    'စစ်ဆေး(စောင့်ဆိုင်း)' +
+                                    '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
+                                        info[3] +
+                                    '</span>' +
+                                '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
                                     'ပြန်လည်ကောင်းမွန်' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
                                         info[5] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(တွေ့ရှိ)' +
+                                    'စစ်ဆေး(မတွေ့)' +
                                     '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                        info[6] +
+                                        info[2] +
                                     '</span>' +
                                 '</p>'
                             );
@@ -4409,40 +4413,39 @@ window.onload = function() {
                                     info[0] +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
+                                    'စစ်ဆေး(တွေ့ရှိ)' +
+                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                        info[6] +
+                                    '</span>' +
+                                '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
                                     'စောင့်ကြည့်/သံသယ' +
-                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
-                                    '</span>' +
-                                '</p>' +
-
-                                '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(မတွေ့)' +
-                                    '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
-                                        info[2] +
-                                    '</span>' +
-                                '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                        info[3] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
                                     'သေဆုံး' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-dark-soft" bis_skin_checked="1">' +
                                         info[4] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
+                                    'စစ်ဆေး(စောင့်ဆိုင်း)' +
+                                    '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
+                                        info[3] +
+                                    '</span>' +
+                                '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
                                     'ပြန်လည်ကောင်းမွန်' +
-                                    '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
+                                    '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
                                         info[5] +
                                     '</span>' +
                                 '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
-                                    'စစ်ဆေး(တွေ့ရှိ)' +
+                                    'စစ်ဆေး(မတွေ့)' +
                                     '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
-                                        info[6] +
+                                        info[2] +
                                     '</span>' +
                                 '</p>'
                             );
@@ -4666,11 +4669,15 @@ window.onload = function() {
                   $('.myanmar-map').addClass('mobile');
                   $('#map-container').addClass('mobile');
                   $('#scroll-down').removeClass('not-mobile');
+                  $('#color-bar-con').addClass('mobile');
+                  $('#color-range-con').addClass('mobile');
               } else {
                   $('.navbar').removeClass('change');
                   $('.myanmar-map').removeClass('mobile');
                   $('#map-container').removeClass('mobile');
                   $('#scroll-down').addClass('not-mobile');
+                  $('#color-bar-con').removeClass('mobile');
+                  $('#color-range-con').removeClass('mobile');
               }
             }
             var x = window.matchMedia("(max-width: 767px)")
@@ -4754,6 +4761,37 @@ window.onload = function() {
 
             });
 
+            function changeColorBar(number) {
+                console.log('fuck');
+                var x = document.getElementsByClassName("color-bar");
+                var y = document.getElementsByClassName("color-range");
+                var i,j;
+                console.log(toggle);
+                if(!toggle) {
+                    for (i = 0; i < x.length; i++) {
+                      x[i].setAttribute('style', 'background:' + cv_pos[i] + ';');
+                    }
+                } else {
+                    for (i = 0; i < x.length; i++) {
+                      x[i].setAttribute('style', 'background:' + cv_pos_sus[i] + ';');
+                    }
+                }
+                var start = 0;
+                var range = parseInt(number)/10;
+                for (i = 0; i < y.length; i++) {
+                    console.log(start);
+                    if(i==y.length-1) {
+                        y[i].innerHTML = Math.ceil(start) + '-' + (number+1);
+                    } else {
+                        y[i].innerHTML = Math.ceil(start) + '-' + Math.ceil(start+range);
+                    }
+                    start=start+range;
+                }
+
+            }
+
+            changeColorBar(maxDivPos);
+
 
             $("#radios").radiosToSlider();
             $("#radios").radiosToSlider({
@@ -4812,6 +4850,7 @@ window.onload = function() {
                 if(mode=='div') {
                     function info2MapDiv(covid_tines, toggle) {
                         if(!toggle) {
+                            changeColorBar(maxDivPos);
                             covids_tines_color = [];
                             var posMax3 = parseInt(covid_tines[0].lab_confirmed);
                             for (i in covid_tines) {
@@ -4831,6 +4870,7 @@ window.onload = function() {
                             }
 
                         } else {
+                            changeColorBar(maxDivSus);
                             covids_tines_color = [];
                             var posMax3 = parseInt(covid_tines[0].puinsuspect);
                             for (i in covid_tines) {
@@ -4858,6 +4898,7 @@ window.onload = function() {
                 } else if(mode=='ky') {
                     function info2MapKy(covid_khayines, toggle) {
                         if(!toggle) {
+                            changeColorBar(maxKyPos);
                             covids_khayines_color = [];
                             var posMax2 = parseInt(covid_khayines[0].lab_confirmed);
                             for (i in covid_khayines) {
@@ -4877,6 +4918,7 @@ window.onload = function() {
                             }
 
                         } else {
+                            changeColorBar(maxKySus);
                             covids_khayines_color = [];
                             var posMax2 = parseInt(covid_khayines[0].puinsuspect);
                             for (i in covid_khayines) {
@@ -4906,6 +4948,7 @@ window.onload = function() {
                         var covids_combied = [];
                         var covids_combied_color = [];
                         if(!toggle) {
+                            changeColorBar(maxTsPos);
                             for (i in zawvids_positives) {
                                 if ( !(zawvids_positives[i].name.indexOf("m-") >= 0) && !(zawvids_positives[i].name.indexOf("y-") >= 0)) {
                                     covids_combied.push({"name": zawvids_positives[i].name, "number": zawvids_positives[i].lab_confirmed, "puinsuspect": zawvids_positives[i].puinsuspect, "pui": zawvids_positives[i].pui, "suspected": zawvids_positives[i].suspected, "lab_negative": zawvids_positives[i].lab_negative, "lab_pending": zawvids_positives[i].lab_pending, "die": zawvids_positives[i].die, "recovered": zawvids_positives[i].recovered, "lab_confirmed": zawvids_positives[i].lab_confirmed});
@@ -4959,6 +5002,7 @@ window.onload = function() {
                             }
                             covids_combied.push({"name": "yangon-gp", "number": ylab_confirmed, "puinsuspect": ypuinsuspect, "pui": ypui, "suspected": ysuspected, "lab_negative": ylab_negative, "lab_pending": ylab_pending, "die": ydie, "recovered": yrecovered, "lab_confirmed": ylab_confirmed});
                         } else {
+                            changeColorBar(maxTsSus);
                             for (i in zawvids_positives) {
                                 if ( !(zawvids_positives[i].name.indexOf("m-") >= 0) && !(zawvids_positives[i].name.indexOf("y-") >= 0)) {
                                     covids_combied.push({"name": zawvids_positives[i].name, "number": zawvids_positives[i].puinsuspect, "puinsuspect": zawvids_positives[i].puinsuspect, "pui": zawvids_positives[i].pui, "suspected": zawvids_positives[i].suspected, "lab_negative": zawvids_positives[i].lab_negative, "lab_pending": zawvids_positives[i].lab_pending, "die": zawvids_positives[i].die, "recovered": zawvids_positives[i].recovered, "lab_confirmed": zawvids_positives[i].lab_confirmed});

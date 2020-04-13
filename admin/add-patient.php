@@ -78,15 +78,16 @@ if (isset($_SESSION['email'])) {
                     <div class="form-group col-md-6">
                         <label for="name">Name</label>
                         <input type="text" name="patient_name" class="form-control" id="name"
-                               placeholder="Patient Name">
+                               placeholder="Patient Name" required>
                     </div>
 
                     <!--                Hospital Name-->
                     <div class="form-group col-md-6">
                         <label for="name">Hospital</label>
-                        <select class="browser-default custom-select select2" name="hospital_name">
+                        <select class="browser-default custom-select select2" name="hospital_name" required>
+                            <option disabled selected value> Select an option</option>
                             <?php foreach ($Hospitals as $hospital => $hos) { ?>
-                                <option selected value="<?php echo $hos['id'] ?>"><?php echo $hos['name'] ?></option>
+                                <option value="<?php echo $hos['id'] ?>"><?php echo $hos['name'] ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -94,17 +95,12 @@ if (isset($_SESSION['email'])) {
                     <!--                Suffer Type-->
                     <div class="form-group col-md-6">
                         <label for="name">Suffer Type</label>
-                        <select class="browser-default custom-select" name="suffer_type">
-                            <?php foreach ($Suffers as $suffer => $sus) {
-                                if ($sus['id'] != 9) {
-                                    ?>
-                                    <option selected onclick="removePlace()"
-                                            value="<?php echo $sus['id'] ?>"><?php echo $sus['name'] ?></option>
-                                <?php } else { ?>
-                                    <!--                        <option onclick="addPlace()">Lab Confirmed</option>-->
-                                    <option value="<?php echo $sus['id'] ?>">Lab Confirmed</option>
-                                <?php }
-                            }?>
+                        <select class="browser-default custom-select" name="suffer_type" required>
+                            <option disabled selected value>Select an option</option>
+                            <option value="5">Die</option>
+                            <option value="6">Recovered</option>
+                            <option value="7">Lab Confirmed</option>
+
                         </select>
                     </div>
 
@@ -114,21 +110,14 @@ if (isset($_SESSION['email'])) {
 
                     </div>
 
-                    <!--For Add One More Place-->
-                    <div class="form-group col-md-6" id="addMorePlaceBtn">
 
-                    </div>
-
-                    <div class="form-row" id="one_row">
-                        <div id="myhidden" value="1" type="hidden"></div>
-                    </div>
 
                     <div class="form-row col-md-12">
                         <!--For Age-->
 
                         <div class="form-group col-md-4">
                             <label for="age">Age</label>
-                            <input type="number" name="patient_age" class="form-control" id="age" placeholder="Patient Age">
+                            <input type="number" name="patient_age" class="form-control" id="age" placeholder="Patient Age" required>
                         </div>
 
                         <!--                    For Gender-->
@@ -164,7 +153,7 @@ if (isset($_SESSION['email'])) {
 
 
                 <input type="hidden" name="tok" value="<?php echo $token; ?>">
-                <button type="submit" class="btn btn-primary" name="btnAddPatient">Add Repository</button>
+                <button type="submit" class="btn btn-primary" name="btnAddPatient">Add Patient</button>
             </form>
         </div>
 
@@ -175,84 +164,7 @@ if (isset($_SESSION['email'])) {
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Menu Toggle Script -->
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-    <script>
-        function addPlace() {
-            var addPlace = "<label>Visited Places</label>\n" +
-                "<select class=\"browser-default form-control select2\" name = \"visited_places\"multiple>\n" +
-                "    <?php foreach ($Places as $place=>$plac) { ?>\n" +
-                "    <option><?php echo $plac['name']?></option>\n" +
-                "    <?php } ?>\n" +
-                "\n" +
-                "</select>";
 
-            var addMorePlaceBtn = '<div class="btn btn-success" onclick="addOneMorePlace()">Add One More Places for Patient</div>';
-            document.getElementById('visited_places').innerHTML = addPlace;
-            $('.select2').select2();
-            document.getElementById('addMorePlaceBtn').innerHTML = addMorePlaceBtn;
-
-        }
-
-        count = 0;
-
-        function addOneMorePlace() {
-            count += 1;
-            hidden_val = count + 1;
-
-
-
-            var one_row = "<div class=\"form-row\" id=\"my_row_" + count + "\">\n" +
-                "   \n" +
-                "    <div class=\"form-group col-md-3\">\n" +
-                "        <input type=\"text\" placeholder=\"Place Name\" name=\"place_name_\">\n" +
-                "    </div>\n" +
-                "    <div class=\"form-group col-md-3\">\n" +
-                "        <select class=\"browser-default form-control select2\" name=\"township_name_\">\n" +
-                "            <?php foreach ($Townships as $township=>$town) { ?>\n" +
-                "            <option><?php echo $town['name']?></option>\n" +
-                "            <?php } ?>\n" +
-                "    \n" +
-                "        </select>\n" +
-                "    </div>\n" +
-                "    <div class=\"form-group col-md-3\">\n" +
-                "        <input type=\"text\" placeholder=\"Latitude\" name=\"latitude_\">\n" +
-                "    </div>\n" +
-                "    <div class=\"form-group col-md-2\">\n" +
-                "        <input type=\"text\" placeholder=\"Longitude\" name=\"longitude_\">\n" +
-                "    </div>\n" +
-                "    <div class=\"form-group col-md-1\">\n" +
-                "      <div class=\"btn btn-danger\" onclick=\"deleteRow(" + count + ")\">Delete</div>\n" +
-                "    </div>\n" +
-                "   \n" +
-                "</div>\n" +
-                "<div id=\"myhidden\" value=\"" + hidden_val + "\" type=\"hidden\"></div>";
-
-            var row = document.getElementById('one_row');
-
-            row.innerHTML = row.innerHTML.replace('<div id="myhidden" value="' + count + '" type="hidden"></div>', one_row);
-
-        }
-
-        function deleteRow(c) {
-            document.getElementById('my_row_' + c).innerHTML = '';
-            var temp_row = document.getElementById('one_row');
-
-            temp_row.innerHTML = temp_row.innerHTML.replace('<div class="form-row" id="my_row_' + c + '"></div>', '')
-
-        }
-
-        function removePlace() {
-            document.getElementById('visited_places').innerHTML = '';
-            document.getElementById('addMorePlaceBtn').innerHTML = '';
-            document.getElementById('one_row').innerHTML = '';
-        }
-    </script>
     <script>
         $('.select2').select2();
     </script>

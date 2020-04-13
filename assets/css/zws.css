@@ -74,7 +74,7 @@
 .card-danger {
     padding: 20px;
 
-    background: rgba(223,71,89,.15);
+    background-color:rgba(223,71,89,.1);
     color:#df4759;
     margin: 0 auto;
 
@@ -83,10 +83,22 @@
     box-sizing: border-box;
     border-radius: 8px;
 }
-.card-green {
+.card-negative {
     padding: 20px;
-    background: rgba(66,186,150,.1);
-    color: #42ba96;
+
+    background-color:rgba(66,186,150,.1);
+    color:#27ae60;
+    margin: 0 auto;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+.card-warning {
+    padding: 20px;
+    background-color: #f9e79f ;
+    color:#b37700;
     margin: 0 auto;
 
     -webkit-box-sizing: border-box;
@@ -97,8 +109,8 @@
 .card-primary {
     padding: 20px;
 
-    background: rgba(124,105,239,.1);
-    color: #7c69ef;
+    background-color:rgba(43,53,79,.1);
+    color:#2b354f;
     margin: 0 auto;
 
     -webkit-box-sizing: border-box;
@@ -106,11 +118,25 @@
     box-sizing: border-box;
     border-radius: 8px;
 }
-.card-warning{
+.card-pending{
     padding: 20px;
-    background: rgba(51,94,234,.15);
+    background-color:rgba(51,94,234,.1);
+    color:#335eea;
     opacity: 0.8;
-    color: #335eea;
+
+    margin: 0 auto;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+.card-recovered{
+    padding: 20px;
+    background-color:rgba(80,102,144,.1);
+    color:#506690;
+    opacity: 0.8;
+
     margin: 0 auto;
 
     -webkit-box-sizing: border-box;

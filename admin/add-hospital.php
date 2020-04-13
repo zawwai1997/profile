@@ -77,13 +77,10 @@ if (isset($_SESSION['email'])) {
         <div class="bg-light border-right col-2" id="sidebar-wrapper">
 
             <div class="list-group list-group-flush">
-                <a href="add-district.php" class="list-group-item list-group-item-action bg-light">Add
-                    District(ခရိုင်)</a>
-                <a href="add-township.php" class="list-group-item list-group-item-action bg-light">Add
-                    Township(မြို့နယ်)</a>
+
                 <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Patient(လူနာ)</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
-
+                <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
             </div>
         </div>
         <div class="col-10">
@@ -144,34 +141,34 @@ if (isset($_SESSION['email'])) {
                     </div>
                     <div class="form-row col-md-12">
                         <!--For PUI-->
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="pui">PUI(စောင့်ကြည့်)</label>
                             <input type="number" name="pui" class="form-control" id="pui" value="0" required>
                         </div>
 
                         <!--For suspected-->
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="suspected">Suspected(သံသယ)</label>
                             <input type="number" name="suspected" class="form-control" id="suspected" value="0"
                                    required>
                         </div>
 
                         <!--For confirmed-->
-                        <div class="form-group col-md-2">
-                            <label for="lab_confirmed">Confirmed(အတည်ပြု)</label>
-                            <input type="number" name="lab_confirmed" class="form-control" id="lab_confirmed"
-                                   value="0" required>
-                        </div>
+<!--                        <div class="form-group col-md-2">-->
+<!--                            <label for="lab_confirmed">Confirmed(အတည်ပြု)</label>-->
+<!--                            <input type="number" name="lab_confirmed" class="form-control" id="lab_confirmed"-->
+<!--                                   value="0" required>-->
+<!--                        </div>-->
 
                         <!--For negative-->
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="lab_negative">Negative(မတွေ့)</label>
                             <input type="number" name="lab_negative" class="form-control" id="lab_negative"
                                    value="0" required>
                         </div>
 
                         <!--For pending-->
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="lab_pending">Pending(စောင့်ဆိုင်းဆဲ)</label>
                             <input type="number" name="lab_pending" class="form-control" id="lab_pending"
                                    value="0" required>

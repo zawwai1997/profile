@@ -199,7 +199,7 @@ GROUP BY Townships.name order by Townships.id";
     }
 
     public function getHospitalJson(){
-        $query = "SELECT States.name as state,District.name as district,Townships.name as township, Hospitals.name as db_name, Hospitals.zawgyi,Hospitals.unicode,Hospitals.lon, Hospitals.lat, 
+        $query = "SELECT States.name as state,States.real_name as real_name,District.name as district,Townships.name as township, Hospitals.name as db_name, Hospitals.zawgyi,Hospitals.unicode,Hospitals.lon, Hospitals.lat, 
 COUNT(case when Patients.suffer_type_id = 1 then 1 else NULL end) as pui , 
 COUNT(case when Patients.suffer_type_id = 2 then 1 else NULL end) as suspected, 
 COUNT(case when Patients.suffer_type_id = 3 then 1 else NULL end) as lab_negative, 

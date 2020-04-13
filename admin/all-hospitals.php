@@ -1,15 +1,15 @@
 <?php
 require_once 'core/init.php';
+
+
 if(isset($_SESSION['email'])){
 $token = hash("sha256", time());
 $_SESSION['token'] = $token;
 
-$District = $user->get('District');
-$Townships = $user->get('Townships');
-$townshipData = array();
- foreach ($Townships as $township=>$towns) {
-     array_push($townshipData, $towns['name']);
- }
+$States = $user->get('States');
+$Hospitals = $user->getHospitalJson();
+
+
 
 ?>
 <!DOCTYPE html>
@@ -22,7 +22,7 @@ $townshipData = array();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Add Patients</title>
+    <title>All Hospitals</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Custom styles for this template -->
@@ -33,10 +33,9 @@ $townshipData = array();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <!-- jQuery UI library -->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <style>
         .select2-container .select2-selection--single{
             height:34px !important;
@@ -57,49 +56,62 @@ $townshipData = array();
     <div class="bg-light border-right col-2" id="sidebar-wrapper">
 
         <div class="list-group list-group-flush">
+<!--            <a href="#" class="list-group-item list-group-item-action bg-light">Add Patient</a>-->
 
             <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Patient(လူနာ)</a>
             <a href="add-hospital.php" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
-            <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
-
+            <a href="#" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
         </div>
     </div>
     <!-- /#sidebar-wrapper -->
     <div class="col-10">
-        <h4>Add Township(မြို့နယ်များ ပေါင်းထည့်ခြင်း)</h4>
+        <h4>Show All Hospitals(ဆေးရုံများ အားလုံး)</h4>
         <?php flash('success') ?>
         <br>
         <br>
-        <form method="post" action="process/add_process.php">
-            <div class="form-row">
+        <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th class="th-sm">Hospital
+                </th>
+                <th class="th-sm">PUI
+                </th>
+                <th class="th-sm">Suspected
+                </th>
+                <th class="th-sm">Negative
+                </th>
+                <th class="th-sm">Pending
+                </th>
+                <th class="th-sm">Die
+                </th>
+                <th class="th-sm">Recovered
+                </th>
+                <th class="th-sm">Confirmed
+                </th>
+                <th class="th-sm">State
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+<?php foreach($Hospitals as $hospital => $hos){ ?>
+            <tr>
+                <td><?php echo $hos['db_name'] ?></td>
+                <td><?php echo $hos['pui'] ?></td>
+                <td><?php echo $hos['suspected'] ?></td>
+                <td><?php echo $hos['lab_negative'] ?></td>
+                <td><?php echo $hos['lab_pending'] ?></td>
+                <td><?php echo $hos['death'] ?></td>
+                <td><?php echo $hos['recovered'] ?></td>
+                <td><?php echo $hos['lab_confirmed'] ?></td>
+                <td><?php echo $hos['real_name'] ?></td>
 
-<!--                District Name-->
-                <div class="form-group col-md-6">
-                    <label for="township_input">Name</label>
-                    <input type="text" name="township_name" class="form-control" id="township_input" placeholder="Township Name">
-                </div>
-
-<!--                //Hospital Name-->
-                <div class="form-group col-md-6">
-                    <label for="state_id">District(ခရိုင်) </label>
-                    <select class="browser-default custom-select select2" name="district_id">
-                        <?php foreach ($District as $district=>$dist) { ?>
-                        <option selected value="<?php echo $dist['id']?>"><?php echo $dist ['name']?></option>
-                        <?php } ?>
-                    </select>
-                </div>
+            </tr>
+        <?php } ?>
 
 
+            </tbody>
 
-
-
-
-
-
-
-            <input type="hidden" name="tok" value="<?php echo $token; ?>">
-            <button type="submit" class="btn btn-primary" name="btnAddTownship">Add District</button>
-        </form>
+        </table>
     </div>
 
 </div>
@@ -116,16 +128,14 @@ $townshipData = array();
         $("#wrapper").toggleClass("toggled");
     });
 </script>
-
 <script>
-    $('.select2').select2();
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
 </script>
 <script>
-    $(function() {
-        $("#township_input").autocomplete({
-            source: <?php echo json_encode($townshipData);  ?>
-        });
-    });
+    $('.select2').select2();
 </script>
 
 </body>

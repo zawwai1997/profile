@@ -58,12 +58,10 @@ if (isset($_SESSION['email'])) {
         <div class="bg-light border-right col-2" id="sidebar-wrapper">
 
             <div class="list-group list-group-flush">
-                <a href="add-district.php" class="list-group-item list-group-item-action bg-light">Add
-                    District(ခရိုင်)</a>
-                <a href="add-township.php" class="list-group-item list-group-item-action bg-light">Add
-                    Township(မြို့နယ်)</a>
+
                 <a href="#" class="list-group-item list-group-item-action bg-light">Add Patient(လူနာ)</a>
                 <a href="add-hospital.php" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
+                <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
 
             </div>
         </div>

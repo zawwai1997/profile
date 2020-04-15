@@ -199,7 +199,7 @@ GROUP BY Townships.name order by Townships.id";
     }
 
     public function getHospitalJson(){
-        $query = "SELECT States.name as state,States.real_name as real_name,District.name as district,Townships.name as township, Hospitals.name as db_name, Hospitals.zawgyi,Hospitals.unicode,Hospitals.lon, Hospitals.lat, 
+        $query = "SELECT Hospitals.id,States.name as state,States.real_name as real_name,District.name as district,Townships.name as township, Hospitals.name as db_name, Hospitals.zawgyi,Hospitals.unicode,Hospitals.lon, Hospitals.lat, 
 COUNT(case when Patients.suffer_type_id = 1 then 1 else NULL end) as pui , 
 COUNT(case when Patients.suffer_type_id = 2 then 1 else NULL end) as suspected, 
 COUNT(case when Patients.suffer_type_id = 3 then 1 else NULL end) as lab_negative, 
@@ -210,7 +210,7 @@ COUNT(case when Patients.suffer_type_id = 7 then 1 else NULL end) as lab_confirm
 FROM Hospitals, Patients ,Townships ,District ,States 
 WHERE Patients.hospital_id = Hospitals.id AND Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
 GROUP BY Hospitals.name 
-order by Townships.name";
+order by Hospitals.id";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -218,6 +218,76 @@ order by Townships.name";
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getData($query){
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getHospitalJsonWithCondition($hospitalName,$stateName){
+        $query = "SELECT Hospitals.id,States.name as state,States.real_name as real_name,District.name as district,Townships.name as township, Hospitals.name as db_name, Hospitals.zawgyi,Hospitals.unicode,Hospitals.lon, Hospitals.lat, 
+COUNT(case when Patients.suffer_type_id = 1 then 1 else NULL end) as pui , 
+COUNT(case when Patients.suffer_type_id = 2 then 1 else NULL end) as suspected, 
+COUNT(case when Patients.suffer_type_id = 3 then 1 else NULL end) as lab_negative, 
+COUNT(case when Patients.suffer_type_id = 4 then 1 else NULL end) as lab_pending, 
+COUNT(case when Patients.suffer_type_id = 5 then 1 else NULL end) as death, 
+COUNT(case when Patients.suffer_type_id = 6 then 1 else NULL end) as recovered, 
+COUNT(case when Patients.suffer_type_id = 7 then 1 else NULL end) as lab_confirmed 
+FROM Hospitals, Patients ,Townships ,District ,States 
+WHERE Patients.hospital_id = Hospitals.id AND Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id Hospitals.name LIKE %$hospitalName % OR States.real_name %$stateName% ";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getHospitalRowCount(){
+        $query = "SELECT Hospitals.id,States.name as state,States.real_name as real_name,District.name as district,Townships.name as township, Hospitals.name as db_name, Hospitals.zawgyi,Hospitals.unicode,Hospitals.lon, Hospitals.lat, 
+COUNT(case when Patients.suffer_type_id = 1 then 1 else NULL end) as pui , 
+COUNT(case when Patients.suffer_type_id = 2 then 1 else NULL end) as suspected, 
+COUNT(case when Patients.suffer_type_id = 3 then 1 else NULL end) as lab_negative, 
+COUNT(case when Patients.suffer_type_id = 4 then 1 else NULL end) as lab_pending, 
+COUNT(case when Patients.suffer_type_id = 5 then 1 else NULL end) as death, 
+COUNT(case when Patients.suffer_type_id = 6 then 1 else NULL end) as recovered, 
+COUNT(case when Patients.suffer_type_id = 7 then 1 else NULL end) as lab_confirmed 
+FROM Hospitals, Patients ,Townships ,District ,States 
+WHERE Patients.hospital_id = Hospitals.id AND Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
+GROUP BY Hospitals.name 
+order by Hospitals.id;";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    public function getPatientsCount($hospitalId,$sufferTypeId){
+        $query = "SELECT count(Patients.name)  as total FROM `Patients` WHERE Patients.hospital_id = $hospitalId and Patients.suffer_type_id = $sufferTypeId";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deletePatients($hospitalId,$sufferTypeId,$limit){
+        $query = "DELETE FROM Patients where Patients.suffer_type_id = $sufferTypeId and Patients.hospital_id = $hospitalId LIMIT $limit ";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+
+
 
     public function getDistrictJson(){
         $query = "SELECT District.name as db_name,

@@ -39,21 +39,21 @@ $total_confirmed = 0;
 
 foreach ($Districts as $district => $dist) {
     $oneDisrict = array(
-        $dist['name'], $dist['real_name'], "unicode", "zawgyi"
+        $dist['name'], $dist['real_name'], $dist['unicode'], $dist['zawgyi']
     );
     array_push($districtData, $oneDisrict);
 }
 
 foreach ($Townships as $township => $town) {
     $oneTownship = array(
-        $town['name'], $town['real_name'], "unicode", "zawgyi"
+        $town['name'], $town['real_name'], $town['unicode'], $town['zawgyi']
     );
     array_push($townshipData, $oneTownship);
 }
 
 foreach ($States as $state => $sta) {
     $oneState = array(
-        $sta['name'], $sta['real_name'], "unicode", "zawgyi"
+        $sta['name'], $sta['real_name'], $sta['unicode'], $sta['zawgyi']
     );
     array_push($stateData, $oneState);
 }
@@ -2657,7 +2657,7 @@ foreach ($regionJson as $key => $value) {
                             'data':
                                 {
                                     'ts': ['mindat', 'kanpetlet', 'madupi', 'paletwa']
-                                },
+                                    },
                         },
                     ],
             },
@@ -3382,13 +3382,41 @@ foreach ($regionJson as $key => $value) {
         ]
 
 
-        var divisions_mm = <?php echo json_encode($stateData); ?>;
+        //var divisions_mm = <?php //echo json_encode($stateData); ?>//;
+        //
+        //var khayines_mm = <?php //echo json_encode($districtData); ?>//;
+        //
+        //var townships_mm = <?php //echo json_encode($townshipData); ?>//;
 
-        var khayines_mm = <?php echo json_encode($districtData); ?>;
+        var divisions_mm = [
+            [
+                "div-ayeyarwaddy",
+                "Ayeyarwaddy Region",
+                "ဧရာဝတီ တိုင်းဒေသကြီး",
+                "ဧရာဝတီ တိုင္းေဒသႀကီး"
+            ]
 
-        var townships_mm = <?php echo json_encode($townshipData); ?>;
+        ];
 
+        var khayines_mm = [
+            [
+                "ky-gangaw",
+                "Gangaw",
+                "ဂန့်ဂေါ",
+                "ဂန႔္ေဂါ"
+            ]
 
+        ];
+
+        var townships_mm = [
+            [
+                "yangon-gp",
+                "Yangon",
+                "ရန်ကုန်",
+                "ဂန႔္ေဂါ"
+            ]
+
+        ];
 
         var covids = {
             "positives": [

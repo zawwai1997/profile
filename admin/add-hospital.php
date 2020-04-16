@@ -32,7 +32,7 @@ if (isset($_SESSION['email'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Add Hospitals</title>
+        <title>Add Hospitals(ဆေးရုံများ ထည့်သွင်းခြင်း)</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
               crossorigin="anonymous">
@@ -78,7 +78,7 @@ if (isset($_SESSION['email'])) {
 
             <div class="list-group list-group-flush">
 
-                <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Patient(လူနာ)</a>
+                <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Positive Patient(လူနာ)</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
                 <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
                 <a href="all-positive-patient.php" class="list-group-item list-group-item-action bg-light">Show Positive Patients</a>

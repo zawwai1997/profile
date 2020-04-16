@@ -57,7 +57,7 @@ if (isset($_SESSION['email'])) {
 
             <div class="list-group list-group-flush">
 
-                <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Patient(လူနာ)</a>
+                <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Positive Patient(လူနာ)</a>
                 <a href="add-hospital.php" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
                 <a href="all-positive-patient.php" class="list-group-item list-group-item-action bg-light">Show Positive Patients</a>
@@ -65,7 +65,7 @@ if (isset($_SESSION['email'])) {
         </div>
         <!-- /#sidebar-wrapper -->
         <div class="col-10">
-            <h4>All Hospitals</h4>
+            <h4>All Hospitals(ဆေးရုံများအား ပြန်လည်စစ်ဆေးခြင်း)</h4>
             <div class="table-responsive">
                 <br />
 

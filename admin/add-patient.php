@@ -23,7 +23,7 @@ if (isset($_SESSION['email'])) {
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Add Patients</title>
+        <title>All Positive Patients(အတည်ပြုလူနာများအား ထည့်သွင်းခြင်း)</title>
 
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -59,7 +59,7 @@ if (isset($_SESSION['email'])) {
 
             <div class="list-group list-group-flush">
 
-                <a href="#" class="list-group-item list-group-item-action bg-light">Add Patient(လူနာ)</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Add Positive Patient(လူနာ)</a>
                 <a href="add-hospital.php" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
                 <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
                 <a href="all-positive-patient.php" class="list-group-item list-group-item-action bg-light">Show Positive Patients</a>
@@ -67,7 +67,7 @@ if (isset($_SESSION['email'])) {
         </div>
         <!-- /#sidebar-wrapper -->
         <div class="col-10">
-            <h4>Add Patient</h4>
+            <h4>All Positive Patients</h4>
             <?php flash('success') ?>
             <form method="post" action="process/add_patient_process.php">
                 <div class="form-row">

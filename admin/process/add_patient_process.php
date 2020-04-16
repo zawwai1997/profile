@@ -16,7 +16,6 @@ if (isset($_POST['btnAddPatient']) && $_POST['tok'] == $_SESSION['token']) {
         'name' => $patient_name,
         'age' => $age,
         'gender' => $gender,
-
         'suffer_type_id' => $suffer_type,
         'hospital_id' => $hospital_name,
     ));
@@ -39,7 +38,7 @@ if (isset($_POST['btnAddPatient']) && $_POST['tok'] == $_SESSION['token']) {
         }
         else
         {
-         flash('success', "Failed to Add");
+         flash('success', "Failed to Add1");
          header("location:../add-patient.php");
          exit();
         }
@@ -48,7 +47,7 @@ if (isset($_POST['btnAddPatient']) && $_POST['tok'] == $_SESSION['token']) {
 
 
     } else {
-        flash('success', "Failed to Add");
+        flash('success', "Failed to Add2");
         header("location:../add-patient.php");
         exit();
     }

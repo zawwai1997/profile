@@ -128,7 +128,7 @@ if (isset($_SESSION['email'])) {
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="female" value="0">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="2">
                                 <label class="form-check-label" for="female">
                                     Female
                                 </label>

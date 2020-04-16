@@ -1,5 +1,5 @@
 <?php
-require_once '../core/init.php';
+require_once '../admin/core/init.php';
 $properties = $user->getTownshipJson();
 $featuresAry = array();
 $featuresAry['type'] = "FeatureCollection";

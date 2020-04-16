@@ -16,7 +16,7 @@ if (isset($_SESSION['email'])) {
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>All Hospitals(ဆေးရုံများအား ပြန်လည်စစ်ဆေးခြင်း)</title>
+        <title>All Positive Patients(လူနာများအား ပြန်လည်စစ်ဆေးခြင်း)</title>
 
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -59,13 +59,13 @@ if (isset($_SESSION['email'])) {
 
                 <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Patient(လူနာ)</a>
                 <a href="add-hospital.php" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
-                <a href="all-positive-patient.php" class="list-group-item list-group-item-action bg-light">Show Positive Patients</a>
+                <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Show Positive Patients</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
         <div class="col-10">
-            <h4>All Hospitals</h4>
+            <h4>All Positive Patients(လူနာများအား ပြန်လည်စစ်ဆေးခြင်း)</h4>
             <div class="table-responsive">
                 <br />
 
@@ -74,15 +74,13 @@ if (isset($_SESSION['email'])) {
                 <table id="user_data" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Suffer Type</th>
                         <th>Hospital</th>
-                        <th>PUI</th>
-                        <th>Suspected</th>
-                        <th>Negative</th>
-                        <th>Pending</th>
-                        <th>Die</th>
-                        <th>Recovered</th>
-                        <th>Confirmed</th>
-                        <th>State</th>
+                        <th></th>
                     </tr>
                     </thead>
                 </table>
@@ -115,19 +113,19 @@ if (isset($_SESSION['email'])) {
                     "serverSide" : true,
                     "order" : [],
                     "ajax" : {
-                        url:"process/get_hospital_data.php",
+                        url:"process/get_patient_data.php",
                         type:"POST"
                     }
                 });
             }
 
 
-            function update_data(hospital_id, suffer_type_id, value)
+            function update_data(patient_id, key, value)
             {
                 $.ajax({
-                    url:"process/update_hospital_data.php",
+                    url:"process/update_patient_data.php",
                     method:"POST",
-                    data:{hospital_id:hospital_id, suffer_type_id:suffer_type_id, value:value},
+                    data:{patient_id:patient_id, key:key, value:value},
                     success:function(data)
                     {
                         $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
@@ -137,19 +135,38 @@ if (isset($_SESSION['email'])) {
                 });
                 setInterval(function(){
                     $('#alert_message').html('');
-                }, 5000);
+                }, 6000);
             }
 
 
             $(document).on('blur', '.update', function(){
-                var hospital_id = $(this).data("id");
-                var suffer_type_id = $(this).data("column");
+                var patient_id = $(this).data("id");
+                var key = $(this).data("column");
 
                 var value = $(this).text();
 
-                update_data(hospital_id, suffer_type_id, value);
+                update_data(patient_id, key, value);
             });
+            $(document).on('click', '.delete', function(){
+                var patient_id = $(this).attr("id");
 
+                if(confirm("Are you sure you want to remove this?"))
+                {
+                    $.ajax({
+                        url:"process/delete_patient_data.php",
+                        method:"POST",
+                        data:{patient_id:patient_id},
+                        success:function(data){
+                            $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
+                            $('#user_data').DataTable().destroy();
+                            fetch_data();
+                        }
+                    });
+                    setInterval(function(){
+                        $('#alert_message').html('');
+                    }, 5000);
+                }
+            });
 
 
         });

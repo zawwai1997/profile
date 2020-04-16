@@ -267,6 +267,19 @@ order by Hospitals.id;";
         return $count;
     }
 
+    public function getPatientRowCount(){
+        $query = "SELECT Count(Patients.name) as count
+ FROM Patients,Gender,Suffer_Type,Hospitals
+ WHERE Patients.gender = Gender.id AND
+ Patients.suffer_type_id = Suffer_Type.id AND
+ Patients.hospital_id = Hospitals.id AND
+ (Patients.suffer_type_id = 5 or Patients.suffer_type_id=6 or Patients.suffer_type_id=7)";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getPatientsCount($hospitalId,$sufferTypeId){
         $query = "SELECT count(Patients.name)  as total FROM `Patients` WHERE Patients.hospital_id = $hospitalId and Patients.suffer_type_id = $sufferTypeId";
 
@@ -290,7 +303,7 @@ order by Hospitals.id;";
 
 
     public function getDistrictJson(){
-        $query = "SELECT District.name as db_name,
+        $query = "SELECT District.id,District.name as db_name,
 COUNT(case when Patients.suffer_type_id = 1 then 1 else NULL end) as pui , 
 COUNT(case when Patients.suffer_type_id = 2 then 1 else NULL end) as suspected, 
 COUNT(case when Patients.suffer_type_id = 3 then 1 else NULL end) as lab_negative, 
@@ -351,6 +364,23 @@ GROUP BY Hospitals.name order by $order";
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function update($table,$key,$value,$patient_id){
+        $query = "UPDATE `$table` SET `$key` = '$value' WHERE `Patients`.`id` = $patient_id;";
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+
+    public function delete($table,$id){
+        $query = "DELETE FROM `$table` WHERE id = $id ";
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
 
 
 }

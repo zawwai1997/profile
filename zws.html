@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Libs CSS -->
+    <link rel="stylesheet" href="assets/fonts/feather/feather.css" />
+    <link
+      rel="stylesheet"
+      href="assets/libs/flatpickr/dist/flatpickr.min.css"
+    />
+    <link rel="stylesheet" href="assets/libs/quill/dist/quill.core.css" />
+    <link rel="stylesheet" href="assets/libs/highlightjs/styles/vs2015.css" />
+
+    <!-- Map -->
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+
+    <!-- Theme CSS -->
+
+    <link
+      rel="stylesheet"
+      href="assets/css/theme.min.css"
+      id="stylesheetLight"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/css/theme-dark.min.css"
+      id="stylesheetDark"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Sale Chart -->
+    <div class="card">
+      <div class="card-header">
+        <!-- Title -->
+        <h4 class="card-header-title">
+          Sales
+        </h4>
+
+        <!-- Nav -->
+        <ul class="nav nav-tabs nav-tabs-sm card-header-tabs">
+          <li
+            class="nav-item"
+            data-toggle="chart"
+            data-target="#salesChart"
+            data-trigger="click"
+            data-action="toggle"
+            data-dataset="0"
+          >
+            <a class="nav-link active" href="index.html#" data-toggle="tab">
+              All
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            data-toggle="chart"
+            data-target="#salesChart"
+            data-trigger="click"
+            data-action="toggle"
+            data-dataset="1"
+          >
+            <a class="nav-link" href="index.html#" data-toggle="tab">
+              Direct
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            data-toggle="chart"
+            data-target="#salesChart"
+            data-trigger="click"
+            data-action="toggle"
+            data-dataset="2"
+          >
+            <a class="nav-link" href="index.html#" data-toggle="tab">
+              Organic
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <!-- Chart -->
+        <div class="chart">
+          <canvas id="salesChart" class="chart-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+    <!-- Traffic -->
+    <div class="card">
+      <div class="card-header">
+        <!-- Title -->
+        <h4 class="card-header-title">
+          Traffic Channels
+        </h4>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs nav-tabs-sm card-header-tabs">
+          <li
+            class="nav-item"
+            data-toggle="chart"
+            data-target="#trafficChart"
+            data-trigger="click"
+            data-action="toggle"
+            data-dataset="0"
+          >
+            <a href="index.html#" class="nav-link active" data-toggle="tab">
+              All
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            data-toggle="chart"
+            data-target="#trafficChart"
+            data-trigger="click"
+            data-action="toggle"
+            data-dataset="1"
+          >
+            <a href="index.html#" class="nav-link" data-toggle="tab">
+              Direct
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <!-- Chart -->
+        <div class="chart chart-appended">
+          <canvas
+            id="trafficChart"
+            class="chart-canvas"
+            data-toggle="legend"
+            data-target="#trafficChartLegend"
+          ></canvas>
+        </div>
+
+        <!-- Legend -->
+        <div id="trafficChartLegend" class="chart-legend"></div>
+      </div>
+    </div>
+    <!-- Goals -->
+    <div class="card">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <!-- Title -->
+            <h4 class="card-header-title">
+              Goals
+            </h4>
+          </div>
+          <div class="col-auto">
+            <!-- Button -->
+            <a href="index.html#!" class="btn btn-sm btn-white">
+              Export
+            </a>
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+      <div
+        class="table-responsive mb-0"
+        data-toggle="lists"
+        data-options='{"valueNames": ["goal-project", "goal-status", "goal-progress", "goal-date"]}'
+      >
+        <table class="table table-sm table-nowrap card-table">
+          <thead>
+            <tr>
+              <th>
+                <a
+                  href="index.html#"
+                  class="text-muted sort"
+                  data-sort="goal-project"
+                >
+                  Goal
+                </a>
+              </th>
+              <th>
+                <a
+                  href="index.html#"
+                  class="text-muted sort"
+                  data-sort="goal-status"
+                >
+                  Status
+                </a>
+              </th>
+              <th>
+                <a
+                  href="index.html#"
+                  class="text-muted sort"
+                  data-sort="goal-progress"
+                >
+                  Progress
+                </a>
+              </th>
+              <th>
+                <a
+                  href="index.html#"
+                  class="text-muted sort"
+                  data-sort="goal-date"
+                >
+                  Due date
+                </a>
+              </th>
+              <th class="text-right">
+                Team
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="list">
+            <tr>
+              <td class="goal-project">
+                Update the API
+              </td>
+              <td class="goal-status">
+                <span class="text-warning">●</span> In progress
+              </td>
+              <td class="goal-progress">
+                55%
+              </td>
+              <td class="goal-date">
+                <time datetime="2018-10-24">07/24/18</time>
+              </td>
+              <td class="text-right">
+                <div class="avatar-group">
+                  <a
+                    href="profile-posts.html"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Dianna Smiley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-1.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="profile-posts.html"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Ab Hadley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-2.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="profile-posts.html"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Adolfo Hess"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-3.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="profile-posts.html"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Daniela Dewitt"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-4.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="dropdown">
+                  <a
+                    href="index.html#"
+                    class="dropdown-ellipses dropdown-toggle"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fe fe-more-vertical"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="index.html#!" class="dropdown-item">
+                      Action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Another action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Something else here
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="goal-project">
+                Release v1.2-Beta
+              </td>
+              <td class="goal-status">
+                <span class="text-warning">●</span> In progress
+              </td>
+              <td class="goal-progress">
+                25%
+              </td>
+              <td class="goal-date">
+                <time datetime="2018-10-24">08/26/18</time>
+              </td>
+              <td class="text-right">
+                <div class="avatar-group justify-content-end">
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Dianna Smiley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-1.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Ab Hadley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-2.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Adolfo Hess"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-3.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="dropdown">
+                  <a
+                    href="index.html#"
+                    class="dropdown-ellipses dropdown-toggle"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fe fe-more-vertical"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="index.html#!" class="dropdown-item">
+                      Action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Another action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Something else here
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="goal-project">
+                GDPR Compliance
+              </td>
+              <td class="goal-status">
+                <span class="text-success">●</span> Completed
+              </td>
+              <td class="goal-progress">
+                100%
+              </td>
+              <td class="goal-date">
+                <time datetime="2018-10-24">06/19/18</time>
+              </td>
+              <td class="text-right">
+                <div class="avatar-group justify-content-end">
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Dianna Smiley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-1.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Ab Hadley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-2.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Adolfo Hess"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-3.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="dropdown">
+                  <a
+                    href="index.html#"
+                    class="dropdown-ellipses dropdown-toggle"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fe fe-more-vertical"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="index.html#!" class="dropdown-item">
+                      Action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Another action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Something else here
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="goal-project">
+                v1.2 Documentation
+              </td>
+              <td class="goal-status">
+                <span class="text-danger">●</span> Cancelled
+              </td>
+              <td class="goal-progress">
+                0%
+              </td>
+              <td class="goal-date">
+                <time datetime="2018-10-24">06/25/18</time>
+              </td>
+              <td class="text-right">
+                <div class="avatar-group justify-content-end">
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Dianna Smiley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-1.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Ab Hadley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-2.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="dropdown">
+                  <a
+                    href="index.html#"
+                    class="dropdown-ellipses dropdown-toggle"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <span class="fe fe-more-vertical"></span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="index.html#!" class="dropdown-item">
+                      Action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Another action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Something else here
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="goal-project">
+                Plan design offsite
+              </td>
+              <td class="goal-status">
+                <span class="text-success">●</span> Completed
+              </td>
+              <td class="goal-progress">
+                100%
+              </td>
+              <td class="goal-date">
+                <time datetime="2018-10-24">06/30/18</time>
+              </td>
+              <td class="text-right">
+                <div class="avatar-group justify-content-end">
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Dianna Smiley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-1.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Ab Hadley"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-2.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Adolfo Hess"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-3.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                  <a
+                    href="index.html#!"
+                    class="avatar avatar-xs"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Daniela Dewitt"
+                  >
+                    <img
+                      src="assets/img/avatars/profiles/avatar-4.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="dropdown">
+                  <a
+                    href="index.html#"
+                    class="dropdown-ellipses dropdown-toggle"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fe fe-more-vertical"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="index.html#!" class="dropdown-item">
+                      Action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Another action
+                    </a>
+                    <a href="index.html#!" class="dropdown-item">
+                      Something else here
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/@shopify/draggable/lib/es5/draggable.bundle.legacy.js"></script>
+    <script src="assets/libs/autosize/dist/autosize.min.js"></script>
+    <script src="assets/libs/chart.js/dist/Chart.min.js"></script>
+    <script src="assets/libs/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="assets/libs/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="assets/libs/highlightjs/highlight.pack.min.js"></script>
+    <script src="assets/libs/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="assets/libs/list.js/dist/list.min.js"></script>
+    <script src="assets/libs/quill/dist/quill.min.js"></script>
+    <script src="assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="assets/libs/chart.js/Chart.extension.js"></script>
+
+    <!-- Map -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>
+
+    <!-- Theme JS -->
+    <script src="assets/js/theme.min.js"></script>
+    <script src="assets/js/dashkit.min.js"></script>
+  </body>
+</html>

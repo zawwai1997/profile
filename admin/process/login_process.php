@@ -17,7 +17,7 @@ if (isset($_POST['btnLogin']) && $_POST['tok'] == $_SESSION['token']) {
     if ($rowCount == 1)
     {   // login success
         $_SESSION['email'] = $email;
-        header("location: ../add-district.php");
+        header("location: ../add-hospital.php");
         exit();
     } else {   
         //login fail

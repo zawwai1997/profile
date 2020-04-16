@@ -54,7 +54,9 @@ $States = $user->get('States');
 <!--            <a href="#" class="list-group-item list-group-item-action bg-light">Add Patient</a>-->
 <!--            <a href="#" class="list-group-item list-group-item-action bg-light">Add District(ခရိုင်)</a>-->
 <!--            <a href="add-township.php" class="list-group-item list-group-item-action bg-light">Add Township(မြို့နယ်)</a>-->
-            <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Positive Patient(လူနာ)</a>
+
+
+<!--            <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Positive Patient(လူနာ)</a>-->
             <a href="add-hospital.php" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
             <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
             <!--            <a href="/detectEmotion" class="list-group-item list-group-item-action bg-light" disabled="true">Emotion</a>-->

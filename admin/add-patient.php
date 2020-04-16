@@ -115,7 +115,7 @@ if (isset($_SESSION['email'])) {
 
                         <div class="form-group col-md-4">
                             <label for="age">Age</label>
-                            <input type="number" name="patient_age" class="form-control" id="age" placeholder="Patient Age" required>
+                            <input type="number" name="patient_age" class="form-control" id="age" placeholder="Patient Age" required min="1" max="100">
                         </div>
 
                         <!--                    For Gender-->
@@ -137,8 +137,8 @@ if (isset($_SESSION['email'])) {
 
                         <!--                    For From Country-->
                         <div class="form-group col-md-4">
-                            <label for="from_country">From Country</label>
-                            <select class="browser-default custom-select select2" name="country_ids[]" multiple>
+                            <label for="from_country">From Country <small class="text-danger txt-sm">(*ခရီးသွား ရာဇ၀င်မရှိပါက None ကိုရွေးချယ်ပေးပါရန်)</small></label>
+                            <select required class="browser-default custom-select select2" name="country_ids[]" multiple>
                                 <?php foreach ($From_Countries as $countries => $country) { ?>
                                     <option value="<?php echo $country['id'] ?>"><?php echo $country['name'] ?></option>
                                 <?php } ?>

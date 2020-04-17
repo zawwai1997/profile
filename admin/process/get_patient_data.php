@@ -57,7 +57,7 @@ foreach ($patientData as $key => $row){
     $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="suffer_type_id">' . $row["suffer"] . '</div>';
     $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="hospital">' . $row["hospital"] . '</div>';
     $sub_array[] = '<button type="button" name="delete" class="btn btn-danger btn-xs delete" id="'.$row["id"].'">Delete</button>';
-    $sub_array[] = '<a href="/profile/admin/transfer.php?id='.$row['id'].'&&token='.$tok.'  " type="button" name="transfer" class="btn btn-info btn-xs transfer" id="'.$row["id"].'">Transfer</a>';
+    $sub_array[] = '<a href="/admin/transfer.php?id='.$row['id'].'&&token='.$tok.'  " type="button" name="transfer" class="btn btn-info btn-xs transfer" id="'.$row["id"].'">Transfer</a>';
     $data[] = $sub_array;
 }
 

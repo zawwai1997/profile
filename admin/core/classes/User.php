@@ -159,14 +159,24 @@ GROUP BY Hospitals.name order by $order ";
 
     public function getRegionJson(){
         $query = "SELECT States.id,States.name as db_name,States.real_name,States.zawgyi,States.unicode,States.lat,States.lon,
-COUNT(case when Patients.suffer_type_id = 1 then 1 else NULL end) as pui ,
-COUNT(case when Patients.suffer_type_id = 2 then 1 else NULL end) as suspected,
-COUNT(case when Patients.suffer_type_id = 3 then 1 else NULL end) as lab_negative,
-COUNT(case when Patients.suffer_type_id = 4 then 1 else NULL end) as lab_pending,
-COUNT(case when Patients.suffer_type_id = 5 then 1 else NULL end) as death,
-COUNT(case when Patients.suffer_type_id = 6 then 1 else NULL end) as recovered,
-COUNT(case when Patients.suffer_type_id = 7 then 1 else NULL end) as lab_confirmed FROM Hospitals, Patients ,Townships ,District ,States 
-WHERE Patients.hospital_id = Hospitals.id AND Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
+COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as pui ,
+COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as suspected,
+COUNT(case when (Patients.suffer_type_id = 3 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_negative,
+COUNT(case when (Patients.suffer_type_id = 4 AND Patients.hospital_id = Hospitals.id)
+      then 1 else NULL end) as lab_pending,
+COUNT(case when (Patients.suffer_type_id = 5 AND Patients.first_hospital_id = Hospitals.id) 
+      then 1 else NULL end) as death,
+COUNT(case when (Patients.suffer_type_id = 6 AND Patients.first_hospital_id = Hospitals.id)
+      then 1 else NULL end) as recovered,
+COUNT(case when (Patients.suffer_type_id = 7 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_confirmed_now,
+COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_confirmed
+ FROM Hospitals, Patients ,Townships ,District ,States 
+WHERE Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
 GROUP BY States.name order by States.id";
 
         $stmt = $this->pdo->prepare($query);
@@ -179,15 +189,24 @@ GROUP BY States.name order by States.id";
     public function getTownshipJson(){
         $query = " SELECT Townships.id,States.name as state,District.name as district,Townships.name as db_name,
 Townships.real_name,Townships.zawgyi,Townships.unicode,Townships.lat,Townships.lon,
-COUNT(case when Patients.suffer_type_id = 1 then 1 else NULL end) as pui ,
-COUNT(case when Patients.suffer_type_id = 2 then 1 else NULL end) as suspected,
-COUNT(case when Patients.suffer_type_id = 3 then 1 else NULL end) as lab_negative,
-COUNT(case when Patients.suffer_type_id = 4 then 1 else NULL end) as lab_pending,
-COUNT(case when Patients.suffer_type_id = 5 then 1 else NULL end) as death,
-COUNT(case when Patients.suffer_type_id = 6 then 1 else NULL end) as recovered,
-COUNT(case when Patients.suffer_type_id = 7 then 1 else NULL end) as lab_confirmed 
+COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as pui ,
+COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as suspected,
+COUNT(case when (Patients.suffer_type_id = 3 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_negative,
+COUNT(case when (Patients.suffer_type_id = 4 AND Patients.hospital_id = Hospitals.id)
+      then 1 else NULL end) as lab_pending,
+COUNT(case when (Patients.suffer_type_id = 5 AND Patients.first_hospital_id = Hospitals.id) 
+      then 1 else NULL end) as death,
+COUNT(case when (Patients.suffer_type_id = 6 AND Patients.first_hospital_id = Hospitals.id)
+      then 1 else NULL end) as recovered,
+COUNT(case when (Patients.suffer_type_id = 7 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_confirmed_now,
+COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_confirmed
 FROM Hospitals, Patients ,Townships ,District ,States 
-WHERE Patients.hospital_id = Hospitals.id AND Hospitals.township_id = Townships.id and 
+WHERE   Hospitals.township_id = Townships.id and 
 Townships.district_id = District.id and District.state_id= States.id 
 GROUP BY Townships.name order by Townships.id";
 
@@ -226,6 +245,7 @@ order by Hospitals.id";
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function getHospitalJsonWithCondition($hospitalName,$stateName){
         $query = "SELECT Hospitals.id,States.name as state,States.real_name as real_name,District.name as district,Townships.name as township, Hospitals.name as db_name, Hospitals.zawgyi,Hospitals.unicode,Hospitals.lon, Hospitals.lat, 
@@ -304,15 +324,24 @@ order by Hospitals.id;";
 
     public function getDistrictJson(){
         $query = "SELECT District.id,District.name as db_name,
-COUNT(case when Patients.suffer_type_id = 1 then 1 else NULL end) as pui , 
-COUNT(case when Patients.suffer_type_id = 2 then 1 else NULL end) as suspected, 
-COUNT(case when Patients.suffer_type_id = 3 then 1 else NULL end) as lab_negative, 
-COUNT(case when Patients.suffer_type_id = 4 then 1 else NULL end) as lab_pending, 
-COUNT(case when Patients.suffer_type_id = 5 then 1 else NULL end) as death, 
-COUNT(case when Patients.suffer_type_id = 6 then 1 else NULL end) as recovered, 
-COUNT(case when Patients.suffer_type_id = 7 then 1 else NULL end) as lab_confirmed 
+COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as pui ,
+COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as suspected,
+COUNT(case when (Patients.suffer_type_id = 3 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_negative,
+COUNT(case when (Patients.suffer_type_id = 4 AND Patients.hospital_id = Hospitals.id)
+      then 1 else NULL end) as lab_pending,
+COUNT(case when (Patients.suffer_type_id = 5 AND Patients.first_hospital_id = Hospitals.id) 
+      then 1 else NULL end) as death,
+COUNT(case when (Patients.suffer_type_id = 6 AND Patients.first_hospital_id = Hospitals.id)
+      then 1 else NULL end) as recovered,
+COUNT(case when (Patients.suffer_type_id = 7 AND Patients.hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_confirmed_now,
+COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Hospitals.id) 
+      then 1 else NULL end) as lab_confirmed
 FROM Hospitals, Patients ,Townships ,District ,States 
-WHERE Patients.hospital_id = Hospitals.id AND Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
+WHERE Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
 GROUP BY District.name 
 order by District.name";
 
@@ -323,7 +352,21 @@ order by District.name";
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getTransferPatients($patient_id){
+        $query = "SELECT Patients.id as p_id,Patients.name,
+(SELECT Hospitals.name FROM Hospitals,Patients WHERE Patients.first_hospital_id = Hospitals.id and Patients.id = p_id) as first_hospital,
+(SELECT Hospitals.id FROM Hospitals,Patients WHERE Patients.first_hospital_id = Hospitals.id and Patients.id = p_id) as first_hospital_id,
+(SELECT Hospitals.name FROM Hospitals,Patients WHERE Patients.hospital_id = Hospitals.id and Patients.id = p_id) as current_hospital,
+(SELECT Hospitals.id FROM Hospitals,Patients WHERE Patients.hospital_id = Hospitals.id and Patients.id = p_id) as current_hospital_id
+FROM Patients
+WHERE Patients.id = $patient_id";
 
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getVisitedPlaces($condition){
         $query = "SELECT Visited_Places.name as visited 
 FROM `Visited_Places`, Townships,District ,States

@@ -73,8 +73,9 @@ foreach ($townshipJson as $key => $value) {
         "die" => $value['death'],
         "recovered" => $value['recovered'],
         "lab_confirmed" => $value['lab_confirmed'],
+        "lab_confirmed_now" => $value['lab_confirmed_now'],
         "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
-            $value['death'] + $value['recovered'] + $value['lab_confirmed']
+            $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
     );
     array_push($townshipAry, $oneTownship);
 }
@@ -94,8 +95,9 @@ foreach ($districtJson as $key => $value) {
         "die" => $value['death'],
         "recovered" => $value['recovered'],
         "lab_confirmed" => $value['lab_confirmed'],
+        "lab_confirmed_now" => $value['lab_confirmed_now'],
         "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
-            $value['death'] + $value['recovered'] + $value['lab_confirmed']
+            $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
     );
     array_push($districtAry, $oneDistrict);
 }
@@ -107,7 +109,7 @@ foreach ($regionJson as $key => $value) {
     $total_puinsus += $value['pui'] + $value['suspected'];
     $total_recovered += $value['recovered'];
     $total_negative += $value['lab_negative'];
-    $total_confirmed += $value['lab_confirmed'];
+    $total_confirmed += $value['lab_confirmed_now'];
 
     if ($maxDivPos < $value['lab_confirmed']) {
         $maxDivPos = $value['lab_confirmed'];
@@ -123,12 +125,14 @@ foreach ($regionJson as $key => $value) {
         "die" => $value['death'],
         "recovered" => $value['recovered'],
         "lab_confirmed" => $value['lab_confirmed'],
+        "lab_confirmed_now" => $value['lab_confirmed_now'],
         "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
-            $value['death'] + $value['recovered'] + $value['lab_confirmed']
+            $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
     );
     array_push($regionAry, $oneRegion);
 }
 
+die(json_encode($regionAry));
 
 ?>
 <!doctype html>

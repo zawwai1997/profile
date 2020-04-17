@@ -66,6 +66,7 @@ if (isset($_SESSION['email'])) {
         <!-- /#sidebar-wrapper -->
         <div class="col-10">
             <h4>All Positive Patients(လူနာများအား ပြန်လည်စစ်ဆေးခြင်း)</h4>
+            <?php flash('success') ?>
             <div class="table-responsive">
                 <br />
 
@@ -80,6 +81,7 @@ if (isset($_SESSION['email'])) {
                         <th>Gender</th>
                         <th>Suffer Type</th>
                         <th>Hospital</th>
+                        <th></th>
                         <th></th>
                     </tr>
                     </thead>
@@ -147,30 +149,14 @@ if (isset($_SESSION['email'])) {
 
                 update_data(patient_id, key, value);
             });
-            $(document).on('click', '.delete', function(){
-                var patient_id = $(this).attr("id");
 
-                if(confirm("Are you sure you want to remove this?"))
-                {
-                    $.ajax({
-                        url:"process/delete_patient_data.php",
-                        method:"POST",
-                        data:{patient_id:patient_id},
-                        success:function(data){
-                            $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
-                            $('#user_data').DataTable().destroy();
-                            fetch_data();
-                        }
-                    });
-                    setInterval(function(){
-                        $('#alert_message').html('');
-                    }, 5000);
-                }
-            });
+
+
 
 
         });
     </script>
+
     <?php
 } else {
     session_destroy();

@@ -95,8 +95,9 @@ if (isset($_SESSION['email'])) {
                     <!--                Hospital Name-->
                     <div class="form-group col-md-6">
                         <label for="hospital_name">Name</label>
-                        <input type="text" name="hospital_name" class="form-control mdb-autocomplete" id="hospital_name"
+                        <input type="text" name="hospital_name" class="form-control" id="hospital_name"
                                placeholder="Hospital Name" required>
+
                     </div>
                     <!--                Township Type-->
                     <div class="form-group col-md-6">

@@ -22,6 +22,10 @@ $townshipJson = $user->getTownshipJson();
 $districtJson = $user->getDistrictJson();
 $regionJson = $user->getRegionJson();
 
+$dailyChart = $user->get('Chart');
+$query = "SELECT id,name,age,gender,suffer_type_id FROM `Patients` WHERE Patients.suffer_type_id = 5 or Patients.suffer_type_id = 7 ";
+$dountChart = $user->getData($query);
+
 $maxDivPos = 0;
 $maxDivSus = 0;
 $maxKyPos = 0;
@@ -132,7 +136,92 @@ foreach ($regionJson as $key => $value) {
     array_push($regionAry, $oneRegion);
 }
 
-die(json_encode($regionAry));
+$dailyCaseAry = array();
+$dateAry = array();
+$dieCaseAry = array();
+$confirmCaseAry = array();
+
+
+
+$deathAgeNumAry = array();
+$deathGenderNumAry = array();
+$confirmAgeNumAry = array();
+$confirmGenderNumAry = array();
+
+$ageLabelAry = ["0-17နှစ်", "18နှစ်-44နှစ်", "45နှစ်-64နှစ်", "65နှစ်-74နှစ်", "75နှစ်အထက်"];
+$genderLabelAry =  ["ကျား","မ"];
+foreach($dailyChart as $key => $value){
+   $date = $value['date'];
+    $date = strtotime($date);
+    $day = intval(date('d',$date));
+    $month=date("F",$date);
+    $month = substr($month,0,3);
+    $result = $month." ".$day;
+    array_push($dateAry,$result);
+    array_push($confirmCaseAry,$value['confirmed']);
+    array_push($dieCaseAry,$value['die']);
+}
+
+$dead = array("date"=>$dateAry,"num"=>$dieCaseAry);
+$positive = array("date"=>$dateAry,"num"=>$confirmCaseAry);
+$dailyResult =array("dead"=>$dead,"positive"=>$positive);
+
+$maleDeath= 0;$femaleDeath = 0; $maleConfirmed = 0 ;$femaleConfirmed = 0;
+$d_gp1 = 0 ; $d_gp2 = 0 ; $d_gp3 = 0; $d_gp4 = 0; $d_gp5 = 0;
+$c_gp1 = 0 ; $c_gp2 = 0 ; $c_gp3 = 0; $c_gp4 = 0; $c_gp5 = 0;
+
+
+foreach($dountChart as $key => $value){
+    if($value['suffer_type_id'] == 5){      //die
+        if     ($value['age'] < 18 ) $d_gp1++;
+        else if($value['age'] < 45 ) $d_gp2++;
+        else if($value['age'] < 65 ) $d_gp3++;
+        else if($value['age'] < 75)  $d_gp4++;
+        else                         $d_gp5++;
+
+        if($value['gender'] == 1)  $maleDeath++; else  $femaleDeath++;
+
+    }else{                      //confirmed
+        if     ($value['age'] < 18 ) $c_gp1++;
+        else if($value['age'] < 45 ) $c_gp2++;
+        else if($value['age'] < 65 ) $c_gp3++;
+        else if($value['age'] < 75)  $c_gp4++;
+        else                         $c_gp5++;
+
+        if($value['gender'] == 1)  $maleConfirmed++; else $femaleConfirmed++;
+
+    }
+}
+
+
+
+$donutResult =array(
+    "dead" => array(
+            "age" => array(
+                    "label" => $ageLabelAry,
+                    "num"   => [$d_gp1,$d_gp2,$d_gp3,$d_gp4,$d_gp5]
+            ),
+            "gender" => array(
+                "label" => $genderLabelAry,
+                "num"   =>[$maleDeath,$femaleDeath]
+            )
+    ),
+    "positive" => array(
+        "age" => array(
+            "label" => $ageLabelAry,
+            "num"   => [$c_gp1,$c_gp2,$c_gp3,$c_gp4,$c_gp5]
+        ),
+        "gender" => array(
+            "label" => $genderLabelAry,
+            "num"   =>[$femaleConfirmed,$femaleConfirmed]
+        )
+    )
+
+);
+
+    die(json_encode($donutResult));
+   // die(json_encode($dailyResult));
+
 
 ?>
 <!doctype html>

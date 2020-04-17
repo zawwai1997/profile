@@ -61,8 +61,9 @@ if(isset($_GET['token']) ==  $_SESSION['token'] and isset($_GET['id'])){
         <!-- /#sidebar-wrapper -->
         <div class="col-10">
             <h4>Transfer Paitents(လူနာများ ဆေးရုံ တစ်ခုမှ အခြားဆေးရုံတစ်ခုသို့ ကူးပြောင်းခြင်း)</h4>
-
             <br>
+            <h2 class="text-danger"><?php echo $transCase[0]['name'] ?></h2>
+
             <br>
             <form method="post" action="process/transfer_update.php">
                 <div class="form-row">

@@ -135,6 +135,7 @@ foreach ($regionJson as $key => $value) {
     );
     array_push($regionAry, $oneRegion);
 }
+die(json_encode($townshipAry));
 
 $dailyCaseAry = array();
 $dateAry = array();

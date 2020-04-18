@@ -5,10 +5,6 @@ require_once 'core/init.php';
 if (isset($_SESSION['email'])) {
     $token = hash("sha256", time());
     $_SESSION['token'] = $token;
-
-    $States = $user->get('States');
-
-
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -20,7 +16,8 @@ if (isset($_SESSION['email'])) {
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Add Patients</title>
+        <title>All Positive Patients(လူနာများအား ပြန်လည်စစ်ဆေးခြင်း)</title>
+
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
               crossorigin="anonymous">
@@ -33,16 +30,18 @@ if (isset($_SESSION['email'])) {
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-        <style>
-            .select2-container .select2-selection--single {
-                height: 34px !important;
-            }
 
-            .select2-container--default .select2-selection--single {
-                border: 1px solid #ccc !important;
-                border-radius: 0px !important;
-            }
-        </style>
+
+        <!--        For Hospitals showing-->
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+        <link rel="stylesheet" href="css/pagination.css">
+        <!--        For Hospitals showing-->
+
 
     </head>
 
@@ -59,34 +58,28 @@ if (isset($_SESSION['email'])) {
         </div>
         <!-- /#sidebar-wrapper -->
         <div class="col-10">
-            <h4>Add District(ခရိုင်များ ပေါင်းထည့်ခြင်း)</h4>
+            <h4>All Positive Patients(လူနာများအား ပြန်လည်စစ်ဆေးခြင်း)</h4>
             <?php flash('success') ?>
-            <br>
-            <br>
-            <form method="post" action="process/add_process.php">
-                <div class="form-row">
+            <div class="table-responsive">
+                <br/>
 
-                    <!--                District Name-->
-                    <div class="form-group col-md-6">
-                        <label for="name">Name</label>
-                        <input type="text" name="district_name" class="form-control" id="name"
-                               placeholder="District Name">
-                    </div>
-
-                    <!--                //Hospital Name-->
-                    <div class="form-group col-md-6">
-                        <label for="state_id">State(ပြည်နယ် / တိုင်းဒေသကြီး) </label>
-                        <select class="browser-default custom-select" name="state_id">
-                            <?php foreach ($States as $state => $sta) { ?>
-                                <option selected value="<?php echo $sta['id'] ?>"><?php echo $sta['name'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
-
-                    <input type="hidden" name="tok" value="<?php echo $token; ?>">
-                    <button type="submit" class="btn btn-primary" name="btnAddDistrict">Add District</button>
-            </form>
+                <br/>
+                <div id="alert_message"></div>
+                <table id="user_data" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Suffer Type</th>
+                        <th>Hospital</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
 
     </div>
@@ -96,21 +89,79 @@ if (isset($_SESSION['email'])) {
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Menu Toggle Script -->
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-
-    <script>
-        $('.select2').select2();
-    </script>
 
     </body>
 
     </html>
+
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+
+            fetch_data();
+
+            function fetch_data() {
+                var dataTable = $('#user_data').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+                    "ajax": {
+                        url: "process/get_patient_data.php",
+                        type: "POST"
+                    }
+                });
+            }
+
+
+            function update_data(patient_id, key, value) {
+                $.ajax({
+                    url: "process/update_patient_data.php",
+                    method: "POST",
+                    data: {patient_id: patient_id, key: key, value: value},
+                    success: function (data) {
+                        $('#alert_message').html('<div class="alert alert-success">' + data + '</div>');
+                        $('#user_data').DataTable().destroy();
+                        fetch_data();
+                    }
+                });
+                setInterval(function () {
+                    $('#alert_message').html('');
+                }, 6000);
+            }
+
+
+            $(document).on('blur', '.update', function () {
+                var patient_id = $(this).data("id");
+                var key = $(this).data("column");
+
+                var value = $(this).text();
+
+                update_data(patient_id, key, value);
+            });
+            $(document).on('click', '.delete', function(){
+                var patient_id = $(this).attr("id");
+
+                if(confirm("Are you sure you want to remove this?"))
+                {
+                    $.ajax({
+                        url:"process/delete_patient_data.php",
+                        method:"POST",
+                        data:{patient_id:patient_id},
+                        success:function(data){
+                            $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
+                            $('#user_data').DataTable().destroy();
+                            fetch_data();
+                        }
+                    });
+                    setInterval(function(){
+                        $('#alert_message').html('');
+                    }, 5000);
+                }
+            });
+
+
+        });
+    </script>
+
     <?php
 } else {
     session_destroy();

@@ -32,18 +32,15 @@ if (isset($_SESSION['email'])) {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 
-
-
         <!--        For Hospitals showing-->
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
         <link rel="stylesheet" href="css/pagination.css">
         <!--        For Hospitals showing-->
-
-
 
 
     </head>
@@ -56,11 +53,7 @@ if (isset($_SESSION['email'])) {
         <div class="bg-light border-right col-2" id="sidebar-wrapper">
 
             <div class="list-group list-group-flush">
-
-<!--                <a href="add-patient.php" class="list-group-item list-group-item-action bg-light">Add Positive Patient(လူနာ)</a>-->
-                <a href="add-hospital.php" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
-                <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Show Positive Patients</a>
+                <?php include("includes/sidebar.php") ?>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -68,9 +61,9 @@ if (isset($_SESSION['email'])) {
             <h4>All Positive Patients(လူနာများအား ပြန်လည်စစ်ဆေးခြင်း)</h4>
             <?php flash('success') ?>
             <div class="table-responsive">
-                <br />
+                <br/>
 
-                <br />
+                <br/>
                 <div id="alert_message"></div>
                 <table id="user_data" class="table table-bordered table-striped">
                     <thead>
@@ -97,51 +90,46 @@ if (isset($_SESSION['email'])) {
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
-
-
     </body>
 
     </html>
 
-    <script type="text/javascript" language="javascript" >
-        $(document).ready(function(){
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
 
             fetch_data();
 
-            function fetch_data()
-            {
+            function fetch_data() {
                 var dataTable = $('#user_data').DataTable({
-                    "processing" : true,
-                    "serverSide" : true,
-                    "order" : [],
-                    "ajax" : {
-                        url:"process/get_patient_data.php",
-                        type:"POST"
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+                    "ajax": {
+                        url: "process/get_patient_data.php",
+                        type: "POST"
                     }
                 });
             }
 
 
-            function update_data(patient_id, key, value)
-            {
+            function update_data(patient_id, key, value) {
                 $.ajax({
-                    url:"process/update_patient_data.php",
-                    method:"POST",
-                    data:{patient_id:patient_id, key:key, value:value},
-                    success:function(data)
-                    {
-                        $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
+                    url: "process/update_patient_data.php",
+                    method: "POST",
+                    data: {patient_id: patient_id, key: key, value: value},
+                    success: function (data) {
+                        $('#alert_message').html('<div class="alert alert-success">' + data + '</div>');
                         $('#user_data').DataTable().destroy();
                         fetch_data();
                     }
                 });
-                setInterval(function(){
+                setInterval(function () {
                     $('#alert_message').html('');
                 }, 6000);
             }
 
 
-            $(document).on('blur', '.update', function(){
+            $(document).on('blur', '.update', function () {
                 var patient_id = $(this).data("id");
                 var key = $(this).data("column");
 
@@ -149,9 +137,6 @@ if (isset($_SESSION['email'])) {
 
                 update_data(patient_id, key, value);
             });
-
-
-
 
 
         });

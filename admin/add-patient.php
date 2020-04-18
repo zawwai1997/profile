@@ -1,6 +1,6 @@
 <?php
 require_once 'core/init.php';
-die("Temporarily Closed!");
+//die("Temporarily Closed!");
 
 if (isset($_SESSION['email'])) {
     $token = hash("sha256", time());
@@ -58,11 +58,7 @@ if (isset($_SESSION['email'])) {
         <div class="bg-light border-right col-2" id="sidebar-wrapper">
 
             <div class="list-group list-group-flush">
-
-                <a href="#" class="list-group-item list-group-item-action bg-light">Add Positive Patient(လူနာ)</a>
-                <a href="add-hospital.php" class="list-group-item list-group-item-action bg-light">Add Hospital(ဆေးရုံ)</a>
-                <a href="all-hospitals.php" class="list-group-item list-group-item-action bg-light">Show All Hospitals</a>
-                <a href="all-positive-patient.php" class="list-group-item list-group-item-action bg-light">Show Positive Patients</a>
+                <?php include("includes/sidebar.php") ?>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -109,13 +105,13 @@ if (isset($_SESSION['email'])) {
                     </div>
 
 
-
                     <div class="form-row col-md-12">
                         <!--For Age-->
 
                         <div class="form-group col-md-4">
                             <label for="age">Age</label>
-                            <input type="number" name="patient_age" class="form-control" id="age" placeholder="Patient Age" required min="1" max="100">
+                            <input type="number" name="patient_age" class="form-control" id="age"
+                                   placeholder="Patient Age" required min="1" max="100">
                         </div>
 
                         <!--                    For Gender-->
@@ -137,8 +133,10 @@ if (isset($_SESSION['email'])) {
 
                         <!--                    For From Country-->
                         <div class="form-group col-md-4">
-                            <label for="from_country">From Country <small class="text-danger txt-sm">(*ခရီးသွား ရာဇ၀င်မရှိပါက None ကိုရွေးချယ်ပေးပါရန်)</small></label>
-                            <select required class="browser-default custom-select select2" name="country_ids[]" multiple>
+                            <label for="from_country">From Country <small class="text-danger txt-sm">(*ခရီးသွား
+                                    ရာဇ၀င်မရှိပါက None ကိုရွေးချယ်ပေးပါရန်)</small></label>
+                            <select required class="browser-default custom-select select2" name="country_ids[]"
+                                    multiple>
                                 <?php foreach ($From_Countries as $countries => $country) { ?>
                                     <option value="<?php echo $country['id'] ?>"><?php echo $country['name'] ?></option>
                                 <?php } ?>

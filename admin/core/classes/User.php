@@ -30,14 +30,14 @@ class User {
         $data = addslashes(strip_tags($data));
 
         return $data;
-    } 
+    }
     public function insert($data)
     {
-        
+
         $query = "INSERT INTO `person`(`generate_code`) VALUES ('$data')";
 
         $stmt = $this->pdo->prepare($query);
-    
+
         $stmt->execute();
 
         return $stmt->rowCount();
@@ -80,7 +80,7 @@ class User {
             foreach ($fields as $keys => $data) {
                 $stmt->bindValue(':' . $keys, $data);
             }
-             $stmt->execute();
+            $stmt->execute();
             return $this->pdo->lastInsertId();
 
         } else {
@@ -177,7 +177,7 @@ COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Ho
       then 1 else NULL end) as lab_confirmed
  FROM Hospitals, Patients ,Townships ,District ,States 
 WHERE Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
-GROUP BY States.name order by States.id";
+GROUP BY States.name order by lab_confirmed DESC ,`death`  DESC , recovered DESC ";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -187,7 +187,8 @@ GROUP BY States.name order by States.id";
     }
 
     public function getTownshipJson(){
-        $query = " SELECT Townships.id,States.name as state,District.name as district,Townships.name as db_name,
+        $query = " SELECT Townships.id,States.name as state,States.id as state_id,
+ District.name as district,Townships.name as db_name,
 Townships.real_name,Townships.zawgyi,Townships.unicode,Townships.lat,Townships.lon,
 COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as pui ,
@@ -208,7 +209,7 @@ COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Ho
 FROM Hospitals, Patients ,Townships ,District ,States 
 WHERE   Hospitals.township_id = Townships.id and 
 Townships.district_id = District.id and District.state_id= States.id 
-GROUP BY Townships.name order by Townships.id";
+GROUP BY Townships.name order by lab_confirmed DESC ,`death`  DESC , recovered DESC";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -323,7 +324,7 @@ order by Hospitals.id;";
 
 
     public function getDistrictJson(){
-        $query = "SELECT District.id,District.name as db_name,
+        $query = "SELECT District.id,District.name as db_name,District.unicode ,States.id as state_id,
 COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as pui ,
 COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
@@ -343,7 +344,7 @@ COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Ho
 FROM Hospitals, Patients ,Townships ,District ,States 
 WHERE Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
 GROUP BY District.name 
-order by District.name";
+order by lab_confirmed DESC ,`death`  DESC , recovered DESC";
 
         $stmt = $this->pdo->prepare($query);
 

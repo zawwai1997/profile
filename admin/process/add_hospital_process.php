@@ -29,7 +29,8 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                     'age' => 0,
                     'gender'=>3,
                     'suffer_type_id'=>1,
-                    'hospital_id'=>$hospital_id
+                    'hospital_id'=>$hospital_id,
+                    'first_hospital_id'=>$hospital_id
                 ));
             }
         }
@@ -40,7 +41,8 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                     'age' => 0,
                     'gender'=>3,
                     'suffer_type_id'=>2,
-                    'hospital_id'=>$hospital_id
+                    'hospital_id'=>$hospital_id,
+                    'first_hospital_id'=>$hospital_id
                 ));
             }
         }
@@ -51,7 +53,8 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                     'age' => 0,
                     'gender'=>3,
                     'suffer_type_id'=>3,
-                    'hospital_id'=>$hospital_id
+                    'hospital_id'=>$hospital_id,
+                    'first_hospital_id'=>$hospital_id
                 ));
             }
         }
@@ -62,7 +65,8 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                     'age' => 0,
                     'gender'=>3,
                     'suffer_type_id'=>4,
-                    'hospital_id'=>$hospital_id
+                    'hospital_id'=>$hospital_id,
+                    'first_hospital_id'=>$hospital_id
                 ));
             }
         }
@@ -87,7 +91,8 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                         'age' => 0,
                         'gender'=>3,
                         'suffer_type_id'=>1,
-                        'hospital_id'=>$hospital_id
+                        'hospital_id'=>$hospital_id,
+                        'first_hospital_id'=>$hospital_id
                     ));
                 }
             }
@@ -98,7 +103,8 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                         'age' => 0,
                         'gender'=>3,
                         'suffer_type_id'=>2,
-                        'hospital_id'=>$hospital_id
+                        'hospital_id'=>$hospital_id,
+                        'first_hospital_id'=>$hospital_id
                     ));
                 }
             }
@@ -109,7 +115,8 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                         'age' => 0,
                         'gender'=>3,
                         'suffer_type_id'=>3,
-                        'hospital_id'=>$hospital_id
+                        'hospital_id'=>$hospital_id,
+                        'first_hospital_id'=>$hospital_id
                     ));
                 }
             }
@@ -120,7 +127,8 @@ if (isset($_POST['btnAddHospital']) && $_POST['tok'] == $_SESSION['token']) {
                         'age' => 0,
                         'gender'=>3,
                         'suffer_type_id'=>4,
-                        'hospital_id'=>$hospital_id
+                        'hospital_id'=>$hospital_id,
+                        'first_hospital_id'=>$hospital_id
                     ));
                 }
             }

@@ -1,22 +1,95 @@
-html {
+/* html {
     scroll-behavior: smooth !important;
 }
-.myanmar-map.mobile {
-    height: calc(100vh - 200px) !important;
+body {
 
+} */
+html {
+    margin: 0px !important;
+    padding: 0px !important;
+    height: calc(100%) !important;
+    /* min-height: 500px; */
+    overflow:visible !important;
 }
+body {
+    margin: 0px !important;
+    padding: 0px !important;
+    height: calc(100%) !important;
+    min-height: 350px;
+    max-height: 1200px;
+    overflow:visible !important;
+}
+#thumbnailicon {
+	position: absolute;
+	top: -500% !important;
+}
+.my-wrapper {
+    margin: 0px !important;
+    padding: 0px !important;
+    height: calc(100% - 70px) !important;
+    min-height: 350px;
+    max-height: 1200px;
+    overflow:visible !important;
+}
+body.body-not-mobile  {
+    min-height: 600px !important;
+}
+body.body-not-mobile .my-wrapper {
+    min-height: 600px !important;
+}
+.my-wrapper.not-mobile {
+    height: calc(100% - 100px) !important;
+}
+body.body-mobile .total-info-desktop{
+    display: none !important;
+}
+body .total-info-desktop{
+    display: block !important;
+}
+body.body-mobile .total-info-mobile{
+    display: block !important;
+}
+body .total-info-mobile{
+    display: none !important;
+}
+/* .navbar {
+    position: absolute;
+} */
+.myanmar-map.mobile {
+    height: 100%;
+    /* height: calc(100vh - 200px) !important; */
+    /* height: calc(100vh - 78px) !important; */
+    /* height: calc(var(--vh, 1vh) * 100) !important;    */
+}
+.myanmar-map.iphone {
+    /* height: calc(100vh - 130px); */
+    /* height: calc(100vh - 200px) !important; */
+    /* height: calc(100vh - 190px) !important; */
+    /* height: calc(var(--vh, 1vh) * 100) !important;    */
+}
+/* .wrapper{
+    height: 100% !important;
+    overflow: visible !important;
+} */
 .myanmar-map {
-    height: 550px;
+    /* min-height: 550px; */
 }
 .myanmar-map.tablet {
-    height: 630px;
+    /* height: 630px; */
 }
-#map-container {
-    margin-top: 30px;
+.not-mobile #map-container {
+    /* margin-top: 30px; */
+    /* height: 630px !important; */
+}
+.map-section {
+    height:100%;
+    /* overflow: hidden; */
+    /* height: 100% !important; */
 }
 #map-container.mobile {
-    margin-top: 0px !important;
+    /* margin-top: 0px !important; */
 }
+
 .navbar.change {
     padding: 12px !important;
 }
@@ -61,6 +134,14 @@ html {
     border-color:#ffcc66 !important;
     background-color:#ffcc66 !important
 }
+.custom-control-input:checked~.custom-control-label:after {
+    border-color:#fff !important;
+    background-color:#fff !important
+}
+.toggle-grey .custom-control-input:checked~.custom-control-label:before {
+    border-color:#000 !important;
+    background-color:#000 !important
+}
 .custom-control-label {
     font-size: 16px !important;
 }
@@ -87,7 +168,7 @@ html {
 .cls-1,.cls-10,.cls-11,.cls-12,.cls-13,.cls-14,.cls-15,.cls-16,.cls-17,.cls-2,.cls-3,.cls-4,.cls-5,.cls-6,.cls-7,.cls-8,.cls-9{stroke:#fff;stroke-miterlimit:10;stroke-width:0.25px;}
 .cls-1:hover,.cls-10:hover,.cls-11:hover,.cls-12:hover,.cls-13:hover,.cls-14:hover,.cls-15:hover,.cls-16:hover,.cls-17:hover,.cls-2:hover,.cls-3:hover,.cls-4:hover,.cls-5:hover,.cls-6:hover,.cls-7:hover,.cls-8:hover,.cls-9:hover {fill: #b3b3b3 !important;}
 * {
-    touch-action: manipulation;
+	touch-action: manipulation;
 }
 #yangon-gp:hover .cls-7 {
     fill: #b3b3b3 !important;
@@ -99,6 +180,10 @@ html {
 #div-yangon:hover .cls-7 {
     fill: #b3b3b3 !important;
 }
+#div-yangon * {
+    fill: #1a0033;
+}
+
 #div-mon:hover .cls-10 {
     fill: #b3b3b3 !important;
 }
@@ -128,6 +213,9 @@ html {
 #ky-eyangon:hover .cls-7 {
     fill: #b3b3b3 !important;
 }
+#ky-eyangon * {
+    fill: #1a0033;
+}
 #ky-kyaukpyu:hover .cls-5 {
     fill: #b3b3b3 !important;
 }
@@ -138,10 +226,10 @@ html {
     fill: #b3b3b3 !important;
 }
 .clickedShwe {
-    fill: #262626 !important;
+    fill: #99ccff !important;
 }
 .clickedShwe * {
-    fill: #262626 !important;
+    fill: #99ccff !important;
 }
 .hoveredShwe {
     fill: #b3b3b3 !important;
@@ -168,155 +256,156 @@ html {
 .cls-17{fill:#e6e6e6;}
 
 .fce9e8 {
-    fill: #ea6861;
+    fill: #fceae9;
 }
 .fce9e8 * {
-    fill: #ea6861;
+    fill: #fceae9;
 }
 
 .f9d4d2 {
-    fill: #e8524a;
+    fill: #f6bfbc;
 }
 .f9d4d2 * {
-    fill: #e8524a;
+    fill: #f6bfbc;
 }
 
 .f6bebb {
-    fill: #e53d34;
+    fill: #f0948f;
 }
 .f6bebb * {
-    fill: #e53d34;
+    fill: #f0948f;
 }
 .f3a9a5 {
-    fill: #e2271d;
+    fill: #ea6962;
 }
 .f3a9a5 * {
-    fill: #e2271d;
+    fill: #ea6962;
 }
 .f0938e {
-    fill: #cb231a;
+    fill: #e33e35;
 }
 .f0938e * {
-    fill: #cb231a;
+    fill: #e33e35;
 }
 .ed7d78 {
-    fill: #b51f17;
+    fill: #ca241c;
 }
 .ed7d78 * {
-    fill: #b51f17;
+    fill: #ca241c;
 }
 
 .ea6861 {
-    fill: #9e1b15;
+    fill: #9d1c15;
 }
 .ea6861 * {
-    fill: #9e1b15;
+    fill: #9d1c15;
 }
 
 .e8524a {
-    fill: #871712;
+    fill: #70140f;
 }
 .e8524a * {
-    fill: #871712;
+    fill: #70140f;
 }
 
 .e74c44 {
-    fill: #71140f;
+    fill: #430c09;
 }
 .e74c44 * {
-    fill: #71140f;
+    fill: #430c09;
 }
 
 .e53d34 {
-    fill: #5a100c;
+    fill: #160403;
 }
 .e53d34 * {
-    fill: #5a100c;
+    fill: #160403;
 }
 
 
 
 .ffd480 {
-    fill: #ffd480;
+    fill: #fff6e6;
 }
 .ffd480 * {
-    fill: #ffd480;
+    fill: #fff6e6;
 }
 
 .ffcc66 {
-    fill: #ffcc66;
+    fill: #ffe4b3;
 }
 .ffcc66 * {
-    fill: #ffcc66;
+    fill: #ffe4b3;
 }
 
 .ffc34d {
-    fill: #ffc34d;
+    fill: #ffd280;
 }
 .ffc34d * {
-    fill: #ffc34d;
+    fill: #ffd280;
 }
 
 .ffbb33 {
-    fill: #ffbb33;
+    fill: #ffc14d;
 }
 .ffbb33 * {
-    fill: #ffbb33;
+    fill: #ffc14d;
 }
 
 .ffb31a {
-    fill: #ffb31a;
+    fill: #ffaf1a;
 }
 .ffb31a * {
-    fill: #ffb31a;
+    fill: #ffaf1a;
 }
 
 .ffaa00 {
-    fill: #ffaa00;
+    fill: #e69500;
 }
 .ffaa00 * {
-    fill: #ffaa00;
+    fill: #e69500;
 }
 
 .e69900 {
-    fill: #e69900;
+    fill: #b37400;
 }
 .e69900 * {
-    fill: #e69900;
+    fill: #b37400;
 }
 
 .cc8800 {
-    fill: #cc8800;
+    fill: #805300;
 }
 .cc8800 * {
-    fill: #cc8800;
+    fill: #805300;
 }
 
 .b37700 {
-    fill: #b37700;
+    fill: #4d3200;
 }
 .b37700 * {
-    fill: #b37700;
+    fill: #4d3200;
 }
 
 .cc96600 {
-    fill: #996600;
+    fill: #1a1100;
 }
 .cc96600 * {
-    fill: #996600;
+    fill: #1a1100;
 }
 
 .displayNone {
     display: none;
 }
 .tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-box {
-    background: #fff;
+	background: #fff;
     border: 0;
-    border-radius: 5px;
-    box-shadow: 1px 1px 5px 0px #cccccc;
+	border-radius: 5px;
+	box-shadow: 1px 1px 5px 0px #cccccc;
     padding: 5px;
     width: 230px;
-    height: 180px;
+    height: 200px;
+    overflow: hidden;
 }
 .tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-box .badge {
     margin-left: 5px !important;
@@ -329,17 +418,18 @@ html {
 }
 
 .tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-content {
-    color: #000;
-    padding: 8px;
+	color: #000;
+	padding: 8px;
+    overflow: hidden;
 }
 .tooltipster-content p:first-child {
-    padding-bottom: 10px;
-    padding-top: 3px;
-    white-space: nowrap;
-    /* width: 50px; */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* border: 1px solid #000000; */
+  padding-bottom: 10px;
+  padding-top: 3px;
+  white-space: nowrap;
+  /* width: 50px; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* border: 1px solid #000000; */
 }
 
 #resultBox.closed {
@@ -350,12 +440,12 @@ html {
 }
 
 @font-face {font-family: "SF Pro Display Regular";
-    src: url("0b51833ff62e4af8acb5fd3e2bf59e97.eot"); /* IE9*/
-    src: url("0b51833ff62e4af8acb5fd3e2bf59e97.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("0b51833ff62e4af8acb5fd3e2bf59e97.woff2") format("woff2"), /* chrome、firefox */
-    url("0b51833ff62e4af8acb5fd3e2bf59e97.woff") format("woff"), /* chrome、firefox */
-    url("0b51833ff62e4af8acb5fd3e2bf59e97.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url("0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Display Regular") format("svg"); /* iOS 4.1- */
+  src: url("0b51833ff62e4af8acb5fd3e2bf59e97.eot"); /* IE9*/
+  src: url("0b51833ff62e4af8acb5fd3e2bf59e97.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("0b51833ff62e4af8acb5fd3e2bf59e97.woff2") format("woff2"), /* chrome、firefox */
+  url("0b51833ff62e4af8acb5fd3e2bf59e97.woff") format("woff"), /* chrome、firefox */
+  url("0b51833ff62e4af8acb5fd3e2bf59e97.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url("0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Display Regular") format("svg"); /* iOS 4.1- */
 }
 
 .radios-to-slider {
@@ -436,3 +526,96 @@ button:focus {
     transform:translate(-50%,calc(-50% + 40px));
     width: 200px;
 }
+
+/* th, td {
+    padding: 5px 5px 5px 5px !important;
+}
+
+table {
+    display:block;
+    height:300px;
+    overflow:auto;
+} */
+
+
+/* .dtHorizontalVerticalExampleWrapper {
+    max-width: 600px;
+    margin: 0 auto;
+} */
+.table-responsive th, td {
+    white-space: nowrap;
+}
+.table-responsive {
+    padding: 0px 20px 20px 20px;
+}
+.dataTables_wrapper {
+    overflow: hidden;
+    font-size: 15px;
+}
+.dataTables_wrapper .row:last-child {
+    display: none;
+}
+.dataTables_filter label#text {
+    display: none !important;
+}
+.dataTables_filter {
+    text-align: right !important;
+}
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+    bottom: .5em;
+}
+
+table th::before {
+    display: none !important;
+}
+table th::after {
+    display: none !important;
+}
+
+#trafficChartLegend {
+    text-align: center;
+}
+.custom-chart-label-circle {
+    width: 10px !important;
+    height: 10px !important;
+    background: #000 !important;
+
+}
+
+@media only screen and (max-width: 600px) {
+  .dataTables_filter input {
+    /* visibility: hidden; */
+  }
+  #tableChangeMode {
+      display: none;
+  }
+  #tableChangeModeMobile {
+      display: block !important;
+  }
+}
+
+#tableChangeModeMobile::after {
+    display: none;
+}
+
+.dataTables_scrollHead .dataTables_scrollHeadInner {
+	width: 100% !important;
+}
+.dataTables_scrollHead .dataTables_scrollHeadInner table{
+	width: 100% !important;
+}
+/*
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+} */

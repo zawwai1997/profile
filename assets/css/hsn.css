@@ -1,0 +1,53 @@
+.sp-only{
+    display: block;
+    
+}
+.right-txt {
+    text-align: right;
+}
+
+.su-logo{
+    margin-right: 2rem !important;
+}
+
+@media (max-width: 750px) {
+    
+    .sp-only{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .sp-only div{
+        padding: 0px 5px;
+    }
+    .su-logo{
+        margin-right: 0rem !important;
+    }
+    .right-txt {
+        text-align: left;
+    }    
+    .para-container{
+        width: 85%;
+
+    }
+   
+  }
+
+  @media (max-width: 360px) {
+    .su-logo{
+        margin-right: 0rem !important;
+    }
+    .para-container{
+        width: 85%;
+
+    }
+    .para-container h3{
+        font-size: 16px;
+    }
+    .para-container p{
+        font-size: 12px;
+    }
+
+  }
+  

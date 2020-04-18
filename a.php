@@ -158,7 +158,7 @@ foreach ($regionJson as $key => $value) {
     <script src="assets/js/svg-pan-zoom.js"></script>
     <script src="assets/js/hammer.js"></script>
 
-    <title>Landkit</title>
+    <title>Corona | MM</title>
 </head>
 <body>
 <div id="page-loader" style="position:fixed;z-index:20;top:0;left:0;width: 100%; height: 100%;background: #fff;">
@@ -212,6 +212,7 @@ foreach ($regionJson as $key => $value) {
                     </a>
                 </li>
             </ul>
+
 
         </div>
 
@@ -474,7 +475,7 @@ foreach ($regionJson as $key => $value) {
                     </p>
                 </div>
 
-                <div style="transform: rotate(-90deg);position:absolute; right:-35px; bottom:220px;color:gray;height:25px;"
+                <div style="transform: rotate(-90deg);position:absolute; right:-36px; bottom:220px;color:gray"
                      class="custom-control custom-switch" bis_skin_checked="1">
 
                     <input type="checkbox" class="custom-control-input" id="toggle-switch">
@@ -1772,7 +1773,7 @@ foreach ($regionJson as $key => $value) {
                                      points="75.44 463.91 75.15 462.74 74.86 463.03 75.15 463.32 75.15 463.91 74.86 464.21 74.56 464.21 74.27 464.8 74.86 465.68 75.15 465.68 75.74 465.38 75.44 464.8 75.74 464.5 75.44 463.91"/>
                             <polygon title="" class="tooltipster cls-5"
                                      points="72.8 457.73 72.8 457.14 72.8 456.56 72.8 455.67 72.8 455.38 73.09 455.38 72.8 455.08 72.8 454.79 72.8 454.2 72.8 453.91 72.8 453.61 72.8 453.02 72.5 452.73 72.21 452.73 71.62 453.02 71.33 453.32 71.03 453.32 70.44 453.32 69.56 453.32 69.27 453.02 68.68 453.02 68.09 452.73 67.21 451.85 67.21 451.26 66.91 450.96 66.62 451.26 66.03 452.14 65.44 452.44 65.15 452.44 64.26 452.44 63.67 453.02 63.38 453.02 63.09 453.02 61.91 453.02 60.73 453.02 60.73 453.32 61.62 455.08 62.2 455.97 62.5 456.26 62.5 456.56 62.5 456.85 63.38 457.73 63.67 458.03 63.97 458.32 64.26 458.32 64.85 458.91 66.03 459.79 66.32 460.09 67.5 461.26 67.79 461.85 68.38 461.85 68.68 461.85 69.27 462.44 70.15 462.44 70.44 462.74 71.33 462.44 71.62 462.44 71.91 462.15 72.21 461.56 73.09 460.09 73.38 458.91 73.09 458.32 72.8 457.73"/>
-                            <polygon title="" class="tooltipster cls-5"
+                            <polygonတ်ပြီtitle="" class="tooltipster cls-5"
                                      points="87.51 430.66 86.62 430.95 86.92 431.25 87.51 430.66"/>
                             <polygon title="" class="tooltipster cls-5"
                                      points="84.27 456.85 83.98 456.56 83.68 456.26 83.98 456.26 83.68 455.38 83.39 454.79 83.09 455.08 82.5 455.08 81.92 455.67 82.21 456.26 82.21 456.56 82.21 456.85 82.8 457.14 83.09 457.44 83.39 457.44 84.56 457.14 84.27 456.85"/>
@@ -2165,7 +2166,7 @@ foreach ($regionJson as $key => $value) {
                                 </div>
                             </div>
                         </div>
-
+                        
 
 
 
@@ -2176,6 +2177,7 @@ foreach ($regionJson as $key => $value) {
         </div> <!-- / .row -->
     </div> <!-- / .container -->
 </section>
+
 
 <!-- JAVASCRIPT
     ================================================== -->
@@ -2657,7 +2659,7 @@ foreach ($regionJson as $key => $value) {
                             'data':
                                 {
                                     'ts': ['mindat', 'kanpetlet', 'madupi', 'paletwa']
-                                    },
+                                },
                         },
                     ],
             },
@@ -3382,41 +3384,13 @@ foreach ($regionJson as $key => $value) {
         ]
 
 
-        //var divisions_mm = <?php //echo json_encode($stateData); ?>//;
-        //
-        //var khayines_mm = <?php //echo json_encode($districtData); ?>//;
-        //
-        //var townships_mm = <?php //echo json_encode($townshipData); ?>//;
+        var divisions_mm = <?php echo json_encode($stateData); ?>;
 
-        var divisions_mm = [
-            [
-                "div-ayeyarwaddy",
-                "Ayeyarwaddy Region",
-                "ဧရာဝတီ တိုင်းဒေသကြီး",
-                "ဧရာဝတီ တိုင္းေဒသႀကီး"
-            ]
+        var khayines_mm = <?php echo json_encode($districtData); ?>;
 
-        ];
+        var townships_mm = <?php echo json_encode($townshipData); ?>;
 
-        var khayines_mm = [
-            [
-                "ky-gangaw",
-                "Gangaw",
-                "ဂန့်ဂေါ",
-                "ဂန႔္ေဂါ"
-            ]
 
-        ];
-
-        var townships_mm = [
-            [
-                "yangon-gp",
-                "Yangon",
-                "ရန်ကုန်",
-                "ဂန႔္ေဂါ"
-            ]
-
-        ];
 
         var covids = {
             "positives": [

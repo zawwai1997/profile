@@ -18,6 +18,7 @@ if (isset($_POST['btnAddPatient']) && $_POST['tok'] == $_SESSION['token']) {
         'gender' => $gender,
         'suffer_type_id' => $suffer_type,
         'hospital_id' => $hospital_name,
+        'first_hospital_id' => $hospital_name,
     ));
 
     if ($result) {

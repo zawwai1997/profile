@@ -118,8 +118,7 @@ foreach ($regionJson as $key => $value) {
     $total_puinsus += $value['pui'] + $value['suspected'];
     $total_recovered += $value['recovered'];
     $total_negative += $value['lab_negative'];
-    $total_confirmed += $value['lab_confirmed_now'];
-
+    $total_confirmed += $value['lab_confirmed_now'] + $value['death'] + $value['recovered'];
 
 
 

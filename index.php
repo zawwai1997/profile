@@ -23,7 +23,7 @@ $districtJson = $user->getDistrictJson();
 $regionJson = $user->getRegionJson();
 
 $dailyChart = $user->get('Chart');
-$query = "SELECT id,name,age,gender,suffer_type_id FROM `Patients` WHERE Patients.suffer_type_id = 5 or Patients.suffer_type_id = 7 ";
+$query = "SELECT id,name,age,gender,suffer_type_id FROM `Patients` WHERE (Patients.suffer_type_id = 5 or Patients.suffer_type_id = 6 or Patients.suffer_type_id = 7) ";
 $dountChart = $user->getData($query);
 
 $maxDivPos = 0;
@@ -189,6 +189,7 @@ $c_gp1 = 0 ; $c_gp2 = 0 ; $c_gp3 = 0; $c_gp4 = 0; $c_gp5 = 0;
 
 
 foreach($dountChart as $key => $value){
+    if($value['gender'] == 1)  $maleConfirmed++; else $femaleConfirmed++;
     if($value['suffer_type_id'] == 5){      //die
         if     ($value['age'] < 18 ) $d_gp1++;
         else if($value['age'] < 45 ) $d_gp2++;
@@ -196,16 +197,12 @@ foreach($dountChart as $key => $value){
         else if($value['age'] < 75)  $d_gp4++;
         else                         $d_gp5++;
 
-        if($value['gender'] == 1)  $maleDeath++; else  $femaleDeath++;
-
     }else{                      //confirmed
         if     ($value['age'] < 18 ) $c_gp1++;
         else if($value['age'] < 45 ) $c_gp2++;
         else if($value['age'] < 65 ) $c_gp3++;
         else if($value['age'] < 75)  $c_gp4++;
         else                         $c_gp5++;
-
-        if($value['gender'] == 1)  $maleConfirmed++; else $femaleConfirmed++;
 
     }
 }
@@ -230,13 +227,13 @@ $donutResult =array(
         ),
         "gender" => array(
             "label" => $genderLabelAry,
-            "num"   =>[$femaleConfirmed,$femaleConfirmed]
+            "num"   =>[$maleConfirmed,$femaleConfirmed]
         )
     )
 
 );
 
-// die(json_encode($donutResult));
+ //die(json_encode($donutResult));
 // die(json_encode($dailyResult));
 
 //echo "var maxDivPos = ".$maxDivPos."<br>";

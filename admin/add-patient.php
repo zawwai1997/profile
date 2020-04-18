@@ -1,6 +1,6 @@
 <?php
 require_once 'core/init.php';
-//die("Temporarily Closed!");
+die("Temporarily Closed!");
 
 if (isset($_SESSION['email'])) {
     $token = hash("sha256", time());

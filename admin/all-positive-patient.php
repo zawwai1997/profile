@@ -137,6 +137,26 @@ if (isset($_SESSION['email'])) {
 
                 update_data(patient_id, key, value);
             });
+            $(document).on('click', '.delete', function(){
+                var patient_id = $(this).attr("id");
+
+                if(confirm("Are you sure you want to remove this?"))
+                {
+                    $.ajax({
+                        url:"process/delete_patient_data.php",
+                        method:"POST",
+                        data:{patient_id:patient_id},
+                        success:function(data){
+                            $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
+                            $('#user_data').DataTable().destroy();
+                            fetch_data();
+                        }
+                    });
+                    setInterval(function(){
+                        $('#alert_message').html('');
+                    }, 5000);
+                }
+            });
 
 
         });

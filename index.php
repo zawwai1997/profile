@@ -5448,7 +5448,7 @@ $total_puinsus = 1754;
 
                 }
                 if(mode=='div') {
-                    alert("dd");
+                    
                     $('#z_puinsus').show();
                     for(i in divisions_mm) {
                         if(divisions_mm[i][0].substr(4) == info[0]) {

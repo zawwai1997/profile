@@ -246,6 +246,12 @@ $donutResult =array(
 //echo "var maxKySus = ".$maxKySus."<br>";
 //echo "var maxTsSus = ".$maxTsSus."<br>";
 //die();
+
+
+
+
+$total_negative = 3786;
+$total_puinsus = 1754;
 ?>
 <!doctype html>
 <html lang="en">
@@ -1162,6 +1168,7 @@ $donutResult =array(
 
 
         function myfunction() {
+
             var eventsHandler;
 
             eventsHandler = {
@@ -5419,6 +5426,7 @@ $donutResult =array(
             });
 
             $(document).on('click','.search-filter',function(){
+
                 $('#searchBox').removeClass('has');
                 $('#resultBox').removeClass('closed');
                 $('#searchInput').val($(this).find('span').html());
@@ -5440,6 +5448,8 @@ $donutResult =array(
 
                 }
                 if(mode=='div') {
+                    alert("dd");
+                    $('#z_puinsus').show();
                     for(i in divisions_mm) {
                         if(divisions_mm[i][0].substr(4) == info[0]) {
                             info[0] = divisions_mm[i][2];
@@ -5651,7 +5661,7 @@ $donutResult =array(
                                             '0' +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
                                         'စောင့်ကြည့်/သံသယ' +
                                         '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             '0' +
@@ -5721,7 +5731,7 @@ $donutResult =array(
                                             info[7] +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
                                         'စောင့်ကြည့်/သံသယ' +
                                         '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             info[1] +
@@ -5783,7 +5793,7 @@ $donutResult =array(
                                             '0' +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
                                         'စောင့်ကြည့်/သံသယ' +
                                         '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             '0' +
@@ -5853,7 +5863,7 @@ $donutResult =array(
                                             info[7] +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
                                         'စောင့်ကြည့်/သံသယ' +
                                         '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             info[1] +
@@ -5912,7 +5922,7 @@ $donutResult =array(
                                         info[7] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus"> ' +
                                     'စောင့်ကြည့်/သံသယ' +
                                     '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
@@ -5967,7 +5977,7 @@ $donutResult =array(
                                         info[7] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
                                     'စောင့်ကြည့်/သံသယ' +
                                     '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
@@ -6024,7 +6034,7 @@ $donutResult =array(
                                         info[7] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
                                     'စောင့်ကြည့်/သံသယ' +
                                     '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
@@ -6079,7 +6089,7 @@ $donutResult =array(
                                         info[7] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
                                     'စောင့်ကြည့်/သံသယ' +
                                     '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
@@ -6633,6 +6643,7 @@ $donutResult =array(
         });
         app.controller("svgMapCtrl", function ($scope) {
             myfunction();
+
             $('#detailMap').attr('href','#!detail');
         });
 

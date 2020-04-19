@@ -189,7 +189,16 @@ $c_gp1 = 0 ; $c_gp2 = 0 ; $c_gp3 = 0; $c_gp4 = 0; $c_gp5 = 0;
 
 
 foreach($dountChart as $key => $value){
+
     if($value['gender'] == 1)  $maleConfirmed++; else $femaleConfirmed++;
+
+    if     ($value['age'] < 18 ) $c_gp1++;
+    else if($value['age'] < 45 ) $c_gp2++;
+    else if($value['age'] < 65 ) $c_gp3++;
+    else if($value['age'] < 75)  $c_gp4++;
+    else                         $c_gp5++;
+
+
     if($value['suffer_type_id'] == 5){      //die
         if     ($value['age'] < 18 ) $d_gp1++;
         else if($value['age'] < 45 ) $d_gp2++;
@@ -197,14 +206,12 @@ foreach($dountChart as $key => $value){
         else if($value['age'] < 75)  $d_gp4++;
         else                         $d_gp5++;
 
-    }else{                      //confirmed
-        if     ($value['age'] < 18 ) $c_gp1++;
-        else if($value['age'] < 45 ) $c_gp2++;
-        else if($value['age'] < 65 ) $c_gp3++;
-        else if($value['age'] < 75)  $c_gp4++;
-        else                         $c_gp5++;
+        if($value['gender'] == 1)  $maleDeath++; else  $femaleDeath++;
 
     }
+
+
+
 }
 
 
@@ -233,7 +240,7 @@ $donutResult =array(
 
 );
 
- //die(json_encode($donutResult));
+// die(json_encode($donutResult));
 // die(json_encode($dailyResult));
 
 //echo "var maxDivPos = ".$maxDivPos."<br>";
@@ -469,56 +476,65 @@ $donutResult =array(
       </div>
     <!-- NAVBAR
     ================================================== -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-		<div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+          <div class="container">
 
-			<!-- Brand -->
-			<a class="navbar-brand" href="index.php">
-				<img src="assets/img/brand.png" class="navbar-brand-img" alt="..." style="width:100px;">
-			</a>
+              <!-- Brand -->
+              <a class="navbar-brand logo-icon-btn">
+                  <img src="assets/img/corona-mm-logo.png" class="navbar-brand-img" alt="..." style="width:100px;">
+              </a>
 
-			<!-- Toggler -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+              <!-- Toggler -->
+              <button class="navbar-toggler about-link-btn" type="button" data-toggle="collapse" data-target=""
+                      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class=""><!--?xml version="1.0" encoding="UTF-8"?-->
+                        <svg width="35px" height="35px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
-			<!-- Collapse -->
-			<div class="collapse navbar-collapse" id="navbarCollapse">
+                            <title>Stockholm-icons / Communication / Chat-error</title>
+                            <desc>Created with Sketch.</desc>
+                            <g id="Stockholm-icons-/-Communication-/-Chat-error" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                <path d="M2,11.8650466 L2,6 C2,4.34314575 3.34314575,3 5,3 L19,3 C20.6568542,3 22,4.34314575 22,6 L22,15 C22,15.0032706 21.9999948,15.0065399 21.9999843,15.009808 L22.0249378,15 L22.0249378,19.5857864 C22.0249378,20.1380712 21.5772226,20.5857864 21.0249378,20.5857864 C20.7597213,20.5857864 20.5053674,20.4804296 20.317831,20.2928932 L18.0249378,18 L12.9835977,18 C12.7263047,14.0909841 9.47412135,11 5.5,11 C4.23590829,11 3.04485894,11.3127315 2,11.8650466 Z M6,7 C5.44771525,7 5,7.44771525 5,8 C5,8.55228475 5.44771525,9 6,9 L15,9 C15.5522847,9 16,8.55228475 16,8 C16,7.44771525 15.5522847,7 15,7 L6,7 Z" id="Combined-Shape" fill="#ff6666"></path>
+                                <path d="M6,14 C6.55228475,14 7,14.4477153 7,15 L7,17 C7,17.5522847 6.55228475,18 6,18 C5.44771525,18 5,17.5522847 5,17 L5,15 C5,14.4477153 5.44771525,14 6,14 Z M6,21 C5.44771525,21 5,20.5522847 5,20 C5,19.4477153 5.44771525,19 6,19 C6.55228475,19 7,19.4477153 7,20 C7,20.5522847 6.55228475,21 6,21 Z" id="Combined-Shape" fill="#ff6666" opacity="0.3"></path>
+                            </g>
+                        </svg>
+                    </span>
+              </button>
 
-				<!-- Toggler -->
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-						aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-					<i class="fe fe-x"></i>
-				</button>
+              <!-- Collapse -->
+              <div class="collapse navbar-collapse" id="navbarCollapse">
 
-				<!-- Navigation -->
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle mb-0" href="#" id="navbarLandings" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">
-							About
-						</a>
+                  <!-- Toggler -->
+                  <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                      <i class="fe fe-x"></i>
+                  </button> -->
 
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle mb-0" href="#" id="navbarPages" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">
-							Contact Us
-						</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle mb-0" href="#" id="navbarDocumentation" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">
-							API Documentation
-						</a>
-					</li>
-				</ul>
+                  <!-- Navigation -->
+                  <ul class="navbar-nav ml-auto">
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle mb-0 about-link-btn" id="navbarLandings" data-toggle="dropdown"
+                             aria-haspopup="true" aria-expanded="false">
+                           <span class="">
+                               <svg width="35px" height="35px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                   <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+                                   <title>Stockholm-icons / Communication / Chat-error</title>
+                                   <desc>Created with Sketch.</desc>
+                                   <g id="Stockholm-icons-/-Communication-/-Chat-error" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                       <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                       <path d="M2,11.8650466 L2,6 C2,4.34314575 3.34314575,3 5,3 L19,3 C20.6568542,3 22,4.34314575 22,6 L22,15 C22,15.0032706 21.9999948,15.0065399 21.9999843,15.009808 L22.0249378,15 L22.0249378,19.5857864 C22.0249378,20.1380712 21.5772226,20.5857864 21.0249378,20.5857864 C20.7597213,20.5857864 20.5053674,20.4804296 20.317831,20.2928932 L18.0249378,18 L12.9835977,18 C12.7263047,14.0909841 9.47412135,11 5.5,11 C4.23590829,11 3.04485894,11.3127315 2,11.8650466 Z M6,7 C5.44771525,7 5,7.44771525 5,8 C5,8.55228475 5.44771525,9 6,9 L15,9 C15.5522847,9 16,8.55228475 16,8 C16,7.44771525 15.5522847,7 15,7 L6,7 Z" id="Combined-Shape" fill="#ff6666"></path>
+                                       <path d="M6,14 C6.55228475,14 7,14.4477153 7,15 L7,17 C7,17.5522847 6.55228475,18 6,18 C5.44771525,18 5,17.5522847 5,17 L5,15 C5,14.4477153 5.44771525,14 6,14 Z M6,21 C5.44771525,21 5,20.5522847 5,20 C5,19.4477153 5.44771525,19 6,19 C6.55228475,19 7,19.4477153 7,20 C7,20.5522847 6.55228475,21 6,21 Z" id="Combined-Shape" fill="#ff6666" opacity="0.3"></path>
+                                   </g>
+                               </svg>
+                           </span>
+                          </a>
+                      </li>
+                  </ul>
 
-			</div>
+              </div>
 
-		</div>
-	</nav>
+          </div>
+      </nav>
 
     <div class="my-wrapper">
         <section class="map-section">
@@ -1058,68 +1074,68 @@ $donutResult =array(
 
 
 
-    <footer class="py-6 py-md-8 border-bottom ">
-      <div class="container">
-        <div class="row" >
-          <div class="col-12 col-sm-12 col-md-6 mb-4 mb-md-0">
-            <!-- Brand -->
-            <a class="navbar-brand" href="index.html">
-              <img src="assets/img/brand.png" class="navbar-brand-img" alt="..." style="width: 100px">
-            </a>
-            <br>
-            <div class="sp-only">
-              <div class="logo-conatiner">
-                <a  href="#">
-                  <img src="assets/img/mohs.jpg" class="my-4" alt="..." style="width: 100px; height: 100px;">
-                </a>
+      <footer class="py-6 py-md-8 border-bottom ">
+          <div class="container">
+              <div class="row" >
+                  <div class="col-12 col-sm-12 col-md-6 mb-4 mb-md-0">
+                      <!-- Brand -->
+                      <a class="navbar-brand logo-icon-btn" href="index.html">
+                          <img src="assets/img/corona-mm-logo.png" class="navbar-brand-img" alt="..." style="width: 100px">
+                      </a>
+                      <br>
+                      <div class="sp-only">
+                          <div class="logo-conatiner">
+                              <a>
+                                  <img src="assets/img/mohs.jpg" class="my-4" alt="..." style="width: 100px; height: 100px;">
+                              </a>
+                          </div>
+                          <div class="para-container">
+                              <!-- Heading -->
+                              <h3 class=" text-gray-900">
+                                  <strong>Data from</strong>
+                              </h3>
+                              <!-- Text -->
+                              <p class="text-muted text-gray-900 mt-3">
+                                  Central Epidemiology Unit,<br>
+                                  Department of Public Health,<br>
+                                  Ministry of Health and Sports, Myanmar
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-6 mb-4 mb-md-0" >
+                      <div class="sp-only right-txt">
+                          <div class="para-container">
+                              <!-- Heading -->
+                              <h3 class="text-gray-900">
+                                  <strong>Developed by</strong>
+                              </h3>
+                              <!-- Text -->
+                              <p class="text-muted mb-3 text-gray-900 ">
+                                  University of Technology<br>
+                                  ( Yatanarpon Cyber City )<br>
+                                  Student Union
+                              </p>
+                              <!-- Text -->
+                              <p class="text-muted text-gray-900 ">
+                                  Ethereal Tech - Group<br>
+                                  from UTYCC
+                              </p>
+                          </div>
+                          <div class="logo-container">
+                              <a>
+                                  <img src="assets/img/yccsu.jpg" class="su-logo" alt="..." style="width: 95px; height: 95px;">
+                              </a>
+                              <a>
+                                  <img src="assets/img/ethereal-tech.png" class="" alt="..." style="width: 100px; height: 100px;">
+                              </a>
+                          </div>
+                      </div>
+                  </div>
               </div>
-              <div class="para-container">
-              <!-- Heading -->
-                <h3 class=" text-gray-900">
-                  <strong>Data from</strong>
-                </h3>
-                <!-- Text -->
-                <p class="text-muted text-gray-900 mt-3">
-                  Central Epidemiology Unit,<br>
-                  Department of Public Health,<br>
-                  Ministry of Health and Sports, Myanmar
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6 mb-4 mb-md-0" >
-            <div class="sp-only right-txt">
-              <div class="para-container">
-                <!-- Heading -->
-                <h3 class="text-gray-900">
-                  <strong>Developed by</strong>
-                </h3>
-                <!-- Text -->
-                <p class="text-muted mb-3 text-gray-900 ">
-                  University of Technology<br>
-                  ( Yatanarpon Cyber City )<br>
-                  Student Union
-                </p>
-                <!-- Text -->
-                <p class="text-muted text-gray-900 ">
-                  Ethereal Tech - Group<br>
-                from UTYCC
-                </p>
-              </div>
-              <div class="logo-container">
-              <a  href="#">
-                <img src="assets/img/yccsu.jpg" class="su-logo" alt="..." style="width: 95px; height: 95px;">
-              </a>
-              <a  href="#">
-                <img src="assets/img/ethereal-tech.png" class="" alt="..." style="width: 100px; height: 100px;">
-              </a>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div> <!-- / .row -->
-      </div> <!-- / .container -->
-    </footer>
+          </div> <!-- / .row -->
+          </div> <!-- / .container -->
+      </footer>
 
 
     <!-- JAVASCRIPT
@@ -1147,11 +1163,6 @@ $donutResult =array(
     <!-- Theme JS -->
     <script src="assets/js/theme.min.js"></script>
     <script>
-
-
-
-
-
 
 
         function myfunction() {
@@ -4748,21 +4759,20 @@ $donutResult =array(
 
             //ZawWaiSoe don't change variable names
             var zawvids_positives =
-            [{"name":"gangaw","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"saw","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"magway","puinsuspect":20,"pui":"20","suspected":"0","lab_negative":"16","lab_pending":"4","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":41},{"name":"natmauk","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"minbu","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"salingyi","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"pakokku","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"pauk","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"aunglan","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"kamma","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"mindon","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"minhla","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"thayet","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"myittha","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"m-chanayethazan","puinsuspect":51,"pui":"51","suspected":"0","lab_negative":"48","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":102},{"name":"m-chanmyathazi","puinsuspect":26,"pui":"26","suspected":"0","lab_negative":"25","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":52},{"name":"patheingyi","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"meiktila","puinsuspect":6,"pui":"6","suspected":"0","lab_negative":"6","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":12},{"name":"wundwin","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"nyaung-u","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"kyaukpadaung","puinsuspect":5,"pui":"4","suspected":"1","lab_negative":"2","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":9},{"name":"mogoke","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"pyinoolwin","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"pyawbwe","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"yamethin","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"4","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"labutta","puinsuspect":6,"pui":"6","suspected":"0","lab_negative":"6","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":12},{"name":"einme","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"wakema","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"pathein","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"3","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"bogale","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":5},{"name":"dedaye","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"pyapon","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"bago","puinsuspect":11,"pui":"11","suspected":"0","lab_negative":"11","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":22},{"name":"daik-u","puinsuspect":5,"pui":"5","suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"nyaunglebin","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"oktwin","puinsuspect":5,"pui":"5","suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"taungoo","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"yedashe","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"paukkaung","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"1","recovered":"0","lab_confirmed":"3","lab_confirmed_now":"0","total_cases":5},{"name":"paungde","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"pyay","puinsuspect":20,"pui":"20","suspected":"0","lab_negative":"2","lab_pending":"14","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"0","total_cases":36},{"name":"shwedaung","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"thegon","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"letpadan","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"minhla-2","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"monyo","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"2","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"okpho","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"nattalin","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"tiddim","puinsuspect":4,"pui":"2","suspected":"2","lab_negative":"0","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"4","lab_confirmed_now":"3","total_cases":7},{"name":"hakha","puinsuspect":8,"pui":"8","suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":13},{"name":"mindat","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"demoso","puinsuspect":9,"pui":"9","suspected":"0","lab_negative":"7","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":18},{"name":"loikaw","puinsuspect":25,"pui":"25","suspected":"0","lab_negative":"24","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":50},{"name":"shadaw","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"2","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"hpa-an","puinsuspect":18,"pui":"18","suspected":"0","lab_negative":"15","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":36},{"name":"kawkareik","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":3},{"name":"myawaddy","puinsuspect":5,"pui":"5","suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"kyaikmaraw","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"0","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":2},{"name":"mawlamyine","puinsuspect":18,"pui":"18","suspected":"0","lab_negative":"17","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":35},{"name":"thanbyuzayat","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ye","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"kyaikto","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"kyaukpyu","puinsuspect":8,"pui":"8","suspected":"0","lab_negative":"8","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":16},{"name":"maungdaw","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ponnagyun","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"sittwe","puinsuspect":5,"pui":"5","suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"thandwe","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"minbya","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"kengtung","puinsuspect":9,"pui":"9","suspected":"0","lab_negative":"9","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":19},{"name":"tachileik","puinsuspect":31,"pui":"31","suspected":"0","lab_negative":"30","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":62},{"name":"kunlong","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"1","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"hsipaw","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"3","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"kyaukme","puinsuspect":11,"pui":"11","suspected":"0","lab_negative":"8","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":22},{"name":"namtu","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"nawnghkio","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"hseni","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"lashio","puinsuspect":14,"pui":"14","suspected":"0","lab_negative":"14","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":28},{"name":"kutkai","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"muse","puinsuspect":19,"pui":"19","suspected":"0","lab_negative":"16","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":38},{"name":"manton","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"hopang","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"langkho","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"mawkmai","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"loilen","puinsuspect":7,"pui":"7","suspected":"0","lab_negative":"4","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"nyaungshwe","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"taunggyi","puinsuspect":12,"pui":"12","suspected":"0","lab_negative":"10","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":24},{"name":"pindaya","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"pinlaung","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"kale","puinsuspect":8,"pui":"8","suspected":"0","lab_negative":"8","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":17},{"name":"katha","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"tigyaing","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"ayadaw","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"monywa","puinsuspect":6,"pui":"6","suspected":"0","lab_negative":"6","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":12},{"name":"shwebo","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"tamu","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"kani","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"pale","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"yinmabin","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"dawei","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"kawthoung","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"myeik","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"2","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"y-dagonmyothitea","puinsuspect":5,"pui":"5","suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":9},{"name":"y-northokkalapa","puinsuspect":152,"pui":"152","suspected":"0","lab_negative":"131","lab_pending":"8","die":"1","recovered":"0","lab_confirmed":"48","lab_confirmed_now":"55","total_cases":347},{"name":"y-southokkalapa","puinsuspect":0,"pui":"0","suspected":"0","lab_negative":"0","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":0},{"name":"y-thingangkuun","puinsuspect":37,"pui":"37","suspected":"0","lab_negative":"32","lab_pending":"5","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":74},{"name":"y-yankin","puinsuspect":10,"pui":"10","suspected":"0","lab_negative":"10","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":20},{"name":"y-hlaingtharya","puinsuspect":12,"pui":"12","suspected":"0","lab_negative":"10","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":24},{"name":"y-insein","puinsuspect":87,"pui":"87","suspected":"0","lab_negative":"80","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"7","lab_confirmed_now":"7","total_cases":174},{"name":"y-mingaladon","puinsuspect":5,"pui":"5","suspected":"0","lab_negative":"4","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"0","total_cases":10},{"name":"y-shwepyithar","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"1","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"hlegu","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":6},{"name":"htantabin","puinsuspect":10,"pui":"10","suspected":"0","lab_negative":"9","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":20},{"name":"y-seikgyikanaungto","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"0","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"kayan","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"kyauktan","puinsuspect":4,"pui":"4","suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"thanlyin","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"y-kyeemyindaing","puinsuspect":5,"pui":"5","suspected":"0","lab_negative":"4","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"0","total_cases":10},{"name":"y-lanmadaw","puinsuspect":128,"pui":"128","suspected":"0","lab_negative":"97","lab_pending":"27","die":"1","recovered":"0","lab_confirmed":"2","lab_confirmed_now":"2","total_cases":255},{"name":"y-sanchaung","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"2","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"pyinmana","puinsuspect":0,"pui":"0","suspected":"0","lab_negative":"0","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":1},{"name":"myaungmya","puinsuspect":5,"pui":"5","suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"kyauktaga","puinsuspect":13,"pui":"13","suspected":"0","lab_negative":"13","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":26},{"name":"phyu","puinsuspect":7,"pui":"7","suspected":"0","lab_negative":"7","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"hlaingbwe","puinsuspect":6,"pui":"6","suspected":"0","lab_negative":"6","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":12},{"name":"kyainseikgyi","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"taungtha","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"monghpyak","puinsuspect":3,"pui":"3","suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"mongkhet","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"mongyawng","puinsuspect":1,"pui":"1","suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"hsihseng","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"ye-u","puinsuspect":2,"pui":"2","suspected":"0","lab_negative":"1","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4}];
+            <?php echo json_encode($townshipAry); ?>;
 
             var covid_khayines =
-            [{"name":"ky-bago","pui":"30","puinsuspect":30,"suspected":"0","lab_negative":"30","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":60},{"name":"ky-dawei","pui":"3","puinsuspect":3,"suspected":"0","lab_negative":"3","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"ky-eyangon","pui":"447","puinsuspect":447,"suspected":"0","lab_negative":"375","lab_pending":"47","die":"2","recovered":"0","lab_confirmed":"59","lab_confirmed_now":"64","total_cases":935},{"name":"ky-falam","pui":"2","puinsuspect":4,"suspected":"2","lab_negative":"0","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"4","lab_confirmed_now":"3","total_cases":7},{"name":"ky-gangaw","pui":"4","puinsuspect":4,"suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"ky-hakha","pui":"8","puinsuspect":8,"suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":13},{"name":"ky-hopang","pui":"1","puinsuspect":1,"suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ky-hpa-an","pui":"24","puinsuspect":24,"suspected":"0","lab_negative":"21","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":48},{"name":"ky-kale","pui":"8","puinsuspect":8,"suspected":"0","lab_negative":"8","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":17},{"name":"ky-katha","pui":"6","puinsuspect":6,"suspected":"0","lab_negative":"6","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":12},{"name":"ky-kawkareik","pui":"3","puinsuspect":3,"suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":5},{"name":"ky-kawthoung","pui":"1","puinsuspect":1,"suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ky-kengtung","pui":"10","puinsuspect":10,"suspected":"0","lab_negative":"10","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":21},{"name":"ky-kunlong","pui":"2","puinsuspect":2,"suspected":"0","lab_negative":"1","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"ky-kyaukme","pui":"19","puinsuspect":19,"suspected":"0","lab_negative":"15","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":38},{"name":"ky-kyaukpyu","pui":"8","puinsuspect":8,"suspected":"0","lab_negative":"8","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":16},{"name":"ky-kyaukse","pui":"4","puinsuspect":4,"suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"ky-labutta","pui":"6","puinsuspect":6,"suspected":"0","lab_negative":"6","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":12},{"name":"ky-langkho","pui":"7","puinsuspect":7,"suspected":"0","lab_negative":"7","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"ky-lashio","pui":"16","puinsuspect":16,"suspected":"0","lab_negative":"16","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":32},{"name":"ky-loikaw","pui":"37","puinsuspect":37,"suspected":"0","lab_negative":"33","lab_pending":"4","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":74},{"name":"ky-loilen","pui":"7","puinsuspect":7,"suspected":"0","lab_negative":"4","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"ky-magway","pui":"21","puinsuspect":21,"suspected":"0","lab_negative":"17","lab_pending":"4","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":43},{"name":"ky-mandalay","pui":"78","puinsuspect":78,"suspected":"0","lab_negative":"74","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":156},{"name":"ky-maungdaw","pui":"1","puinsuspect":1,"suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ky-mawlaik","pui":"1","puinsuspect":1,"suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ky-mawlamyine","pui":"21","puinsuspect":21,"suspected":"0","lab_negative":"19","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":41},{"name":"ky-meiktila","pui":"7","puinsuspect":7,"suspected":"0","lab_negative":"7","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"ky-minbu","pui":"1","puinsuspect":1,"suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ky-mindat","pui":"1","puinsuspect":1,"suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ky-monghpyak","pui":"4","puinsuspect":4,"suspected":"0","lab_negative":"4","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"ky-monywa","pui":"7","puinsuspect":7,"suspected":"0","lab_negative":"7","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"ky-mrauk-u","pui":"1","puinsuspect":1,"suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ky-muse","pui":"22","puinsuspect":22,"suspected":"0","lab_negative":"19","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":44},{"name":"ky-myaungmya","pui":"7","puinsuspect":7,"suspected":"0","lab_negative":"7","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"ky-myawaddy","pui":"5","puinsuspect":5,"suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"ky-myeik","pui":"3","puinsuspect":3,"suspected":"0","lab_negative":"2","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"ky-myingyan","pui":"2","puinsuspect":2,"suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"ky-naypyitaw","pui":"0","puinsuspect":0,"suspected":"0","lab_negative":"0","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":1},{"name":"ky-nyangon","pui":"13","puinsuspect":13,"suspected":"0","lab_negative":"11","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":26},{"name":"ky-nyaung-u","pui":"8","puinsuspect":9,"suspected":"1","lab_negative":"6","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":17},{"name":"ky-pakokku","pui":"5","puinsuspect":5,"suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"ky-pathein","pui":"4","puinsuspect":4,"suspected":"0","lab_negative":"3","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":8},{"name":"ky-pyapon","pui":"4","puinsuspect":4,"suspected":"0","lab_negative":"4","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":9},{"name":"ky-pyay","pui":"26","puinsuspect":26,"suspected":"0","lab_negative":"8","lab_pending":"14","die":"1","recovered":"0","lab_confirmed":"4","lab_confirmed_now":"0","total_cases":49},{"name":"ky-pyinoolwin","pui":"5","puinsuspect":5,"suspected":"0","lab_negative":"5","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":10},{"name":"ky-shwebo","pui":"3","puinsuspect":3,"suspected":"0","lab_negative":"2","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":6},{"name":"ky-sittwe","pui":"8","puinsuspect":8,"suspected":"0","lab_negative":"8","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":16},{"name":"ky-syangon","pui":"9","puinsuspect":9,"suspected":"0","lab_negative":"9","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":18},{"name":"ky-tachileik","pui":"31","puinsuspect":31,"suspected":"0","lab_negative":"30","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":62},{"name":"ky-taunggyi","pui":"18","puinsuspect":18,"suspected":"0","lab_negative":"16","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":36},{"name":"ky-taungoo","pui":"16","puinsuspect":16,"suspected":"0","lab_negative":"16","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":32},{"name":"ky-thandwe","pui":"2","puinsuspect":2,"suspected":"0","lab_negative":"2","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":4},{"name":"ky-thaton","pui":"1","puinsuspect":1,"suspected":"0","lab_negative":"1","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":2},{"name":"ky-thayarwady","pui":"9","puinsuspect":9,"suspected":"0","lab_negative":"7","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":18},{"name":"ky-thayet","pui":"7","puinsuspect":7,"suspected":"0","lab_negative":"7","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"ky-yamethin","pui":"5","puinsuspect":5,"suspected":"0","lab_negative":"5","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":12},{"name":"ky-yinmabin","pui":"6","puinsuspect":6,"suspected":"0","lab_negative":"6","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":12}];
+            <?php echo json_encode($districtAry) ; ?> ;
 
             var covid_tines =
-            [{"name":"div-ayeyarwaddy","puinsuspect":21,"pui":"21","suspected":"0","lab_negative":"20","lab_pending":"2","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":43},{"name":"div-ebago","puinsuspect":46,"pui":"46","suspected":"0","lab_negative":"46","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":92},{"name":"div-chin","puinsuspect":13,"pui":"11","suspected":"2","lab_negative":"6","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"4","lab_confirmed_now":"3","total_cases":22},{"name":"div-kayar","puinsuspect":37,"pui":"37","suspected":"0","lab_negative":"33","lab_pending":"4","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":74},{"name":"div-kayin","puinsuspect":32,"pui":"32","suspected":"0","lab_negative":"28","lab_pending":"3","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":63},{"name":"div-magway","puinsuspect":38,"pui":"38","suspected":"0","lab_negative":"34","lab_pending":"4","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":77},{"name":"div-mandalay","puinsuspect":110,"pui":"109","suspected":"1","lab_negative":"103","lab_pending":"7","die":"0","recovered":"0","lab_confirmed":"2","lab_confirmed_now":"2","total_cases":222},{"name":"div-mon","puinsuspect":22,"pui":"22","suspected":"0","lab_negative":"20","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":43},{"name":"div-rakhine","puinsuspect":20,"pui":"20","suspected":"0","lab_negative":"20","lab_pending":"0","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":40},{"name":"div-eshan","puinsuspect":45,"pui":"45","suspected":"0","lab_negative":"44","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":91},{"name":"div-sagaing","puinsuspect":31,"pui":"31","suspected":"0","lab_negative":"30","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":63},{"name":"div-tanintharyi","puinsuspect":7,"pui":"7","suspected":"0","lab_negative":"6","lab_pending":"1","die":"0","recovered":"0","lab_confirmed":"0","lab_confirmed_now":"0","total_cases":14},{"name":"div-yangon","puinsuspect":469,"pui":"469","suspected":"0","lab_negative":"395","lab_pending":"48","die":"2","recovered":"0","lab_confirmed":"60","lab_confirmed_now":"65","total_cases":979},{"name":"div-sshan","puinsuspect":32,"pui":"32","suspected":"0","lab_negative":"27","lab_pending":"4","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":64},{"name":"div-nshan","puinsuspect":60,"pui":"60","suspected":"0","lab_negative":"52","lab_pending":"7","die":"0","recovered":"0","lab_confirmed":"1","lab_confirmed_now":"1","total_cases":120},{"name":"div-wbago","puinsuspect":35,"pui":"35","suspected":"0","lab_negative":"15","lab_pending":"16","die":"1","recovered":"0","lab_confirmed":"4","lab_confirmed_now":"0","total_cases":67}];
+            <?php  echo json_encode($regionAry); ?>;
 
-
-            var maxDivPos = 4;
-            var maxKyPos = 4;
-            var maxTsPos = 4;
-            var maxDivSus = 110;
-            var maxKySus = 78;
-            var maxTsSus = 77;
+            var maxDivPos = <?php  echo $maxDivPos; ?>;
+            var maxKyPos =  <?php  echo $maxKyPos; ?>;
+            var maxTsPos =  <?php  echo $maxTsPos; ?>;
+            var maxDivSus = <?php  echo $maxDivSus; ?>;
+            var maxKySus =  <?php  echo $maxKySus; ?>;
+            var maxTsSus =  <?php  echo $maxTsSus; ?>;
 
 
             function tsModeConfirm(zawvids_positives) {
@@ -7295,5 +7305,14 @@ $donutResult =array(
 
 
     <script src="../assets/js/autocomplete.js"></script>
+      <script>
+          $('.about-link-btn').on('click', function() {
+              window.location.href = "about-corona-mm.php";
+          });
+
+          $('.logo-icon-btn').on('click', function() {
+              window.location.href = "index.html";
+          });
+      </script>
   </body>
 </html>

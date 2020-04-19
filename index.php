@@ -120,8 +120,6 @@ foreach ($regionJson as $key => $value) {
     $total_negative += $value['lab_negative'];
     $total_confirmed += $value['lab_confirmed_now'] + $value['death'] + $value['recovered'];
 
-
-
     if($value['id']!=14){
         if ($maxDivPos < $value['lab_confirmed']) {
             $maxDivPos = $value['lab_confirmed'];
@@ -131,8 +129,6 @@ foreach ($regionJson as $key => $value) {
 
         }
     }
-
-
 
     $oneRegion = array(
         "name" => $value['db_name'],
@@ -5008,24 +5004,39 @@ $donutResult =array(
                 $('#searchInput').attr("placeholder", "တိုင်းဒေသကြီး ရှာဖွေရန်");
             });
             $('#mode-khayine').on('click', function() {
-                $('.mode-btn').removeClass('active');
-                $(this).addClass('active');
-                // modeKhayines(covids_khayines_color);
-                mode='ky';
-                changeAll();
-                $('#searchInput').val('');
-                $('#searchFilter').html('');
-                $('#searchInput').attr("placeholder", "ခရိုင် ရှာဖွေရန်");
+                    if(zws_toggle!='quaratine'){
+                        zws_toggle = 'khayine'
+                        $('.mode-btn').removeClass('active');
+                        $(this).addClass('active');
+                        // modeKhayines(covids_khayines_color);
+                        mode='ky';
+                        changeAll();
+                        $('#searchInput').val('');
+                        $('#searchFilter').html('');
+                        $('#searchInput').attr("placeholder", "ခရိုင် ရှာဖွေရန်");
+
+                    }
+
+
+
             });
             $('#mode-township').on('click', function() {
-                $('.mode-btn').removeClass('active');
-                $(this).addClass('active');
-                //modeTownShips(covids_combied_color);
-                mode='ts';
-                changeAll();
-                $('#searchInput').val('');
-                $('#searchFilter').html('');
-                $('#searchInput').attr("placeholder", "မြို့နယ် ရှာဖွေရန်");
+
+                  if(zws_toggle!='quaratine'){
+                    zws_toggle = 'myonal'
+                          $('.mode-btn').removeClass('active');
+                          $(this).addClass('active');
+                          //modeTownShips(covids_combied_color);
+                          mode='ts';
+                          changeAll();
+                          $('#searchInput').val('');
+                          $('#searchFilter').html('');
+                          $('#searchInput').attr("placeholder", "မြို့နယ် ရှာဖွေရန်");
+
+                }
+
+
+
             });
             var covids_combied = [];
             var covids_combied_color = [];
@@ -5033,14 +5044,41 @@ $donutResult =array(
             var covids_khayines_color = [];
             $('#mode-tine').trigger('click');
 
+            zws_toggle = 'confirm';
             $('#toggle-switch').on('change', function() {
-                toggle = $(this).prop('checked');
-                if(!toggle) {
-    				$('#svgmaptoggle').html('စစ်ဆေး(တွေ့ရှိ)');
-    			} else {
-    				$('#svgmaptoggle').html('စောင့်/သံသယ');
-    			}
-                changeAll();
+                if(zws_toggle=='myonal' || zws_toggle=='khayine'){
+
+                    toggle = $(this).prop('checked');
+                    zws_toggle = 'quaratine';
+                    if(!toggle) {
+                        $('#svgmaptoggle').html('စစ်ဆေး(တွေ့ရှိ)');
+                    } else {
+                        $('#svgmaptoggle').html('စောင့်/သံသယ');
+                    }
+
+
+
+
+                    $('.mode-btn').removeClass('active');
+                    $("#mode-tine").addClass('active');
+                    //modeDivisions();
+                    mode='div';
+                    changeAll();
+                    $('#searchInput').val('');
+                    $('#searchFilter').html('');
+                    $('#searchInput').attr("placeholder", "တိုင်းဒေသကြီး ရှာဖွေရန်");
+                }
+                else{
+
+                    toggle = $(this).prop('checked');
+                    zws_toggle = 'confirm';
+                    if(!toggle) {
+                        $('#svgmaptoggle').html('စစ်ဆေး(တွေ့ရှိ)');
+                    } else {
+                        $('#svgmaptoggle').html('စောင့်/သံသယ');
+                    }
+                    changeAll();
+                }
             });
             $('#toggle-switch').trigger('click');
             $('#toggle-switch').trigger('click');

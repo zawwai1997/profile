@@ -5004,8 +5004,8 @@ $donutResult =array(
                 $('#searchInput').attr("placeholder", "တိုင်းဒေသကြီး ရှာဖွေရန်");
             });
             $('#mode-khayine').on('click', function() {
-                    if(zws_toggle!='quaratine'){
-                        zws_toggle = 'khayine'
+
+                        // zws_toggle = 'khayine'
                         $('.mode-btn').removeClass('active');
                         $(this).addClass('active');
                         // modeKhayines(covids_khayines_color);
@@ -5015,15 +5015,15 @@ $donutResult =array(
                         $('#searchFilter').html('');
                         $('#searchInput').attr("placeholder", "ခရိုင် ရှာဖွေရန်");
 
-                    }
+
 
 
 
             });
             $('#mode-township').on('click', function() {
 
-                  if(zws_toggle!='quaratine'){
-                    zws_toggle = 'myonal'
+                  // if(zws_toggle!='quaratine'){
+                  //   zws_toggle = 'myonal'
                           $('.mode-btn').removeClass('active');
                           $(this).addClass('active');
                           //modeTownShips(covids_combied_color);
@@ -5033,7 +5033,7 @@ $donutResult =array(
                           $('#searchFilter').html('');
                           $('#searchInput').attr("placeholder", "မြို့နယ် ရှာဖွေရန်");
 
-                }
+                // }
 
 
 
@@ -5044,23 +5044,25 @@ $donutResult =array(
             var covids_khayines_color = [];
             $('#mode-tine').trigger('click');
 
-            zws_toggle = 'confirm';
+            zws_toggle = 0;
             $('#toggle-switch').on('change', function() {
-                if(zws_toggle=='myonal' || zws_toggle=='khayine'){
+
+                zws_toggle++;
+                if(zws_toggle%2 != 0){
 
                     toggle = $(this).prop('checked');
-                    zws_toggle = 'quaratine';
+                    // zws_toggle = 'quaratine';
                     if(!toggle) {
                         $('#svgmaptoggle').html('စစ်ဆေး(တွေ့ရှိ)');
                     } else {
                         $('#svgmaptoggle').html('စောင့်/သံသယ');
                     }
 
-
-
-
                     $('.mode-btn').removeClass('active');
-                    $("#mode-tine").addClass('active');
+
+                    $("#mode-khayine").hide();
+                    $("#mode-township").hide();
+                    $("#mode-tine").hide();
                     //modeDivisions();
                     mode='div';
                     changeAll();
@@ -5071,12 +5073,19 @@ $donutResult =array(
                 else{
 
                     toggle = $(this).prop('checked');
-                    zws_toggle = 'confirm';
+                    // zws_toggle = 'confirm';
                     if(!toggle) {
                         $('#svgmaptoggle').html('စစ်ဆေး(တွေ့ရှိ)');
                     } else {
                         $('#svgmaptoggle').html('စောင့်/သံသယ');
                     }
+                    $("#mode-tine").addClass('active');
+                    $("#mode-khayine").show();
+                    $("#mode-township").show();
+                    $("#mode-tine").show();
+
+
+
                     changeAll();
                 }
             });
@@ -5460,11 +5469,11 @@ $donutResult =array(
                 $('#resultName').html(info[0]);
                 $('#resultPuinsuspect').html(info[1]);
                 $('#resultLabnegative').html(info[2]);
-                $('#resultLabpending').html(info[3]);
+                $('#resultLabpending').hide();
                 $('#resultDie').html(info[4]);
                 $('#resultRecovered').html(info[5]);
                 $('#resultLabconfirmed').html(info[6]);
-                $('#resultLabconfirmedNow').html(info[7]);
+                 $('#resultLabconfirmedNow').html(info[7]);
             });
             var covidsCombined = [];
             function takeInfo(iD) {
@@ -5642,7 +5651,7 @@ $donutResult =array(
                                             '0' +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
                                         'စောင့်ကြည့်/သံသယ' +
                                         '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             '0' +
@@ -5654,7 +5663,7 @@ $donutResult =array(
                                             '0' +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none" >' +
                                         'စစ်ဆေး(စောင့်ဆိုင်း)' +
                                         '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                             '0' +
@@ -5666,7 +5675,7 @@ $donutResult =array(
                                             '0' +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                         'စစ်ဆေး(မတွေ့)' +
                                         '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                             '0' +
@@ -5712,7 +5721,7 @@ $donutResult =array(
                                             info[7] +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
                                         'စောင့်ကြည့်/သံသယ' +
                                         '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             info[1] +
@@ -5724,7 +5733,7 @@ $donutResult =array(
                                             info[4] +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                         'စစ်ဆေး(စောင့်ဆိုင်း)' +
                                         '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                             info[3] +
@@ -5736,7 +5745,7 @@ $donutResult =array(
                                             info[5] +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                         'စစ်ဆေး(မတွေ့)' +
                                         '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                             info[2] +
@@ -5774,7 +5783,7 @@ $donutResult =array(
                                             '0' +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
                                         'စောင့်ကြည့်/သံသယ' +
                                         '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             '0' +
@@ -5786,7 +5795,7 @@ $donutResult =array(
                                             '0' +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                         'စစ်ဆေး(စောင့်ဆိုင်း)' +
                                         '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                             '0' +
@@ -5798,7 +5807,7 @@ $donutResult =array(
                                             '0' +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                         'စစ်ဆေး(မတွေ့)' +
                                         '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                             '0' +
@@ -5844,7 +5853,7 @@ $donutResult =array(
                                             info[7] +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
                                         'စောင့်ကြည့်/သံသယ' +
                                         '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                             info[1] +
@@ -5856,7 +5865,7 @@ $donutResult =array(
                                             info[4] +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                         'စစ်ဆေး(စောင့်ဆိုင်း)' +
                                         '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                             info[3] +
@@ -5868,7 +5877,7 @@ $donutResult =array(
                                             info[5] +
                                         '</span>' +
                                     '</p>' +
-                                    '<p class="font-size-sm text-muted mb-0">' +
+                                    '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                         'စစ်ဆေး(မတွေ့)' +
                                         '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                             info[2] +
@@ -5903,7 +5912,7 @@ $donutResult =array(
                                         info[7] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
                                     'စောင့်ကြည့်/သံသယ' +
                                     '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
@@ -5915,7 +5924,7 @@ $donutResult =array(
                                         info[4] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                     'စစ်ဆေး(စောင့်ဆိုင်း)' +
                                     '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                         info[3] +
@@ -5927,7 +5936,7 @@ $donutResult =array(
                                         info[5] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                     'စစ်ဆေး(မတွေ့)' +
                                     '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                         info[2] +
@@ -5958,7 +5967,7 @@ $donutResult =array(
                                         info[7] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
                                     'စောင့်ကြည့်/သံသယ' +
                                     '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
@@ -5970,7 +5979,7 @@ $donutResult =array(
                                         info[4] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                     'စစ်ဆေး(စောင့်ဆိုင်း)' +
                                     '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                         info[3] +
@@ -5982,7 +5991,7 @@ $donutResult =array(
                                         info[5] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                     'စစ်ဆေး(မတွေ့)' +
                                     '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                         info[2] +
@@ -6015,7 +6024,7 @@ $donutResult =array(
                                         info[7] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
                                     'စောင့်ကြည့်/သံသယ' +
                                     '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
@@ -6027,7 +6036,7 @@ $donutResult =array(
                                         info[4] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                     'စစ်ဆေး(စောင့်ဆိုင်း)' +
                                     '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                         info[3] +
@@ -6039,7 +6048,7 @@ $donutResult =array(
                                         info[5] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                     'စစ်ဆေး(မတွေ့)' +
                                     '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                         info[2] +
@@ -6070,7 +6079,7 @@ $donutResult =array(
                                         info[7] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none;">' +
                                     'စောင့်ကြည့်/သံသယ' +
                                     '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                         info[1] +
@@ -6082,7 +6091,7 @@ $donutResult =array(
                                         info[4] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                     'စစ်ဆေး(စောင့်ဆိုင်း)' +
                                     '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
                                         info[3] +
@@ -6094,7 +6103,7 @@ $donutResult =array(
                                         info[5] +
                                     '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0">' +
+                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
                                     'စစ်ဆေး(မတွေ့)' +
                                     '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                         info[2] +

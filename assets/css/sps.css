@@ -404,7 +404,7 @@ body .total-info-mobile{
 	box-shadow: 1px 1px 5px 0px #cccccc;
     padding: 5px;
     width: 230px;
-    height: 200px;
+    height: 150px;
     overflow: hidden;
 }
 .tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-box .badge {
@@ -435,6 +435,7 @@ body .total-info-mobile{
 #resultBox.closed {
     display: none !important;
 }
+
 #totalBox.closed {
     display: none !important;
 }

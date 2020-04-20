@@ -158,11 +158,12 @@ GROUP BY Hospitals.name order by $order ";
     }
 
     public function getRegionJson(){
-        $query = "SELECT States.id,States.name as db_name,States.real_name,States.zawgyi,States.unicode,States.lat,States.lon,
+        $query = "SELECT States.id as s_id,States.name as db_name,States.real_name,States.zawgyi,States.unicode,States.lat,States.lon,
 COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as pui ,
 COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as suspected,
+(SELECT Div_Pos.count FROM Div_Pos WHERE Div_Pos.state_id = s_id) as puinsus	,
 COUNT(case when (Patients.suffer_type_id = 3 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as lab_negative,
 COUNT(case when (Patients.suffer_type_id = 4 AND Patients.hospital_id = Hospitals.id)

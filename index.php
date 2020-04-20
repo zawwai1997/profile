@@ -111,6 +111,7 @@ foreach ($districtJson as $key => $value) {
     );
     array_push($districtAry, $oneDistrict);
 }
+die(json_encode($districtJson));
 
 foreach ($regionJson as $key => $value) {
     $total_pending += $value['lab_pending'];

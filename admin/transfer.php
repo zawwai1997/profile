@@ -68,7 +68,7 @@ if(isset($_GET['token']) ==  $_SESSION['token'] and isset($_GET['id'])){
                     <!--                //From Hospital Name-->
                     <div class="form-group col-md-6">
                         <label for="state_id">From</label>
-                        <select class="browser-default custom-select" name="first_hospital_id">
+                        <select class="browser-default custom-select select2" name="first_hospital_id">
 
                                 <option selected value="<?php echo $transCase[0]['first_hospital_id']?>"><?php echo $transCase[0]['first_hospital']?></option>
                                 <?php foreach ($allHospitals as $hospital => $hos){
@@ -82,7 +82,7 @@ if(isset($_GET['token']) ==  $_SESSION['token'] and isset($_GET['id'])){
                     <!--                //To Hospital Name-->
                     <div class="form-group col-md-6">
                         <label for="state_id">To</label>
-                        <select class="browser-default custom-select" name="current_hospital_id">
+                        <select class="browser-default custom-select select2" name="current_hospital_id">
 
                             <option selected value="<?php echo $transCase[0]['current_hospital_id']?>"><?php echo $transCase[0]['current_hospital']?></option>
                             <?php foreach ($allHospitals as $hospital => $hos){

@@ -251,8 +251,11 @@ $donutResult =array(
 
 
 
-$total_negative = 3786;
-$total_puinsus = 1754;
+$total_negative = 4040;
+$total_puinsus = 1967;
+$total_recovered = 7 ;
+$total_die = 5;
+$Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀၂၀)ရက်နေ့၊ ည (၁၁:၁၅)အချိန်အထိ နောက်ဆုံး update လုပ်ထားသော အချက်အလက်များ စုဆောင်းတင်ပြထားခြင်းဖြစ်ပါသည်။"
 ?>
 <!doctype html>
 <html lang="en">

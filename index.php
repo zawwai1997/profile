@@ -284,16 +284,13 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
+    <!-- Required meta tags    -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta property="og:image" content="assets/img/thumbnailicon.png" />
     <!-- Libs CSS -->
     <link rel="stylesheet" href="assets/fonts/Feather/feather.css">
-    <link rel="stylesheet" href="assets/libs/flickity/dist/flickity.min.css">
-    <link rel="stylesheet" href="assets/libs/flickity-fade/flickity-fade.css">
     <link rel="stylesheet" href="assets/libs/aos/dist/aos.css">
-    <link rel="stylesheet" href="assets/libs/jarallax/dist/jarallax.css">
     <link rel="stylesheet" href="assets/libs/highlightjs/styles/vs2015.css">
     <link rel="stylesheet" href="assets/libs/@fancyapps/fancybox/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="assets/css/sps.css?v1">
@@ -316,8 +313,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
 
 
     <!-- Map -->
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
-
     <!-- Theme CSS -->
     <link rel="stylesheet" href="assets/css/theme.min.css">
     <link rel="icon" href="assets/img/favicon.png" type="image/png">
@@ -327,14 +322,9 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
-    <link
-            href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css"
-            rel="stylesheet"
-    />
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script type="text/javascript" src="assets/js/js.js"></script>
-    <script type="text/javascript" src="assets/js/geojson.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script type="text/javascript" src="assets/js/datatables.min.js"></script>
     <!-- MDBootstrap Datatables  -->
@@ -1173,16 +1163,13 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
 <!-- Libs JS -->
 <!-- <script src="assets/libs/jquery/dist/jquery.min.js"></script> -->
 <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/libs/flickity/dist/flickity.pkgd.min.js"></script>
+<!-- <script src="assets/libs/flickity/dist/flickity.pkgd.min.js"></script>
 <script src="assets/libs/flickity-fade/flickity-fade.js"></script>
+-->
 <script src="assets/libs/aos/dist/aos.js"></script>
 <script src="assets/libs/smooth-scroll/dist/smooth-scroll.min.js"></script>
-<script src="assets/libs/jarallax/dist/jarallax.min.js"></script>
-<script src="assets/libs/jarallax/dist/jarallax-video.min.js"></script>
-<script src="assets/libs/jarallax/dist/jarallax-element.min.js"></script>
 <script src="assets/libs/typed.js/lib/typed.min.js"></script>
 <script src="assets/libs/countup.js/dist/countUp.min.js"></script>
-<script src="assets/libs/highlightjs/highlight.pack.min.js"></script>
 <script src="assets/libs/@fancyapps/fancybox/dist/jquery.fancybox.min.js"></script>
 
 <!-- Map -->
@@ -4938,25 +4925,25 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
             }
         }
         function modeKhayines(zawPosActKyColor) {
-                disKhayines();
-                disTownships();
-                disDivisions();
-                showKhayines();
-                colorClassRemover();
-                for (i in zawPosActKyColor) {
-                    if(zawPosActKyColor[i].name!='ky-naypyitaw') {
-                        var element = document.getElementById(zawPosActKyColor[i].name);
-                        if(!toggle) {
-                            element.classList.add(cv_pos2[parseInt(zawPosActKyColor[i].color)-1]);
-                        } else {
-                            element.classList.add(cv_pos_sus2[parseInt(zawPosActKyColor[i].color)-1]);
-                        }
+            disKhayines();
+            disTownships();
+            disDivisions();
+            showKhayines();
+            colorClassRemover();
+            for (i in zawPosActKyColor) {
+                if(zawPosActKyColor[i].name!='ky-naypyitaw') {
+                    var element = document.getElementById(zawPosActKyColor[i].name);
+                    if(!toggle) {
+                        element.classList.add(cv_pos2[parseInt(zawPosActKyColor[i].color)-1]);
+                    } else {
+                        element.classList.add(cv_pos_sus2[parseInt(zawPosActKyColor[i].color)-1]);
                     }
-                    //$('#' + covids_positives_combied_color_kharines_color[i].name).attr('style', 'fill:' + cv_pos[parseInt(covids_positives_combied_color_kharines_color[i].color)-1]);
                 }
-                //var element = document.getElementById(zawPosActKyColor[i].name);
-                //$('#ky-eyangon' + ' polyline').attr('style', 'fill:' + '#1a0033');
+                //$('#' + covids_positives_combied_color_kharines_color[i].name).attr('style', 'fill:' + cv_pos[parseInt(covids_positives_combied_color_kharines_color[i].color)-1]);
             }
+            //var element = document.getElementById(zawPosActKyColor[i].name);
+            //$('#ky-eyangon' + ' polyline').attr('style', 'fill:' + '#1a0033');
+        }
 
         function modeDivisions(zawPosActDivColor) {
             disKhayines();
@@ -4966,13 +4953,13 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
             colorClassRemover();
             for (i in zawPosActDivColor) {
                 if(zawPosActDivColor[i].name != 'div-ebago') {
-					var element = document.getElementById(zawPosActDivColor[i].name);
-					if(!toggle) {
-						element.classList.add(cv_pos2[parseInt(zawPosActDivColor[i].color)-1]);
-					} else {
-						element.classList.add(cv_pos_sus2[parseInt(zawPosActDivColor[i].color)-1]);
-					}
-				}
+                    var element = document.getElementById(zawPosActDivColor[i].name);
+                    if(!toggle) {
+                        element.classList.add(cv_pos2[parseInt(zawPosActDivColor[i].color)-1]);
+                    } else {
+                        element.classList.add(cv_pos_sus2[parseInt(zawPosActDivColor[i].color)-1]);
+                    }
+                }
                 //$('#' + covids_positives_combied_color_kharines_color[i].name).attr('style', 'fill:' + cv_pos[parseInt(covids_positives_combied_color_kharines_color[i].color)-1]);
             }
             // for (i in covids_positives_combied_color_divisions_mod_color) {
@@ -5012,29 +4999,29 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
             } else if(mode=='div') {
                 for(i in divisions) {
                     element = document.getElementById(divisions[i]);
-					if(divisions[i] != 'div-ebago') {
-						element.classList.remove('fce9e8');
-						element.classList.remove('f9d4d2');
-						element.classList.remove('f6bebb');
-						element.classList.remove('f3a9a5');
-						element.classList.remove('f0938e');
-						element.classList.remove('ed7d78');
-						element.classList.remove('ea6861');
-						element.classList.remove('e8524a');
-						element.classList.remove('e74c44');
-						element.classList.remove('e53d34');
+                    if(divisions[i] != 'div-ebago') {
+                        element.classList.remove('fce9e8');
+                        element.classList.remove('f9d4d2');
+                        element.classList.remove('f6bebb');
+                        element.classList.remove('f3a9a5');
+                        element.classList.remove('f0938e');
+                        element.classList.remove('ed7d78');
+                        element.classList.remove('ea6861');
+                        element.classList.remove('e8524a');
+                        element.classList.remove('e74c44');
+                        element.classList.remove('e53d34');
 
-						element.classList.remove('ffd480');
-						element.classList.remove('ffcc66');
-						element.classList.remove('ffc34d');
-						element.classList.remove('ffbb33');
-						element.classList.remove('ffb31a');
-						element.classList.remove('ffaa00');
-						element.classList.remove('e69900');
-						element.classList.remove('cc8800');
-						element.classList.remove('b37700');
-						element.classList.remove('cc96600');
-					}
+                        element.classList.remove('ffd480');
+                        element.classList.remove('ffcc66');
+                        element.classList.remove('ffc34d');
+                        element.classList.remove('ffbb33');
+                        element.classList.remove('ffb31a');
+                        element.classList.remove('ffaa00');
+                        element.classList.remove('e69900');
+                        element.classList.remove('cc8800');
+                        element.classList.remove('b37700');
+                        element.classList.remove('cc96600');
+                    }
                 }
             }
 
@@ -5042,11 +5029,9 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
         }
 
         function changeColorBar(number) {
-            console.log('fuck');
             var x = document.getElementsByClassName("color-bar");
             var y = document.getElementsByClassName("color-range");
             var i,j;
-            console.log(toggle);
             if(!toggle) {
                 for (i = 0; i < x.length; i++) {
                     x[i].setAttribute('style', 'background:' + cv_pos[i] + ';width:10px;');
@@ -5059,7 +5044,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
             // var start = 0;
             // var range = parseInt(number)/10;
             // for (i = 0; i < y.length; i++) {
-            //     console.log(start);
             //     // y[9].innerHTML = 'အများ';
             //     // y[0].innerHTML = 'အနည်း';
             //     if(i==y.length-1) {
@@ -5419,7 +5403,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                         covids_combied.push({"name": "yangon-gp", "number": ypuinsuspect, "puinsuspect": ypuinsuspect, "pui": ypui, "suspected": ysuspected, "lab_negative": ylab_negative, "lab_pending": ylab_pending, "die": ydie, "recovered": yrecovered, "lab_confirmed": ylab_confirmed, "lab_confirmed_now": ylab_confirmed_now});
                     }
                     covidsCombined = covids_combied;
-                    console.log(covids_combied);
                     var numSort = [];
                     if(!toggle) {
                         var posMax = maxTsPos;
@@ -5439,17 +5422,11 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                             //covids_combied_color.push({"name": covids_combied[i].name, "number": parseInt(covids_combied[i].number), "color": 1});
                         }
                     }
-
-                    console.log('shwe ' + posMax);
-                    console.log(numSort);
                     return covids_combied_color;
                 }
 
                 var covidsCombiedColor = info2MapTs(zawvids_positives, toggle);
-                console.log('here 0');
-                console.log(covidsCombined);
-                console.log('here 1');
-                console.log(covidsCombiedColor);
+
                 modeTownShips(covidsCombiedColor);
             }
         }
@@ -5583,7 +5560,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                         } else if(iD == 'mandalay-gp') {
                             iD = 'mandalay';
                         }
-                        console.log('babybaby ' + covidsCombined[i].lab_confirmed_now);
                         info.push(iD);
                         info.push(covidsCombined[i].puinsuspect);
                         info.push(covidsCombined[i].lab_negative);
@@ -5687,7 +5663,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
             // for (i = 0; i < y.length; i++) {
             //   y[i].classList.remove("hoveredShwe");
             // }
-            console.log(recentTtip);
             document.getElementById(recentTtip).classList.remove('hoveredShwe');
 
             var undefine = $(this).parent().attr('id');
@@ -6104,9 +6079,9 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                                 break;
                             }
                         }
-						if(undefine == 'div-wbago') {
-						info[0] = 'ပဲခူး တိုင်းဒေသကြီး';
-						}
+                        if(undefine == 'div-wbago') {
+                            info[0] = 'ပဲခူး တိုင်းဒေသကြီး';
+                        }
 
                         $('.tooltipster-content').html(
                             '<p class="font-weight-bold mb-1">' +
@@ -6236,7 +6211,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
 
         document.getElementById('mobile-svg').addEventListener('mousedown', start_drag);
         function start_drag() {
-            //console.log(window.panZoom.getTransform());
             setTimeout(function(){
                 document.getElementById(recentTtip).classList.remove("hoveredShwe");
             }, 0);
@@ -6358,7 +6332,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
 
         ttTownships.sort();
         ttTownships = townships_mm;
-        console.log(ttTownships);
         var ttKhayines = [];
         for(i in territories) {
             for(j in territories[i].data) {
@@ -6504,7 +6477,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                         }
                     }
                 }
-                console.log(tempSearch);
                 var searchDivs = ''
                 for(i in tempSearch) {
                     // searchDivs += '<div style="z-index:1;" class="shwe-button search-filter" id2="' + tempSearch[i] + '"><button style="margin-top: 5px; margin-bottom: 5px; border: 0;width: 72px; height: 30px; background: #fff;display: table-cell; vertical-align: middle;"></button><span style="margin-left: 10px;font-size: 17px;">' + idToName(tempSearch[i]) + '</span></div>'
@@ -7240,11 +7212,10 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
             })();
 
 
-        var groupPercentInfo = <?php echo json_encode($donutResult) ?>
+        var groupPercentInfo = {"dead":{"age":{"label":["0-17\u1014\u103e\u1005\u103a","18\u1014\u103e\u1005\u103a-44\u1014\u103e\u1005\u103a","45\u1014\u103e\u1005\u103a-64\u1014\u103e\u1005\u103a","65\u1014\u103e\u1005\u103a-74\u1014\u103e\u1005\u103a","75\u1014\u103e\u1005\u103a\u1021\u1011\u1000\u103a"],"num":[0,0,2,1,2]},"gender":{"label":["\u1000\u103b\u102c\u1038","\u1019"],"num":[4,1]}},"positive":{"age":{"label":["0-17\u1014\u103e\u1005\u103a","18\u1014\u103e\u1005\u103a-44\u1014\u103e\u1005\u103a","45\u1014\u103e\u1005\u103a-64\u1014\u103e\u1005\u103a","65\u1014\u103e\u1005\u103a-74\u1014\u103e\u1005\u103a","75\u1014\u103e\u1005\u103a\u1021\u1011\u1000\u103a"],"num":[6,70,31,7,6]},"gender":{"label":["\u1000\u103b\u102c\u1038","\u1019"],"num":[65,55]}}}
 
-
-            // chart_htetoonaing
-            "use strict";
+        // chart_htetoonaing
+        "use strict";
 
         (function () {
             var e = document.getElementById("trafficChart").getContext("2d");
@@ -7276,7 +7247,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
             var groupChartToggle = false;
             var type = 'age';
             function changeGroupChart() {
-                console.log(type + groupChartToggle);
                 if(type=='age' && groupChartToggle) {
                     $('.donutModeLabel').attr('style', 'display:none');
 
@@ -7357,7 +7327,7 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
 
 
 
-        var dayByDayInfo = <?php echo json_encode($dailyResult); ?>;
+        var dayByDayInfo = {"dead":{"date":["Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31","Apr 1","Apr 2","Apr 3","Apr 4","Apr 5","Apr 6","Apr 7","Apr 8","Apr 9","Apr 10","Apr 11","Apr 12","Apr 13","Apr 14","Apr 15","Apr 16","Apr 17","Apr 18","Apr 19","Apr 20","Apr 21"],"num":["0","0","0","0","0","0","0","0","1","0","0","0","0","0","0","0","2","0","0","0","1","0","0","0","0","0","1","0","0","0"]},"positive":{"date":["Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31","Apr 1","Apr 2","Apr 3","Apr 4","Apr 5","Apr 6","Apr 7","Apr 8","Apr 9","Apr 10","Apr 11","Apr 12","Apr 13","Apr 14","Apr 15","Apr 16","Apr 17","Apr 18","Apr 19","Apr 20","Apr 21"],"num":["2","1","0","2","3","0","2","4","1","1","4","0","1","0","1","0","0","1","5","10","3","12","21","11","0","9","13","4","8","2"]}};
 
         "use strict";
         !function () {
@@ -7403,8 +7373,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                                 data: dayByDayInfo.positive.num
                             }
                         ]
-                    console.log(dayByDayInfo.positive.date);
-                    console.log(dayByDayInfo.positive.num);
                     dayByDayChart.update();
                 } else if($(this).prop('checked')) {
                     $('#dayByDayToggleText').html('ပိုးတွေ့သေဆုံး');
@@ -7417,8 +7385,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                                 data: dayByDayInfo.dead.num
                             }
                         ]
-                    console.log(dayByDayInfo.dead.date);
-                    console.log(dayByDayInfo.dead.num);
                     dayByDayChart.update();
                 }
             });
@@ -7441,6 +7407,28 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
             $('#regionTable #sps-table-div').attr('style', '');
         });
 
+        $("#scroll-down").on('click', function(event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                    scrollTop: $('#scroll-down-here').offset().top
+                }, 800, function(){
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    // window.location.hash = hash;
+                });
+            } // End if
+        });
+
         $('#regionTable .table-responsive #dtHorizontalVerticalDiv input').attr('placeholder', 'search ts');
     });
 
@@ -7450,7 +7438,6 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
 </script>
 
 
-<script src="../assets/js/autocomplete.js"></script>
 <script>
     $('.about-link-btn').on('click', function() {
         window.location.href = "about-corona-mm.php";

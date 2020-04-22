@@ -581,6 +581,24 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                         </div>
                     </a>
                     <ng-view></ng-view>
+                    <button id="scroll-down" style="position: absolute; bottom:0px;left:20px;font-size: 13px;padding: 5px 0px 5px 0px;" type="button" class="btn btn-light">
+                        <a id="down-mobile-a" style="color:#ff6666;width:100%;height:100%;padding: 10px 5px 10px 5px;">
+                        <span><!--?xml version="1.0" encoding="UTF-8"?-->
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+                                <title>Stockholm-icons / Navigation / Down-2</title>
+                                <desc>Created with Sketch.</desc>
+                                <g id="Stockholm-icons-/-Navigation-/-Down-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                                    <rect id="Rectangle" fill="#ff6666" opacity="0.4" x="11" y="4" width="2" height="10" rx="1"></rect>
+                                    <path d="M6.70710678,19.7071068 C6.31658249,20.0976311 5.68341751,20.0976311 5.29289322,19.7071068 C4.90236893,19.3165825 4.90236893,18.6834175 5.29289322,18.2928932 L11.2928932,12.2928932 C11.6714722,11.9143143 12.2810586,11.9010687 12.6757246,12.2628459 L18.6757246,17.7628459 C19.0828436,18.1360383 19.1103465,18.7686056 18.7371541,19.1757246 C18.3639617,19.5828436 17.7313944,19.6103465 17.3242754,19.2371541 L12.0300757,14.3841378 L6.70710678,19.7071068 Z" id="Path-94" fill="#ff6666" transform="translate(12.000003, 15.999999) scale(1, -1) translate(-12.000003, -15.999999) "></path>
+                                </g>
+                            </svg>
+                        </span>
+                            အောက်သို့
+                        </a>
+                    </button>
+                    <div id="scroll-down-here" style="position:absolute;bottom:0px;"></div>
                 </div>
 
                 <div style="display: none;" class="total-info-desktop main-left-info mt-7 col-12 col-md-6 col-lg-6 order-md-1 aos-init aos-animate" data-aos="fade-up">

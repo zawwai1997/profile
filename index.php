@@ -762,8 +762,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                         <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                             <div class="container-fluid" style="padding-left: 0px">
                                 <div class="card-pending">
-                                    <h6 class="c19-tt1">အဖြေ စောင့်ဆိုင်းဆဲ</h6>
-                                    <h2 class="c19-tt3" style="color:#335eea;"><?php echo $total_pending; ?></h2>
+                                    <h6 class="c19-tt1">စစ်ဆေးပြီး လူနာ</h6>
+                                    <h2 class="c19-tt3" style="color:#335eea;"><?php echo $total_test; ?></h2>
                                 </div>
                             </div>
                         </div>
@@ -787,8 +787,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                         <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                             <div class="container-fluid" style="padding-left: 0px">
                                 <div class="card-negative">
-                                    <h6 class="c19-tt1">စစ်ဆေး (မတွေ့)</h6>
-                                    <h2 class="c19-tt3" style="color:#27ae60 ;"><?php echo $total_negative; ?></h2>
+                                    <h6 class="c19-tt1">ကုသမှု ခံယူဆဲ</h6>
+                                    <h2 class="c19-tt3" style="color:#27ae60 ;"><?php echo $total_cure; ?></h2>
                                 </div>
                             </div>
                         </div>

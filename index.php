@@ -272,8 +272,8 @@ $donutResult =array(
 
 
 $total_test = 5198;
-$total_recovered = 7;
-$total_puinsus = 2212;
+$total_recovered = 9;
+$total_puinsus = 2089;
 $total_die = 5;
 $total_confirmed = 121;
 

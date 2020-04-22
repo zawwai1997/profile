@@ -272,9 +272,7 @@ $donutResult =array(
 
 
 $total_test = 4919 ;
-$total_recovered = 9;
 $total_puinsus = 2089;
-$total_die = 5;
 
 $total_cure = 109 ;
 
@@ -662,8 +660,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                             <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                                 <div class="container-fluid" style="padding-left: 0px">
                                     <div class="card-recovered">
-                                        <h6 class="c19-tt1">ပြန်လည်ကောင်းမွန်</h6>
-                                        <h2 class="c19-tt3" style="color:#506690;"><?php echo $total_recovered; ?></h2>
+                                        <h6 class="c19-tt1">ကုသမှု ခံယူဆဲ</h6>
+                                        <h2 class="c19-tt3" style="color:#506690;"><?php echo $total_cure; ?></h2>
                                     </div>
                                 </div>
                             </div>
@@ -671,8 +669,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                             <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                                 <div class="container-fluid" style="padding-left: 0px">
                                     <div class="card-negative">
-                                        <h6 class="c19-tt1">ကုသမှု ခံယူဆဲ</h6>
-                                        <h2 class="c19-tt3" style="color:#27ae60 ;"><?php echo $total_cure; ?></h2>
+                                        <h6 class="c19-tt1">ပြန်လည်ကောင်းမွန်</h6>
+                                        <h2 class="c19-tt3" style="color:#27ae60 ;"><?php echo $total_recovered; ?></h2>
                                     </div>
                                 </div>
                             </div>
@@ -777,8 +775,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                         <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                             <div class="container-fluid" style="padding-left: 0px">
                                 <div class="card-recovered">
-                                    <h6 class="c19-tt1">ပြန်လည်ကောင်းမွန်</h6>
-                                    <h2 class="c19-tt3" style="color:#506690;"><?php echo $total_recovered; ?></h2>
+                                    <h6 class="c19-tt1">ကုသမှု ခံယူဆဲ</h6>
+                                    <h2 class="c19-tt3" style="color:#506690;"><?php echo $total_cure; ?></h2>
                                 </div>
                             </div>
                         </div>
@@ -786,8 +784,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၁-၄-၂၀�
                         <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                             <div class="container-fluid" style="padding-left: 0px">
                                 <div class="card-negative">
-                                    <h6 class="c19-tt1">ကုသမှု ခံယူဆဲ</h6>
-                                    <h2 class="c19-tt3" style="color:#27ae60 ;"><?php echo $total_cure; ?></h2>
+                                    <h6 class="c19-tt1">ပြန်လည်ကောင်းမွန်</h6>
+                                    <h2 class="c19-tt3" style="color:#27ae60 ;"><?php echo $total_recovered; ?></h2>
                                 </div>
                             </div>
                         </div>

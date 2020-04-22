@@ -7,12 +7,11 @@ $_SESSION['token'] = $token;
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<!-- Mirrored from landkit.goodthemes.co/career-single.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 22 Jan 2020 16:53:28 GMT -->
-<!-- Added by HTTrack -->
+
 <meta
         http-equiv="content-type"
         content="text/html;charset=UTF-8"
-/><!-- /Added by HTTrack -->
+/>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -471,12 +470,10 @@ $_SESSION['token'] = $token;
                     </div>
                     <div class="logo-container">
                         <a>
-                            <img src="assets/img/yccsu.jpg" class="su-logo" alt="..."
-                                 style="width: 95px; height: 95px;">
+                            <img src="assets/img/yccsu.jpg" class="su-logo" alt="..." style="width: 95px; height: 95px;">
                         </a>
                         <a>
-                            <img src="assets/img/ethereal-tech.png" class="" alt="..."
-                                 style="width: 100px; height: 100px;">
+                            <img src="assets/img/ethereal-tech.png" class="" alt="..." style="width: 100px; height: 100px;">
                         </a>
                     </div>
                 </div>

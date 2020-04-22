@@ -404,7 +404,7 @@ body .total-info-mobile{
 	box-shadow: 1px 1px 5px 0px #cccccc;
     padding: 5px;
     width: 230px;
-    height: 150px;
+    height: 170px;
     overflow: hidden;
 }
 .tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-box .badge {
@@ -435,7 +435,6 @@ body .total-info-mobile{
 #resultBox.closed {
     display: none !important;
 }
-
 #totalBox.closed {
     display: none !important;
 }
@@ -543,9 +542,9 @@ table {
     max-width: 600px;
     margin: 0 auto;
 } */
-.table-responsive th, td {
+/* .table-responsive th, td {
     white-space: nowrap;
-}
+} */
 .table-responsive {
     padding: 0px 20px 20px 20px;
 }
@@ -562,7 +561,7 @@ table {
 .dataTables_filter {
     text-align: right !important;
 }
-table.dataTable thead .sorting:after,
+/* table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:after,
 table.dataTable thead .sorting_asc:before,
@@ -573,7 +572,7 @@ table.dataTable thead .sorting_desc:before,
 table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
     bottom: .5em;
-}
+} */
 
 table th::before {
     display: none !important;
@@ -606,13 +605,6 @@ table th::after {
 
 #tableChangeModeMobile::after {
     display: none;
-}
-
-.dataTables_scrollHead .dataTables_scrollHeadInner {
-	width: 100% !important;
-}
-.dataTables_scrollHead .dataTables_scrollHeadInner table{
-	width: 100% !important;
 }
 /*
 thead, tbody tr {

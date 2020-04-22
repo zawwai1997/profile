@@ -158,7 +158,39 @@ GROUP BY Hospitals.name order by $order ";
     }
 
     public function getRegionJson(){
-        $query = "SELECT States.id as s_id,States.name as db_name,States.real_name,States.zawgyi,States.unicode,States.lat,States.lon,
+            $query = " SELECT States.id as s_id,States.name as db_name,States.real_name,States.zawgyi,States.unicode,States.lat,States.lon,
+    COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
+          then 1 else NULL end) as pui ,
+    COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
+          then 1 else NULL end) as suspected,
+    (SELECT Div_Pos.count FROM Div_Pos WHERE Div_Pos.state_id = s_id) as puinsus	,
+    COUNT(case when (Patients.suffer_type_id = 3 AND Patients.hospital_id = Hospitals.id) 
+          then 1 else NULL end) as lab_negative,
+    COUNT(case when (Patients.suffer_type_id = 4 AND Patients.hospital_id = Hospitals.id)
+          then 1 else NULL end) as lab_pending,
+    COUNT(case when (Patients.suffer_type_id = 5 AND Patients.first_hospital_id = Hospitals.id) 
+          then 1 else NULL end) as death,
+    COUNT(case when (Patients.suffer_type_id = 6 AND Patients.first_hospital_id = Hospitals.id)
+          then 1 else NULL end) as recovered,
+    COUNT(case when (Patients.suffer_type_id = 7 AND Patients.hospital_id = Hospitals.id) 
+          then 1 else NULL end) as lab_confirmed_now,
+    COUNT(case when ( (Patients.suffer_type_id = 7 or Patients.suffer_type_id =6 or Patients.suffer_type_id=5) AND Patients.first_hospital_id = Hospitals.id) 
+          then 1 else NULL end) as lab_confirmed
+     FROM Hospitals, Patients ,Townships ,District ,States 
+    WHERE Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
+    GROUP BY States.name order by lab_confirmed DESC ,`death`  DESC , recovered DESC ";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTownshipJson(){
+        $query = " SELECT Townships.id,States.name as state,States.id as s_id,
+ District.name as district,Townships.name as db_name,District.id as d_id,
+Townships.real_name,Townships.zawgyi,Townships.unicode,Townships.lat,Townships.lon,
 COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as pui ,
 COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
@@ -174,43 +206,12 @@ COUNT(case when (Patients.suffer_type_id = 6 AND Patients.first_hospital_id = Ho
       then 1 else NULL end) as recovered,
 COUNT(case when (Patients.suffer_type_id = 7 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as lab_confirmed_now,
-COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Hospitals.id) 
-      then 1 else NULL end) as lab_confirmed
- FROM Hospitals, Patients ,Townships ,District ,States 
-WHERE Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
-GROUP BY States.name order by lab_confirmed DESC ,`death`  DESC , recovered DESC ";
-
-        $stmt = $this->pdo->prepare($query);
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getTownshipJson(){
-        $query = " SELECT Townships.id,States.name as state,States.id as state_id,
- District.name as district,Townships.name as db_name,
-Townships.real_name,Townships.zawgyi,Townships.unicode,Townships.lat,Townships.lon,
-COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
-      then 1 else NULL end) as pui ,
-COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
-      then 1 else NULL end) as suspected,
-COUNT(case when (Patients.suffer_type_id = 3 AND Patients.hospital_id = Hospitals.id) 
-      then 1 else NULL end) as lab_negative,
-COUNT(case when (Patients.suffer_type_id = 4 AND Patients.hospital_id = Hospitals.id)
-      then 1 else NULL end) as lab_pending,
-COUNT(case when (Patients.suffer_type_id = 5 AND Patients.first_hospital_id = Hospitals.id) 
-      then 1 else NULL end) as death,
-COUNT(case when (Patients.suffer_type_id = 6 AND Patients.first_hospital_id = Hospitals.id)
-      then 1 else NULL end) as recovered,
-COUNT(case when (Patients.suffer_type_id = 7 AND Patients.hospital_id = Hospitals.id) 
-      then 1 else NULL end) as lab_confirmed_now,
-COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Hospitals.id) 
-      then 1 else NULL end) as lab_confirmed
+COUNT(case when ( (Patients.suffer_type_id = 7 or Patients.suffer_type_id =6 or Patients.suffer_type_id=5) AND Patients.first_hospital_id = Hospitals.id) 
+          then 1 else NULL end) as lab_confirmed
 FROM Hospitals, Patients ,Townships ,District ,States 
 WHERE   Hospitals.township_id = Townships.id and 
 Townships.district_id = District.id and District.state_id= States.id 
-GROUP BY Townships.name order by lab_confirmed DESC ,`death`  DESC , recovered DESC";
+GROUP BY Townships.name order by lab_confirmed DESC ,`death`  DESC , recovered DESC ";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -325,11 +326,12 @@ order by Hospitals.id;";
 
 
     public function getDistrictJson(){
-        $query = "SELECT District.id,District.name as db_name,District.unicode ,States.id as state_id,
+        $query = "SELECT District.id,District.name as db_name,District.unicode ,States.id as s_id,
 COUNT(case when (Patients.suffer_type_id = 1 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as pui ,
 COUNT(case when (Patients.suffer_type_id = 2 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as suspected,
+(SELECT Div_Pos.count FROM Div_Pos WHERE Div_Pos.state_id = s_id) as puinsus	,
 COUNT(case when (Patients.suffer_type_id = 3 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as lab_negative,
 COUNT(case when (Patients.suffer_type_id = 4 AND Patients.hospital_id = Hospitals.id)
@@ -340,8 +342,8 @@ COUNT(case when (Patients.suffer_type_id = 6 AND Patients.first_hospital_id = Ho
       then 1 else NULL end) as recovered,
 COUNT(case when (Patients.suffer_type_id = 7 AND Patients.hospital_id = Hospitals.id) 
       then 1 else NULL end) as lab_confirmed_now,
-COUNT(case when (Patients.suffer_type_id = 7 AND Patients.first_hospital_id = Hospitals.id) 
-      then 1 else NULL end) as lab_confirmed
+COUNT(case when ( (Patients.suffer_type_id = 7 or Patients.suffer_type_id =6 or Patients.suffer_type_id=5) AND Patients.first_hospital_id = Hospitals.id) 
+          then 1 else NULL end) as lab_confirmed
 FROM Hospitals, Patients ,Townships ,District ,States 
 WHERE Hospitals.township_id = Townships.id and Townships.district_id = District.id and District.state_id= States.id 
 GROUP BY District.name 

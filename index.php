@@ -61,13 +61,22 @@ foreach ($States as $state => $sta) {
     );
     array_push($stateData, $oneState);
 }
-
+$mandalayTownshipGp = 0;   //for m-?? townships
 foreach ($townshipJson as $key => $value) {
-    if($value['state_id']!=14){
-        if ($maxTsPos < $value['lab_confirmed']) {
-            $maxTsPos = $value['lab_confirmed'];
+    if($value['s_id']!=14){  //Township is not for yangon
+
+        if($value['id'] == 32 or $value['id'] == 33 or $value['id'] == 34 or $value['id'] == 35 or $value['id'] == 37 )  {  //Mandalay m-?? Townships
+            $mandalayTownshipGp += $value['lab_confirmed'];
+
         }
-        if ($maxTsSus < $value['suspected'] + $value['pui']) $maxTsSus = $value['suspected'] + $value['pui'];
+        else{      //Township is not for Mandalay 
+            if ($maxTsPos < $value['lab_confirmed']) {
+                $maxTsPos = $value['lab_confirmed'];
+                $maxTownshipName = $value['db_name'];
+            } 
+        }
+        
+       // if ($maxTsSus < $value['suspected'] + $value['pui']) $maxTsSus = $value['suspected'] + $value['pui'];
     }
     $oneTownship = array(
         "name" => $value['db_name'],
@@ -86,12 +95,20 @@ foreach ($townshipJson as $key => $value) {
     array_push($townshipAry, $oneTownship);
 }
 
+if($mandalayTownshipGp > $maxTsPos) {
+    $maxTsPos = $mandalayTownshipGp; $maxTownshipName ="mandalay_gp";
+}
+
 foreach ($districtJson as $key => $value) {
-    if($value['state_id']!=14){
+    if($value['s_id']!=14){
         if ($maxKyPos < $value['lab_confirmed']) {
             $maxKyPos = $value['lab_confirmed'];
+            $maxKyName = $value['db_name'];
         }
-        if ($maxKySus < $value['suspected'] + $value['pui']) $maxKySus = $value['suspected'] + $value['pui'];
+//        if ($maxKySus < $value['suspected'] + $value['pui']) {
+//            $maxKySus = $value['suspected'] + $value['pui'];
+//            $maxKyName = $value['db_name'];
+//        }
     }
 
 
@@ -121,12 +138,14 @@ foreach ($regionJson as $key => $value) {
     $total_negative += $value['lab_negative'];
     $total_confirmed += $value['lab_confirmed_now'] + $value['death'] + $value['recovered'];
 
-    if($value['s_id']!=14){
+    if($value['s_id']!=14){   //not yangon
         if ($maxDivPos < $value['lab_confirmed']) {
             $maxDivPos = $value['lab_confirmed'];
+            $maxDivPosName = $value['db_name'];
         }
-        if ($maxDivSus < $value['suspected'] + $value['pui']) {
-            $maxDivSus = $value['suspected'] + $value['pui'];
+        if ($maxDivSus < $value['puinsus']) {
+            $maxDivSus = $value['puinsus'];
+            $maxDivSusName = $value['db_name'];
 
         }
     }
@@ -147,6 +166,8 @@ foreach ($regionJson as $key => $value) {
     );
     array_push($regionAry, $oneRegion);
 }
+
+
 
 //die(json_encode($townshipAry));
 
@@ -239,7 +260,7 @@ $donutResult =array(
 
 // die(json_encode($donutResult));
 // die(json_encode($dailyResult));
-
+//
 //echo "var maxDivPos = ".$maxDivPos."<br>";
 //echo "var maxKyPos = ".$maxKyPos."<br>";
 //echo "var maxTsPos = ".$maxTsPos."<br>";
@@ -251,10 +272,13 @@ $donutResult =array(
 
 
 
-$total_negative = 4040;
+$total_negative = 4406;
 $total_puinsus = 1967;
 $total_recovered = 7 ;
 $total_die = 5;
+$total_test = 4692;
+$total_cure = 107 ;
+
 $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀၂၀)ရက်နေ့၊ ည (၁၁:၁၅)အချိန်အထိ နောက်ဆုံး update လုပ်ထားသော အချက်အလက်များ စုဆောင်းတင်ပြထားခြင်းဖြစ်ပါသည်။"
 ?>
 <!doctype html>
@@ -289,6 +313,7 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
             href="assets/css/theme-dark.min.css"
             id="stylesheetDark"
     />
+
 
     <!-- Map -->
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
@@ -476,9 +501,9 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
 </head>
 <body ng-app="myApp">
 <div id="page-loader" style="position:fixed;z-index:20;top:0;left:0;width: 100%; height: 100%;background: #fff;">
-    <img class="illustration" style="display:none;width:200px;" src="assets/img/favicon.png"/>
-    <img class="illustration" style="width:200px;" src="assets/img/wash-hands.gif"/>
-    <img class="text" style="width:200px;" src="assets/img/wash-hand-txt-mm.png"/>
+	<img class="illustration" style="display:none;width:200px;" src="assets/img/favicon.png"/>
+	<img class="illustration" style="width:200px;" src="assets/img/wash-hands.gif"/>
+	<img class="text" style="width:200px;" src="assets/img/wash-hand-txt-mm.png"/>
 </div>
 <!-- NAVBAR
     ================================================== -->
@@ -593,7 +618,7 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
                             <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                                 <div class="container-fluid" style="padding-left: 0px">
                                     <div class="card-warning">
-                                        <h6 class="c19-tt1">စောင့်ကြည့် / သံသယ</h6>
+                                        <h6 class="c19-tt1">စောင့်ကြည့်(သံသယ)</h6>
                                         <h2 class="c19-tt3" style="color:#b37700;"><?php echo $total_puinsus ?></h2>
                                     </div>
                                 </div>
@@ -619,8 +644,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
                             <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                                 <div class="container-fluid" style="padding-left: 0px">
                                     <div class="card-pending">
-                                        <h6 class="c19-tt1">အဖြေ စောင့်ဆိုင်းဆဲ</h6>
-                                        <h2 class="c19-tt3" style="color:#335eea;"><?php echo $total_pending; ?></h2>
+                                        <h6 class="c19-tt1">စစ်ဆေးပြီး လူနာ</h6>
+                                        <h2 class="c19-tt3" style="color:#335eea;"><?php echo $total_test; ?></h2>
                                     </div>
                                 </div>
                             </div>
@@ -644,8 +669,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
                             <div class="flex-item c19-lg-6x c19-md-6x c19-sm-12x left animate3">
                                 <div class="container-fluid" style="padding-left: 0px">
                                     <div class="card-negative">
-                                        <h6 class="c19-tt1">စစ်ဆေး (မတွေ့)</h6>
-                                        <h2 class="c19-tt3" style="color:#27ae60 ;"><?php echo $total_negative; ?></h2>
+                                        <h6 class="c19-tt1">ကုသမှု ခံယူဆဲ</h6>
+                                        <h2 class="c19-tt3" style="color:#27ae60 ;"><?php echo $total_cure; ?></h2>
                                     </div>
                                 </div>
                             </div>
@@ -1898,437 +1923,443 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
 
 
         var townships = [
-            "thanatpin",
-            "bogale",
-            "danubyu",
-            "dedaye",
-            "einme",
-            "hinthada",
-            "ingapu",
-            "kangyidaunt",
-            "kyaiklat",
-            "kyangin",
-            "kyaunggon",
-            "kyonpyaw",
-            "labutta",
-            "lemyethna",
-            "maubin",
-            "mawlamyinegyun",
-            "myanaung",
-            "myaungmya",
-            "ngapudaw",
-            "nyaungdon",
-            "pantanaw",
-            "pathein",
-            "pyapon",
-            "thabaung",
-            "wakema",
-            "yegyi",
-            "zalun",
+			"thanatpin",
+			"bogale",
+			"danubyu",
+			"dedaye",
+			"einme",
+			"hinthada",
+			"ingapu",
+			"kangyidaunt",
+			"kyaiklat",
+			"kyangin",
+			"kyaunggon",
+			"kyonpyaw",
+			"labutta",
+			"lemyethna",
+			"maubin",
+			"mawlamyinegyun",
+			"myanaung",
+			"myaungmya",
+			"ngapudaw",
+			"nyaungdon",
+			"pantanaw",
+			"pathein",
+			"pyapon",
+			"thabaung",
+			"wakema",
+			"yegyi",
+			"zalun",
 
 
-            "bago",
-            "daik-u",
-            "kawa",
-            "kyaukkyi",
-            "kyauktaga",
-            "nyaunglebin",
-            "oktwin",
-            "phyu",
-            "shwegyin",
-            "tantabin",
-            "taungoo",
-            "tanatpin",
-            "waw",
-            "yedashe",
-            "gyobingauk",
-            "letpadan",
-            "minhla-2",
-            "monyo",
-            "nattalin",
-            "okpho",
-            "padaung",
-            "paukkaung",
-            "paungde",
-            "pyay",
-            "shwedaung",
-            "thayarwady",
-            "thegon",
-            "zigon",
+			"bago",
+			"daik-u",
+			"kawa",
+			"kyaukkyi",
+			"kyauktaga",
+			"nyaunglebin",
+			"oktwin",
+			"phyu",
+			"shwegyin",
+			"tantabin",
+			"taungoo",
+			"tanatpin",
+			"waw",
+			"yedashe",
+			"gyobingauk",
+			"letpadan",
+			"minhla-2",
+			"monyo",
+			"nattalin",
+			"okpho",
+			"padaung",
+			"paukkaung",
+			"paungde",
+			"pyay",
+			"shwedaung",
+			"thayarwady",
+			"thegon",
+			"zigon",
 
 
-            "falam",
-            "hakha",
-            "htantlang",
-            "kanpetlet",
-            "madupi",
-            "mindat",
-            "paletwa",
-            "tiddim",
-            "tonzang",
+			"falam",
+			"hakha",
+			"htantlang",
+			"kanpetlet",
+			"madupi",
+			"mindat",
+			"paletwa",
+			"tiddim",
+			"tonzang",
 
 
-            "bhamo",
-            "chipwi",
-            "hpakan",
-            "injangyang",
-            "kawnglanghpu",
-            "machanbaw",
-            "mansi",
-            "mogaung",
-            "mohnyin",
-            "momauk",
-            "myitkyina",
-            "nogmung",
-            "puta-o",
-            "shwegu",
-            "sumprabum",
-            "tanai",
-            "tsawlaw",
-            "waingmaw",
+			"bhamo",
+			"chipwi",
+			"hpakan",
+			"injangyang",
+			"kawnglanghpu",
+			"machanbaw",
+			"mansi",
+			"mogaung",
+			"mohnyin",
+			"momauk",
+			"myitkyina",
+			"nogmung",
+			"puta-o",
+			"shwegu",
+			"sumprabum",
+			"tanai",
+			"tsawlaw",
+			"waingmaw",
 
 
-            "bawlakhe",
-            "demoso",
-            "hpasawng",
-            "hpruso",
-            "loikaw",
-            "mese",
-            "shadaw",
+			"bawlakhe",
+			"demoso",
+			"hpasawng",
+			"hpruso",
+			"loikaw",
+			"mese",
+			"shadaw",
 
 
-            "hlaingbwe",
-            "hpa-an",
-            "hpapun",
-            "kawkareik",
-            "kyainseikgyi",
-            "myawaddy",
-            "thandaung",
+			"hlaingbwe",
+			"hpa-an",
+			"hpapun",
+			"kawkareik",
+			"kyainseikgyi",
+			"myawaddy",
+			"thandaung",
 
 
-            "aunglan",
-            "chauk",
-            "gangaw",
-            "kamma",
-            "magway",
-            "minbu",
-            "mindon",
-            "minhla",
-            "myaing",
-            "myothit",
-            "natmauk",
-            "ngape",
-            "pakokku",
-            "pauk",
-            "pwintbyu",
-            "salin",
-            "saw",
-            "seikphyu",
-            "sidoktaya",
-            "sinbaungwe",
-            "taungdwingyi",
-            "thayet",
-            "tilin",
-            "yenangyaung",
-            "yesagyo",
+			"aunglan",
+			"chauk",
+			"gangaw",
+			"kamma",
+			"magway",
+			"minbu",
+			"mindon",
+			"minhla",
+			"myaing",
+			"myothit",
+			"natmauk",
+			"ngape",
+			"pakokku",
+			"pauk",
+			"pwintbyu",
+			"salin",
+			"saw",
+			"seikphyu",
+			"sidoktaya",
+			"sinbaungwe",
+			"taungdwingyi",
+			"thayet",
+			"tilin",
+			"yenangyaung",
+			"yesagyo",
 
 
-            "amarapura",
-            "m-aungmyaythazan",
-            "m-chanayethazan",
-            "m-chanmyathazi",
-            "kyaukpadaung",
-            "kyaukse",
-            "lewe",
-            "madaya",
-            "m-mahaaungmyay",
-            "mahlaing",
-            "meiktila",
-            "mogoke",
-            "myingyan",
-            "myittha",
-            "natogyi",
-            "ngazun",
-            "nyaung-u",
-            "patheingyi",
-            "pyawbwe",
-            "m-pyigyitagon",
-            "pyinmana",
-            "pyinoolwin",
-            "singu",
-            "sintgaing",
-            "tada-u",
-            "tatkon",
-            "taungtha",
-            "thabeikkyin",
-            "thazi",
-            "wundwin",
-            "yamethin",
+			"amarapura",
+			"m-aungmyaythazan",
+			"m-chanayethazan",
+			"m-chanmyathazi",
+			"kyaukpadaung",
+			"kyaukse",
+			"madaya",
+			"m-mahaaungmyay",
+			"mahlaing",
+			"meiktila",
+			"mogoke",
+			"myingyan",
+			"myittha",
+			"natogyi",
+			"ngazun",
+			"nyaung-u",
+			"patheingyi",
+			"pyawbwe",
+			"m-pyigyitagon",
+			"pyinoolwin",
+			"singu",
+			"sintgaing",
+			"tada-u",
+			"taungtha",
+			"thabeikkyin",
+			"thazi",
+			"wundwin",
+			"yamethin",
+
+			"lewe",
+			"tatkon",
+			"pyinmana",
+			"oketarathiri",
+			"zayarthiri",
+			"pokebathiri",
+			"dekkhinathiri",
+			"zabuthiri",
+
+			"bilin",
+			"chaungzon",
+			"kyaikmaraw",
+			"kyaikto",
+			"mawlamyine",
+			"mudon",
+			"paung",
+			"thanbyuzayat",
+			"thaton",
+			"ye",
 
 
-            "bilin",
-            "chaungzon",
-            "kyaikmaraw",
-            "kyaikto",
-            "mawlamyine",
-            "mudon",
-            "paung",
-            "thanbyuzayat",
-            "thaton",
-            "ye",
+			"ann",
+			"buthidaung",
+			"gwa",
+			"kyaukpyu",
+			"kyauktaw",
+			"maungdaw",
+			"minbya",
+			"mrauk-u",
+			"munaung",
+			"myebon",
+			"pauktaw",
+			"ponnagyun",
+			"ramree",
+			"rathedaung",
+			"sittwe",
+			"thandwe",
+			"toungup",
 
 
-            "ann",
-            "buthidaung",
-            "gwa",
-            "kyaukpyu",
-            "kyauktaw",
-            "maungdaw",
-            "minbya",
-            "mrauk-u",
-            "munaung",
-            "myebon",
-            "pauktaw",
-            "ponnagyun",
-            "ramree",
-            "rathedaung",
-            "sittwe",
-            "thandwe",
-            "toungup",
+			"ayadaw",
+			"banmauk",
+			"budalin",
+			"chaung-u",
+			"hkamti",
+			"homalin",
+			"indaw",
+			"kale",
+			"kalewa",
+			"kanbalu",
+			"kani",
+			"katha",
+			"kawlin",
+			"khin-u",
+			"kyunhla",
+			"lahe",
+			"layshi",
+			"mawlaik",
+			"mingin",
+			"monywa",
+			"myaung",
+			"myinmu",
+			"nanyun",
+			"pale",
+			"paungbyin",
+			"pinlebu",
+			"sagaing",
+			"salingyi",
+			"shwebo",
+			"tabayin",
+			"tamu",
+			"taze",
+			"tigyaing",
+			"wetlet",
+			"wuntho",
+			"ye-u",
+			"yinmabin",
 
 
-            "ayadaw",
-            "banmauk",
-            "budalin",
-            "chaung-u",
-            "hkamti",
-            "homalin",
-            "indaw",
-            "kale",
-            "kalewa",
-            "kanbalu",
-            "kani",
-            "katha",
-            "kawlin",
-            "khin-u",
-            "kyunhla",
-            "lahe",
-            "layshi",
-            "mawlaik",
-            "mingin",
-            "monywa",
-            "myaung",
-            "myinmu",
-            "nanyun",
-            "pale",
-            "paungbyin",
-            "pinlebu",
-            "sagaing",
-            "salingyi",
-            "shwebo",
-            "tabayin",
-            "tamu",
-            "taze",
-            "tigyaing",
-            "wetlet",
-            "wuntho",
-            "ye-u",
-            "yinmabin",
+			"kengtung",
+			"matman",
+			"monghpyak",
+			"monghsat",
+			"mongkhet",
+			"mongla",
+			"mongping",
+			"mongton",
+			"mongyang",
+			"mongyawng",
+			"tachileik",
 
 
-            "kengtung",
-            "matman",
-            "monghpyak",
-            "monghsat",
-            "mongkhet",
-            "mongla",
-            "mongping",
-            "mongton",
-            "mongyang",
-            "mongyawng",
-            "tachileik",
+			"hopang",
+			"hseni",
+			"hsipaw",
+			"konkyan",
+			"kunlong",
+			"kutkai",
+			"kyaukme",
+			"lashio",
+			"laukkaing",
+			"mabein",
+			"manton",
+			"mongmao",
+			"mongmit",
+			"mongyai",
+			"muse",
+			"namhsan",
+			"namphan",
+			"namtu",
+			"nanhkan",
+			"nawnghkio",
+			"pangsang",
+			"pangwaun",
+			"tangyan",
 
 
-            "hopang",
-            "hseni",
-            "hsipaw",
-            "konkyan",
-            "kunlong",
-            "kutkai",
-            "kyaukme",
-            "lashio",
-            "laukkaing",
-            "mabein",
-            "manton",
-            "mongmao",
-            "mongmit",
-            "mongyai",
-            "muse",
-            "namhsan",
-            "namphan",
-            "namtu",
-            "nanhkan",
-            "nawnghkio",
-            "pangsang",
-            "pangwaun",
-            "tangyan",
+			"hopong",
+			"hsihseng",
+			"kalaw",
+			"kunhing",
+			"kyethi",
+			"laihka",
+			"langkho",
+			"lawksawk",
+			"loilen",
+			"mawkmai",
+			"monghsu",
+			"mongkaung",
+			"mongnai",
+			"mongpan",
+			"nansang",
+			"nyaungshwe",
+			"pekon",
+			"pindaya",
+			"pinlaung",
+			"taunggyi",
+			"ywangan",
 
 
-            "hopong",
-            "hsihseng",
-            "kalaw",
-            "kunhing",
-            "kyethi",
-            "laihka",
-            "langkho",
-            "lawksawk",
-            "loilen",
-            "mawkmai",
-            "monghsu",
-            "mongkaung",
-            "mongnai",
-            "mongpan",
-            "nansang",
-            "nyaungshwe",
-            "pekon",
-            "pindaya",
-            "pinlaung",
-            "taunggyi",
-            "ywangan",
+			"bokpyin",
+			"dawei",
+			"kawthoung",
+			"kyunsu",
+			"launglon",
+			"myeik",
+			"palaw",
+			"tanintharyi",
+			"thayetchaung",
+			"yebyu",
 
 
-            "bokpyin",
-            "dawei",
-            "kawthoung",
-            "kyunsu",
-            "launglon",
-            "myeik",
-            "palaw",
-            "tanintharyi",
-            "thayetchaung",
-            "yebyu",
-
-
-            "y-ahlone",
-            "y-bahan",
-            "y-botahtaung",
-            "y-cocokyun",
-            "y-dagon",
-            "y-dagonmyothitea",
-            "y-dagonmyothitno",
-            "y-dagonmyothitse",
-            "y-dagonmyothitso",
-            "y-dala",
-            "y-dawbon",
-            "y-hlaing",
-            "y-hlaingtharya",
-            "hlegu",
-            "hmawbi",
-            "htantabin",
-            "y-insein",
-            "y-kamaryut",
-            "kawhmu",
-            "kayan",
-            "kungyangon",
-            "kyauktan",
-            "y-kyeemyindaing",
-            "y-lanmadaw",
-            "y-latha",
-            "y-mayangone",
-            "y-mingaladon",
-            "y-mingalartaungnyunt",
-            "y-northokkalapa",
-            "y-pabedan",
-            "y-pazundaung",
-            "y-sanchaung",
-            "y-seikgyikanaungto",
-            "y-seikkan",
-            "y-shwepyithar",
-            "y-southokkalapa",
-            "taikkyi",
-            "y-tamwe",
-            "y-thaketa",
-            "thanlyin",
-            "y-thingangkuun",
-            "thongwa",
-            "twantay",
-            "y-yankin",
-        ]
+			"y-ahlone",
+			"y-bahan",
+			"y-botahtaung",
+			"y-cocokyun",
+			"y-dagon",
+			"y-dagonmyothitea",
+			"y-dagonmyothitno",
+			"y-dagonmyothitse",
+			"y-dagonmyothitso",
+			"y-dala",
+			"y-dawbon",
+			"y-hlaing",
+			"y-hlaingtharya",
+			"hlegu",
+			"hmawbi",
+			"htantabin",
+			"y-insein",
+			"y-kamaryut",
+			"kawhmu",
+			"kayan",
+			"kungyangon",
+			"kyauktan",
+			"y-kyeemyindaing",
+			"y-lanmadaw",
+			"y-latha",
+			"y-mayangone",
+			"y-mingaladon",
+			"y-mingalartaungnyunt",
+			"y-northokkalapa",
+			"y-pabedan",
+			"y-pazundaung",
+			"y-sanchaung",
+			"y-seikgyikanaungto",
+			"y-seikkan",
+			"y-shwepyithar",
+			"y-southokkalapa",
+			"taikkyi",
+			"y-tamwe",
+			"y-thaketa",
+			"thanlyin",
+			"y-thingangkuun",
+			"thongwa",
+			"twantay",
+			"y-yankin",
+		]
 
         var khayines = [
-            "ky-loikaw",
-            "ky-bawlakhe",
-            "ky-kawthoung",
-            "ky-myeik",
-            "ky-dawei",
-            "ky-kawkareik",
-            "ky-myawaddy",
-            "ky-hpa-an",
-            "ky-hpapun",
-            "ky-mawlamyine",
-            "ky-thaton",
-            "ky-syangon",
-            "ky-wyangon",
-            "ky-eyangon",
-            "ky-nyangon",
-            "ky-pathein",
-            "ky-myaungmya",
-            "ky-hinthada",
-            "ky-maubin",
-            "ky-labutta",
-            "ky-pyapon",
-            "ky-bago",
-            "ky-taungoo",
-            "ky-thayarwady",
-            "ky-pyay",
-            "ky-nyaung-u",
-            "ky-yamethin",
-            "ky-naypyitaw",
-            "ky-meiktila",
-            "ky-myingyan",
-            "ky-kyaukse",
-            "ky-mandalay",
-            "ky-pyinoolwin",
-            "ky-thayet",
-            "ky-magway",
-            "ky-minbu",
-            "ky-pakokku",
-            "ky-gangaw",
-            "ky-thandwe",
-            "ky-kyaukpyu",
-            "ky-mrauk-u",
-            "ky-sittwe",
-            "ky-maungdaw",
-            "ky-mindat",
-            "ky-hakha",
-            "ky-falam",
-            "ky-tachileik",
-            "ky-monghpyak",
-            "ky-kengtung",
-            "ky-monghsat",
-            "ky-langkho",
-            "ky-loilen",
-            "ky-taunggyi",
-            "ky-matman",
-            "ky-hopang",
-            "ky-lashio",
-            "ky-kunlong",
-            "ky-muse",
-            "ky-kyaukme",
-            "ky-kale",
-            "ky-yinmabin",
-            "ky-shwebo",
-            "ky-monywa",
-            "ky-sagaing",
-            "ky-kanbalu",
-            "ky-mawlaik",
-            "ky-katha",
-            "ky-hkamti",
-            "ky-puta-o",
-            "ky-myitkyina",
-            "ky-mohnyin",
-            "ky-bhamo"
-        ]
+			"ky-loikaw",
+			"ky-bawlakhe",
+			"ky-kawthoung",
+			"ky-myeik",
+			"ky-dawei",
+			"ky-kawkareik",
+			"ky-myawaddy",
+			"ky-hpa-an",
+			"ky-hpapun",
+			"ky-mawlamyine",
+			"ky-thaton",
+			"ky-syangon",
+			"ky-wyangon",
+			"ky-eyangon",
+			"ky-nyangon",
+			"ky-pathein",
+			"ky-myaungmya",
+			"ky-hinthada",
+			"ky-maubin",
+			"ky-labutta",
+			"ky-pyapon",
+			"ky-bago",
+			"ky-taungoo",
+			"ky-thayarwady",
+			"ky-pyay",
+			"ky-nyaung-u",
+			"ky-yamethin",
+			"ky-meiktila",
+			"ky-myingyan",
+			"ky-kyaukse",
+			"ky-mandalay",
+			"ky-pyinoolwin",
+			"ky-thayet",
+			"ky-magway",
+			"ky-minbu",
+			"ky-pakokku",
+			"ky-gangaw",
+			"ky-thandwe",
+			"ky-kyaukpyu",
+			"ky-mrauk-u",
+			"ky-sittwe",
+			"ky-maungdaw",
+			"ky-mindat",
+			"ky-hakha",
+			"ky-falam",
+			"ky-tachileik",
+			"ky-monghpyak",
+			"ky-kengtung",
+			"ky-monghsat",
+			"ky-langkho",
+			"ky-loilen",
+			"ky-taunggyi",
+			"ky-matman",
+			"ky-hopang",
+			"ky-lashio",
+			"ky-kunlong",
+			"ky-muse",
+			"ky-kyaukme",
+			"ky-kale",
+			"ky-yinmabin",
+			"ky-shwebo",
+			"ky-monywa",
+			"ky-sagaing",
+			"ky-kanbalu",
+			"ky-mawlaik",
+			"ky-katha",
+			"ky-hkamti",
+			"ky-puta-o",
+			"ky-myitkyina",
+			"ky-mohnyin",
+			"ky-bhamo",
+			"ky-dekkhinathiri",
+			"ky-oketarathiri"
+		]
 
         var khayines_pos = [
             ["ky-loikaw","400","450"],
@@ -2353,7 +2384,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
             "div-rakhine",
             "div-sagaing",
             "div-kachin",
-            "div-chin"
+            "div-chin",
+			"div-naypyitaw"
         ]
 
         var divisions_mm = [
@@ -2462,2164 +2494,2208 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
         ];
 
         var khayines_mm = [
-            [
-                "ky-gangaw",
-                "Gangaw",
-                "ဂန့်ဂေါ",
-                "ဂန႔္ေဂါ"
-            ],
-            [
-                "ky-magway",
-                "Magway",
-                "မကွေး",
-                "မေကြး"
-            ],
-            [
-                "ky-minbu",
-                "Minbu",
-                "မင်းဘူး",
-                "မင္းဘူး"
-            ],
-            [
-                "ky-pakokku",
-                "Pakokku",
-                "ပခုက္ကူ",
-                "ပခုကၠဴ"
-            ],
-            [
-                "ky-thayet",
-                "Thayet",
-                "သရက်",
-                "သရက္"
-            ],
-            [
-                "ky-kyaukse",
-                "Kyaukse",
-                "ကျောက်ဆည်",
-                "ေက်ာက္ဆည္"
-            ],
-            [
-                "ky-mandalay",
-                "Mandalay",
-                "မန္တလေး",
-                "မႏၲေလး"
-            ],
-            [
-                "ky-meiktila",
-                "Meiktila",
-                "မိတ္ထီလာ",
-                "မိတၳီလာ"
-            ],
-            [
-                "ky-myingyan",
-                "Myingyan",
-                "မြင်းခြံ",
-                "ျမင္းၿခံ"
-            ],
-            [
-                "ky-nyaung-u",
-                "Nyaung-U",
-                "ညောင်ဦး",
-                "ေညာင္ဦး"
-            ],
-            [
-                "ky-pyinoolwin",
-                "Pyinoolwin",
-                "ပြင်ဦးလွင်",
-                "ျပင္ဦးလြင္"
-            ],
-            [
-                "ky-yamethin",
-                "Yamethin",
-                "ရမည်းသင်း",
-                "ရမည္းသင္း"
-            ],
-            [
-                "ky-hinthada",
-                "Hinthada",
-                "ဟင်္သာတ",
-                "ဟသၤာတ"
-            ],
-            [
-                "ky-labutta",
-                "Labutta",
-                "လပွတ္တာ",
-                "လပြတၱာ"
-            ],
-            [
-                "ky-maubin",
-                "Maubin",
-                "မအူပင်",
-                "မအူပင္"
-            ],
-            [
-                "ky-myaungmya",
-                "Myaungmya",
-                "မြောင်းမြ",
-                "ေျမာင္းျမ"
-            ],
-            [
-                "ky-pathein",
-                "Pathein",
-                "ပုသိမ်",
-                "ပုသိမ္"
-            ],
-            [
-                "ky-pyapon",
-                "Pyapon",
-                "ဖျာပုံ",
-                "ဖ်ာပုံ"
-            ],
-            [
-                "ky-bago",
-                "Bago",
-                "ပဲခူး",
-                "ပဲခူး"
-            ],
-            [
-                "ky-taungoo",
-                "Taungoo",
-                "တောင်ငူ",
-                "ေတာင္ငူ"
-            ],
-            [
-                "ky-pyay",
-                "Pyay",
-                "ပြည်",
-                "ျပည္"
-            ],
-            [
-                "ky-thayarwady",
-                "Thayarwaddy",
-                "သာယာဝတီ",
-                "သာယာဝတီ"
-            ],
-            [
-                "ky-hakha",
-                "Hakha",
-                "ဟားခါး",
-                "ဟားခါး"
-            ],
-            [
-                "ky-mindat",
-                "Mindat",
-                "မင်းတပ်",
-                "မင္းတပ္"
-            ],
-            [
-                "ky-bhamo",
-                "Bhamo",
-                "ဗန်းမော်",
-                "ဗန္းေမာ္"
-            ],
-            [
-                "ky-mohnyin",
-                "Mohnyin",
-                "မိုးညှင်း",
-                "မိုးညႇင္း"
-            ],
-            [
-                "ky-myitkyina",
-                "Myitkyina",
-                "မြစ်ကြီးနား",
-                "ျမစ္ျကီးနား"
-            ],
-            [
-                "ky-puta-o",
-                "Puta-O",
-                "ပူတာအို",
-                "ပူတာအို"
-            ],
-            [
-                "ky-bawlakhe",
-                "Bawlakhe",
-                "ဘော်လခဲ",
-                "ေဘာ္လခဲ"
-            ],
-            [
-                "ky-loikaw",
-                "Loikaw",
-                "လွိုင်ကော်",
-                "လြိုင္ေကာ္"
-            ],
-            [
-                "ky-hpa-an",
-                "Hpa-An",
-                "ဘားအံ",
-                "ဘားအံ"
-            ],
-            [
-                "ky-hpapun",
-                "Hpapun",
-                "ဖာပွန်",
-                "ဖာပြန္"
-            ],
-            [
-                "ky-kawkareik",
-                "Kawkareik",
-                "ကော့ကရိတ်",
-                "ေကာ့ကရိတ္"
-            ],
-            [
-                "ky-myawaddy",
-                "Myawaddy",
-                "မြဝတီ",
-                "ျမ၀တီ"
-            ],
-            [
-                "ky-mawlamyine",
-                "Mawlamyine",
-                "မော်လမြိုင်",
-                "ေမာ္လျမိုင္"
-            ],
-            [
-                "ky-thaton",
-                "Thaton",
-                "သထုံ",
-                "သထံု"
-            ],
-            [
-                "ky-kyaukpyu",
-                "Kyaukpyu",
-                "ကျောက်ဖြူ",
-                "ေက်ာက္ျဖူ"
-            ],
-            [
-                "ky-sittwe",
-                "Sittwe",
-                "စစ်တွေ",
-                "စစ္ေတြ"
-            ],
-            [
-                "ky-thandwe",
-                "Thandwe",
-                "သံတွဲ",
-                "သံတြဲ"
-            ],
-            [
-                "ky-mrauk-u",
-                "Mrauk-U",
-                "မြောက်ဦး",
-                "ေျမာက္ဦး"
-            ],
-            [
-                "ky-kengtung",
-                "Kengtung",
-                "ကျိုင်းတုံ",
-                "က်ိုင္းတံု"
-            ],
-            [
-                "ky-tachileik",
-                "Tachileik",
-                "တာချီလိတ်",
-                "တာခ်ီလိတ္"
-            ],
-            [
-                "ky-kunlong",
-                "Kunlong",
-                "ကွမ်းလုံ",
-                "ကြမ္းလုံ"
-            ],
-            [
-                "ky-kyaukme",
-                "Kyaukme",
-                "ကျောက်မဲ",
-                "ေက်ာက္မဲ"
-            ],
-            [
-                "ky-lashio",
-                "Lashio",
-                "လားရှိုး",
-                "လားရွိဳး"
-            ],
-            [
-                "ky-langkho",
-                "Langkho",
-                "လင်းခေး",
-                "လင္းေခး"
-            ],
-            [
-                "ky-loilen",
-                "Loilen",
-                "လွိုင်လင်",
-                "လြိုင္လင္"
-            ],
-            [
-                "ky-taunggyi",
-                "Taunggyi",
-                "တောင်ကြီး",
-                "ေတာင္ျကီး"
-            ],
-            [
-                "ky-kanbalu",
-                "Kanbalu",
-                "ကန့်ဘလူ",
-                "ကန့္ဘလူ"
-            ],
-            [
-                "ky-kale",
-                "Kale",
-                "ကလေး",
-                "ကေလး"
-            ],
-            [
-                "ky-katha",
-                "Katha",
-                "ကသာ",
-                "ကသာ"
-            ],
-            [
-                "ky-mawlaik",
-                "Mawlaik",
-                "မော်လိုက်",
-                "ေမာ္လိုက္"
-            ],
-            [
-                "ky-monywa",
-                "Monywa",
-                "မုံရွာ",
-                "မံုရြာ"
-            ],
-            [
-                "ky-sagaing",
-                "Sagaing",
-                "စစ်ကိုင်း",
-                "စစ္ကိုင္း"
-            ],
-            [
-                "ky-shwebo",
-                "Shwebo",
-                "ရွှေဘို",
-                "ေရြွဘို"
-            ],
-            [
-                "ky-myeik",
-                "Myeik",
-                "မြိတ်",
-                "ျမိတ္"
-            ],
-            [
-                "ky-kawthoung",
-                "Kawthoung",
-                "ကော့သောင်း",
-                "ေကာ့ေသာင္း"
-            ],
-            [
-                "ky-dawei",
-                "Dawei",
-                "ထားဝယ်",
-                "ထား၀ယ္"
-            ],
-            [
-                "ky-syangon",
-                "South Yangon",
-                "ရန်ကုန်တောင်ပိုင်း",
-                "ရန္ကုန္ေတာင္ပိုင္း"
-            ],
-            [
-                "ky-wyangon",
-                "West Yangon",
-                "ရန်ကုန်အနောက်ပိုင်း",
-                "ရန္ကုန္အေနာက္ပိုင္း"
-            ],
-            [
-                "ky-eyangon",
-                "East Yangon",
-                "ရန်ကုန်အရှေ့ပိုင်း",
-                "ရန္ကုန္အေရွ့ပိုင္း"
-            ],
-            [
-                "ky-nyangon",
-                "North Yangon",
-                "ရန်ကုန်မြောက်ပိုင်း",
-                "ရန္ကုန္ေျမာက္ပိုင္း"
-            ],
-            [
-                "ky-naypyitaw",
-                "Naypyidaw",
-                "နေပြည်တော်",
-                "ေနျပည္ေတာ္"
-            ],
-            [
-                "ky-maungdaw",
-                "Maungdaw",
-                "မောင်းတော",
-                "ေမာင္းေတာ"
-            ],
-            [
-                "ky-falam",
-                "Falam",
-                "ဖလမ်း",
-                "ဖလမ္း"
-            ],
-            [
-                "ky-monghpyak",
-                "Monghpyak",
-                "မိုင်းဖြတ်",
-                "မိုင္းျဖတ္"
-            ],
-            [
-                "ky-monghsat",
-                "Monghsat",
-                "မိုင်းဆတ်",
-                "မိုင္းဆတ္"
-            ],
-            [
-                "ky-matman",
-                "Matman",
-                "မက်မန်း",
-                "မက္မန္း"
-            ],
-            [
-                "ky-hopang",
-                "Hopang",
-                "ဟိုပင်",
-                "ဟိုပင္"
-            ],
-            [
-                "ky-muse",
-                "Muse",
-                "မူဆယ်",
-                "မူဆယ္"
-            ],
-            [
-                "ky-yinmabin",
-                "Yinmabin",
-                "ယင်းမာပင်",
-                "ယင္းမာပင္"
-            ],
-            [
-                "ky-hkamti",
-                "Hkamti",
-                "ခန္တီး",
-                "ခႏၲီး"
-            ]
-        ];
+			[
+				"ky-gangaw",
+				"Gangaw",
+				"ဂန့်ဂေါ",
+				"ဂန႔္ေဂါ"
+			],
+			[
+				"ky-magway",
+				"Magway",
+				"မကွေး",
+				"မေကြး"
+			],
+			[
+				"ky-minbu",
+				"Minbu",
+				"မင်းဘူး",
+				"မင္းဘူး"
+			],
+			[
+				"ky-pakokku",
+				"Pakokku",
+				"ပခုက္ကူ",
+				"ပခုကၠဴ"
+			],
+			[
+				"ky-thayet",
+				"Thayet",
+				"သရက်",
+				"သရက္"
+			],
+			[
+				"ky-kyaukse",
+				"Kyaukse",
+				"ကျောက်ဆည်",
+				"ေက်ာက္ဆည္"
+			],
+			[
+				"ky-mandalay",
+				"Mandalay",
+				"မန္တလေး",
+				"မႏၲေလး"
+			],
+			[
+				"ky-meiktila",
+				"Meiktila",
+				"မိတ္ထီလာ",
+				"မိတၳီလာ"
+			],
+			[
+				"ky-myingyan",
+				"Myingyan",
+				"မြင်းခြံ",
+				"ျမင္းၿခံ"
+			],
+			[
+				"ky-nyaung-u",
+				"Nyaung-U",
+				"ညောင်ဦး",
+				"ေညာင္ဦး"
+			],
+			[
+				"ky-pyinoolwin",
+				"Pyinoolwin",
+				"ပြင်ဦးလွင်",
+				"ျပင္ဦးလြင္"
+			],
+			[
+				"ky-yamethin",
+				"Yamethin",
+				"ရမည်းသင်း",
+				"ရမည္းသင္း"
+			],
+			[
+				"ky-hinthada",
+				"Hinthada",
+				"ဟင်္သာတ",
+				"ဟသၤာတ"
+			],
+			[
+				"ky-labutta",
+				"Labutta",
+				"လပွတ္တာ",
+				"လပြတၱာ"
+			],
+			[
+				"ky-maubin",
+				"Maubin",
+				"မအူပင်",
+				"မအူပင္"
+			],
+			[
+				"ky-myaungmya",
+				"Myaungmya",
+				"မြောင်းမြ",
+				"ေျမာင္းျမ"
+			],
+			[
+				"ky-pathein",
+				"Pathein",
+				"ပုသိမ်",
+				"ပုသိမ္"
+			],
+			[
+				"ky-pyapon",
+				"Pyapon",
+				"ဖျာပုံ",
+				"ဖ်ာပုံ"
+			],
+			[
+				"ky-bago",
+				"Bago",
+				"ပဲခူး",
+				"ပဲခူး"
+			],
+			[
+				"ky-taungoo",
+				"Taungoo",
+				"တောင်ငူ",
+				"ေတာင္ငူ"
+			],
+			[
+				"ky-pyay",
+				"Pyay",
+				"ပြည်",
+				"ျပည္"
+			],
+			[
+				"ky-thayarwady",
+				"Thayarwaddy",
+				"သာယာဝတီ",
+				"သာယာဝတီ"
+			],
+			[
+				"ky-hakha",
+				"Hakha",
+				"ဟားခါး",
+				"ဟားခါး"
+			],
+			[
+				"ky-mindat",
+				"Mindat",
+				"မင်းတပ်",
+				"မင္းတပ္"
+			],
+			[
+				"ky-bhamo",
+				"Bhamo",
+				"ဗန်းမော်",
+				"ဗန္းေမာ္"
+			],
+			[
+				"ky-mohnyin",
+				"Mohnyin",
+				"မိုးညှင်း",
+				"မိုးညႇင္း"
+			],
+			[
+				"ky-myitkyina",
+				"Myitkyina",
+				"မြစ်ကြီးနား",
+				"ျမစ္ျကီးနား"
+			],
+			[
+				"ky-puta-o",
+				"Puta-O",
+				"ပူတာအို",
+				"ပူတာအို"
+			],
+			[
+				"ky-bawlakhe",
+				"Bawlakhe",
+				"ဘော်လခဲ",
+				"ေဘာ္လခဲ"
+			],
+			[
+				"ky-loikaw",
+				"Loikaw",
+				"လွိုင်ကော်",
+				"လြိုင္ေကာ္"
+			],
+			[
+				"ky-hpa-an",
+				"Hpa-An",
+				"ဘားအံ",
+				"ဘားအံ"
+			],
+			[
+				"ky-hpapun",
+				"Hpapun",
+				"ဖာပွန်",
+				"ဖာပြန္"
+			],
+			[
+				"ky-kawkareik",
+				"Kawkareik",
+				"ကော့ကရိတ်",
+				"ေကာ့ကရိတ္"
+			],
+			[
+				"ky-myawaddy",
+				"Myawaddy",
+				"မြဝတီ",
+				"ျမ၀တီ"
+			],
+			[
+				"ky-mawlamyine",
+				"Mawlamyine",
+				"မော်လမြိုင်",
+				"ေမာ္လျမိုင္"
+			],
+			[
+				"ky-thaton",
+				"Thaton",
+				"သထုံ",
+				"သထံု"
+			],
+			[
+				"ky-kyaukpyu",
+				"Kyaukpyu",
+				"ကျောက်ဖြူ",
+				"ေက်ာက္ျဖူ"
+			],
+			[
+				"ky-sittwe",
+				"Sittwe",
+				"စစ်တွေ",
+				"စစ္ေတြ"
+			],
+			[
+				"ky-thandwe",
+				"Thandwe",
+				"သံတွဲ",
+				"သံတြဲ"
+			],
+			[
+				"ky-mrauk-u",
+				"Mrauk-U",
+				"မြောက်ဦး",
+				"ေျမာက္ဦး"
+			],
+			[
+				"ky-kengtung",
+				"Kengtung",
+				"ကျိုင်းတုံ",
+				"က်ိုင္းတံု"
+			],
+			[
+				"ky-tachileik",
+				"Tachileik",
+				"တာချီလိတ်",
+				"တာခ်ီလိတ္"
+			],
+			[
+				"ky-kunlong",
+				"Kunlong",
+				"ကွမ်းလုံ",
+				"ကြမ္းလုံ"
+			],
+			[
+				"ky-kyaukme",
+				"Kyaukme",
+				"ကျောက်မဲ",
+				"ေက်ာက္မဲ"
+			],
+			[
+				"ky-lashio",
+				"Lashio",
+				"လားရှိုး",
+				"လားရွိဳး"
+			],
+			[
+				"ky-langkho",
+				"Langkho",
+				"လင်းခေး",
+				"လင္းေခး"
+			],
+			[
+				"ky-loilen",
+				"Loilen",
+				"လွိုင်လင်",
+				"လြိုင္လင္"
+			],
+			[
+				"ky-taunggyi",
+				"Taunggyi",
+				"တောင်ကြီး",
+				"ေတာင္ျကီး"
+			],
+			[
+				"ky-kanbalu",
+				"Kanbalu",
+				"ကန့်ဘလူ",
+				"ကန့္ဘလူ"
+			],
+			[
+				"ky-kale",
+				"Kale",
+				"ကလေး",
+				"ကေလး"
+			],
+			[
+				"ky-katha",
+				"Katha",
+				"ကသာ",
+				"ကသာ"
+			],
+			[
+				"ky-mawlaik",
+				"Mawlaik",
+				"မော်လိုက်",
+				"ေမာ္လိုက္"
+			],
+			[
+				"ky-monywa",
+				"Monywa",
+				"မုံရွာ",
+				"မံုရြာ"
+			],
+			[
+				"ky-sagaing",
+				"Sagaing",
+				"စစ်ကိုင်း",
+				"စစ္ကိုင္း"
+			],
+			[
+				"ky-shwebo",
+				"Shwebo",
+				"ရွှေဘို",
+				"ေရြွဘို"
+			],
+			[
+				"ky-myeik",
+				"Myeik",
+				"မြိတ်",
+				"ျမိတ္"
+			],
+			[
+				"ky-kawthoung",
+				"Kawthoung",
+				"ကော့သောင်း",
+				"ေကာ့ေသာင္း"
+			],
+			[
+				"ky-dawei",
+				"Dawei",
+				"ထားဝယ်",
+				"ထား၀ယ္"
+			],
+			[
+				"ky-syangon",
+				"South Yangon",
+				"ရန်ကုန်တောင်ပိုင်း",
+				"ရန္ကုန္ေတာင္ပိုင္း"
+			],
+			[
+				"ky-wyangon",
+				"West Yangon",
+				"ရန်ကုန်အနောက်ပိုင်း",
+				"ရန္ကုန္အေနာက္ပိုင္း"
+			],
+			[
+				"ky-eyangon",
+				"East Yangon",
+				"ရန်ကုန်အရှေ့ပိုင်း",
+				"ရန္ကုန္အေရွ့ပိုင္း"
+			],
+			[
+				"ky-nyangon",
+				"North Yangon",
+				"ရန်ကုန်မြောက်ပိုင်း",
+				"ရန္ကုန္ေျမာက္ပိုင္း"
+			],
+			[
+				"ky-naypyitaw",
+				"Naypyidaw",
+				"နေပြည်တော်",
+				"ေနျပည္ေတာ္"
+			],
+			[
+				"ky-maungdaw",
+				"Maungdaw",
+				"မောင်းတော",
+				"ေမာင္းေတာ"
+			],
+			[
+				"ky-falam",
+				"Falam",
+				"ဖလမ်း",
+				"ဖလမ္း"
+			],
+			[
+				"ky-monghpyak",
+				"Monghpyak",
+				"မိုင်းဖြတ်",
+				"မိုင္းျဖတ္"
+			],
+			[
+				"ky-monghsat",
+				"Monghsat",
+				"မိုင်းဆတ်",
+				"မိုင္းဆတ္"
+			],
+			[
+				"ky-matman",
+				"Matman",
+				"မက်မန်း",
+				"မက္မန္း"
+			],
+			[
+				"ky-hopang",
+				"Hopang",
+				"ဟိုပင်",
+				"ဟိုပင္"
+			],
+			[
+				"ky-muse",
+				"Muse",
+				"မူဆယ်",
+				"မူဆယ္"
+			],
+			[
+				"ky-yinmabin",
+				"Yinmabin",
+				"ယင်းမာပင်",
+				"ယင္းမာပင္"
+			],
+			[
+				"ky-hkamti",
+				"Hkamti",
+				"ခန္တီး",
+				"ခႏၲီး"
+			],
+			[
+				"ky-dekkhinathiri",
+				"Dekkhinathiri",
+				"ဒက္ခိဏသီရိခရိုင်",
+				"ခႏၲီး"
+			],
+			[
+				"ky-oketarathiri",
+				"Oketarathiri",
+				"ဥတ္တရသီရိခရိုင်",
+				"ခႏၲီး"
+			],
+		];
 
-        var townships_mm = [
+        var townships_mm =
+
             [
-                "yangon-gp",
-                "Yangon",
-                "ရန်ကုန်",
-                "ဂန႔္ေဂါ"
-            ],
-            [
-                "mandalay-gp",
-                "Mandalay",
-                "မန္တလေး",
-                "မန္တလေး"
-            ],
-            [
+                [
+                  "yangon-gp",
+                  "Yangon",
+                  "ရန်ကုန်",
+                  "ဂန႔္ေဂါ"
+                ],
+                [
+                  "mandalay-gp",
+                  "Mandalay",
+                  "မန္တလေး",
+                  "မန္တလေး"
+                ],
+                [
                 "gangaw",
                 "Gangaw",
                 "ဂန့်ဂေါ",
                 "ဂန႔္ေဂါ"
-            ],
-            [
+                ],
+                [
                 "saw",
                 "Saw",
                 "ဆော",
                 "ေဆာ"
-            ],
-            [
+                ],
+                [
                 "tilin",
                 "Tilin",
                 "ထီးလင်း",
                 "ထီးလင္း"
-            ],
-            [
+                ],
+                [
                 "chauk",
                 "Chauk",
                 "ချောက်",
                 "ေခ်ာက္"
-            ],
-            [
+                ],
+                [
                 "magway",
                 "Magway",
                 "မကွေး",
                 "မေကြး"
-            ],
-            [
+                ],
+                [
                 "myothit",
                 "Myothit",
                 "မြို့သစ်",
                 "ၿမိဳ႕သစ္"
-            ],
-            [
+                ],
+                [
                 "natmauk",
                 "Natmauk",
                 "နတ်မောက်",
                 "နတ္ေမာက္"
-            ],
-            [
+                ],
+                [
                 "taungdwingyi",
                 "Taungdwingyi",
                 "တောင်တွင်းကြီး",
                 "ေတာင္တြင္းႀကီး"
-            ],
-            [
+                ],
+                [
                 "yenangyaung",
                 "Yenangyaung",
                 "ရေနံချောင်း",
                 "ေရနံေခ်ာင္း"
-            ],
-            [
+                ],
+                [
                 "minbu",
                 "Minbu",
                 "မင်းဘူး",
                 "မင္းဘူး"
-            ],
-            [
+                ],
+                [
                 "ngape",
                 "Ngape",
                 "ငဖဲ",
                 "ငဖဲ"
-            ],
-            [
+                ],
+                [
                 "pwintbyu",
                 "Pwintbyu",
                 "ပွင့်ဖြူ",
                 "ပြင့္ျဖဴ"
-            ],
-            [
+                ],
+                [
                 "salingyi",
                 "Salingyi",
                 "ဆာလင်းကြီး",
                 "ဆာလင္းႀကီး"
-            ],
-            [
+                ],
+                [
                 "sidoktaya",
                 "Sidoktaya",
                 "စေတ္တုတရာ",
                 "ေစတၱဳတရာ"
-            ],
-            [
+                ],
+                [
                 "myaing",
                 "Myaing",
                 "မြိုင်",
                 "ၿမိဳင္"
-            ],
-            [
+                ],
+                [
                 "pakokku",
                 "pakokku",
                 "ပခုက္ကူ",
                 "ပခုကၠဴ"
-            ],
-            [
+                ],
+                [
                 "pauk",
                 "pauk",
                 "ပေါက်",
                 "ေပါက္"
-            ],
-            [
+                ],
+                [
                 "seikphyu",
                 "seikphyu",
                 "ဆိပ်ဖြူ",
                 "ဆိပ္ျဖဴ"
-            ],
-            [
+                ],
+                [
                 "yesagyo",
                 "Yesagyo",
                 "ရေစကြို",
                 "ေရစႀကိဳ"
-            ],
-            [
+                ],
+                [
                 "aunglan",
                 "Aunglan",
                 "အောင်လံ",
                 "ေအာင္လံ"
-            ],
-            [
+                ],
+                [
                 "kamma",
                 "Kamma",
                 "ကမ္မ",
                 "ကမၼ"
-            ],
-            [
+                ],
+                [
                 "mindon",
                 "Mindon",
                 "မင်းတုန်း",
                 "မင္းတုန္း"
-            ],
-            [
+                ],
+                [
                 "minhla",
                 "Minhla",
                 "မင်းလှ",
                 "မင္းလွ"
-            ],
-            [
+                ],
+                [
                 "sinbaungwe",
                 "Sinbaungwe",
                 "ဆင်ပေါင်ဝဲ",
                 "ဆင္ေပါင္ဝဲ"
-            ],
-            [
+                ],
+                [
                 "thayet",
                 "Thayet",
                 "သရက်",
                 "သရက္"
-            ],
-            [
+                ],
+                [
                 "kyaukse",
                 "Kyaukse",
                 "ကျောက်ဆညိ",
                 "ေက်ာက္ဆညိ"
-            ],
-            [
+                ],
+                [
                 "myittha",
                 "Myittha",
                 "မြစ်သား",
                 "ျမစ္သား"
-            ],
-            [
+                ],
+                [
                 "sintgaing",
                 "Sintgaing",
                 "စဉ့်ကိုင်",
-                "စဥ့္ကိုင္"
-            ],
-            [
+                "စဥ့္ကိုင္"
+                ],
+                [
                 "tada-u",
                 "Tada-u",
                 "တံတားဦး",
                 "တံတားဦး"
-            ],
-            [
+                ],
+                [
                 "amarapura",
                 "Amarapura",
                 "အမရပူရ",
                 "အမရပူရ"
-            ],
-            [
+                ],
+                [
                 "patheingyi",
                 "Patheingyi",
                 "ပုသိမ်ကြီး",
                 "ပုသိမ္ႀကီး"
-            ],
-            [
+                ],
+                [
                 "mahlaing",
                 "Mahlaing",
                 "မလှိုင်",
                 "မလႈိင္"
-            ],
-            [
+                ],
+                [
                 "meiktila",
                 "Meiktila",
                 "မိတ္ထီလာ",
                 "မိတၳီလာ"
-            ],
-            [
+                ],
+                [
                 "thazi",
                 "Thazi",
                 "သာစည်",
                 "သာစည္"
-            ],
-            [
+                ],
+                [
                 "wundwin",
                 "Wundwin",
                 "ဝမ်းတွင်း",
                 "ဝမ္းတြင္း"
-            ],
-            [
+                ],
+                [
                 "myingyan",
                 "Myingyan",
                 "မြင်းခြံ",
                 "ျမင္းၿခံ"
-            ],
-            [
+                ],
+                [
                 "natogyi",
                 "Natogyi",
                 "နွားထိုးကြီး",
                 "ႏြားထိုးႀကီး"
-            ],
-            [
+                ],
+                [
                 "nyaung-u",
                 "Nyaung-U",
                 "ညောင်ဦး",
                 "ေညာင္ဦး"
-            ],
-            [
+                ],
+                [
                 "kyaukpadaung",
                 "Kyaukpadaung",
                 "ကျောက်ပန်းတောင်း",
                 "ေက်ာက္ပန္းေတာင္း"
-            ],
-            [
+                ],
+                [
                 "madaya",
                 "Madaya",
                 "မတ္တရာ",
                 "မတၱရာ"
-            ],
-            [
+                ],
+                [
                 "mogoke",
                 "Mogoke",
                 "မိုးကုတ်",
                 "မိုးကုတ္"
-            ],
-            [
+                ],
+                [
                 "pyinoolwin",
                 "Pyinoolwin",
                 "ပြင်ဦးလွင်",
                 "ျပင္ဦးလြင္"
-            ],
-            [
+                ],
+                [
                 "singu",
                 "Singu",
                 "စဉ့်ကူး",
                 "စဥ့္ကူး"
-            ],
-            [
+                ],
+                [
                 "thabeikkyin",
                 "Thabeikkyin",
                 "သပိတ်ကျင်း",
                 "သပိတ္က်င္း"
-            ],
-            [
+                ],
+                [
                 "pyawbwe",
                 "Pyawbwe",
                 "ပျော်ဘွယ်",
                 "ေပ်ာ္ဘြယ္"
-            ],
-            [
+                ],
+                [
                 "yamethin",
                 "Yamethin",
                 "ရမည်းသင်း",
                 "ရမည္းသင္း"
-            ],
-            [
+                ],
+                [
                 "hinthada",
                 "Hinthada",
                 "ဟင်္သာတ",
                 "ဟသၤာတ"
-            ],
-            [
+                ],
+                [
                 "lemyethna",
                 "Lemyethna",
                 "လေးမျက်နှာ",
                 "ေလးမ်က္ႏွာ"
-            ],
-            [
+                ],
+                [
                 "zalun",
                 "Zalun",
                 "ဇလွန်",
                 "ဇလြန္"
-            ],
-            [
+                ],
+                [
                 "ingapu",
                 "Ingapu",
                 "အင်္ဂပူ",
                 "အဂၤပူ"
-            ],
-            [
+                ],
+                [
                 "kyangin",
                 "Kyangin",
                 "ကြံခင်း",
                 "ႀကံခင္း"
-            ],
-            [
+                ],
+                [
                 "myanaung",
                 "Myanaung",
                 "မြန်အောင်",
                 "ျမန္ေအာင္"
-            ],
-            [
+                ],
+                [
                 "labutta",
                 "Labutta",
                 "လပွတ္တာ",
                 "လပြတၱာ"
-            ],
-            [
+                ],
+                [
                 "mawlamyinegyun",
                 "Mawlamyinegyun",
                 "မော်လမြိုင်ကျွန်း",
                 "ေမာ္လၿမိဳင္ကြၽန္း"
-            ],
-            [
+                ],
+                [
                 "nyaungdon",
                 "Nyaungdon",
                 "ညောင်တုန်း",
                 "ေညာင္တုန္း"
-            ],
-            [
+                ],
+                [
                 "pantanaw",
                 "Pantanaw",
                 "ပန်းတနော်",
                 "ပန္းတေနာ္"
-            ],
-            [
+                ],
+                [
                 "einme",
                 "Einme",
                 "အိမ်မဲ",
                 "အိမ္မဲ"
-            ],
-            [
+                ],
+                [
                 "wakema",
                 "Wakema",
                 "ဝါးခယ်မ",
                 "ဝါးခယ္မ"
-            ],
-            [
+                ],
+                [
                 "ngapudaw",
                 "Ngapudaw",
                 "ငပုတော",
                 "ငပုေတာ"
-            ],
-            [
+                ],
+                [
                 "pathein",
                 "Pathein",
                 "ပုသိမ်",
                 "ပုသိမ္"
-            ],
-            [
+                ],
+                [
                 "thabaung",
                 "Thabaung",
                 "သာပေါင်း",
                 "သာေပါင္း"
-            ],
-            [
+                ],
+                [
                 "kyaunggon",
                 "Kyaunggon",
                 "ကျောင်းကုန်း",
                 "ေက်ာင္းကုန္း"
-            ],
-            [
+                ],
+                [
                 "kyonpyaw",
                 "Kyonpyaw",
                 "ကျုံပျော်",
                 "က်ဳံေပ်ာ္"
-            ],
-            [
+                ],
+                [
                 "bogale",
                 "Bogale",
                 "ဘိုကလေး",
                 "ဘိုကေလး"
-            ],
-            [
+                ],
+                [
                 "dedaye",
                 "Dedaye",
                 "ဒေးဒရဲ",
                 "ေဒးဒရဲ"
-            ],
-            [
+                ],
+                [
                 "kyaiklat",
                 "Kyaiklat",
                 "ကျိုက်လတ်",
                 "က်ိဳက္လတ္"
-            ],
-            [
+                ],
+                [
                 "pyapon",
                 "Pyapon",
                 "ဖျာပုံ",
                 "ဖ်ာပုံ"
-            ],
-            [
+                ],
+                [
                 "bago",
                 "Bago",
                 "ပဲခူး",
                 "ပဲခူး"
-            ],
-            [
+                ],
+                [
                 "daik-u",
                 "Daik-u",
                 "ဒိုက်ဦး",
                 "ဒိုက္ဦး"
-            ],
-            [
+                ],
+                [
                 "kawa",
                 "Kawa",
                 "ကဝ",
                 "ကဝ"
-            ],
-            [
+                ],
+                [
                 "nyaunglebin",
                 "Nyaunglebin",
                 "ညောင်လေးပင်",
                 "ေညာင္ေလးပင္"
-            ],
-            [
+                ],
+                [
                 "shwegyin",
                 "Shwegyin",
                 "ရွှေကျင်",
                 "ေ႐ႊက်င္"
-            ],
-            [
+                ],
+                [
                 "thanatpin",
                 "Thanatpin",
                 "သနပ်ပင်",
                 "သနပ္ပင္"
-            ],
-            [
+                ],
+                [
                 "waw",
                 "Waw",
                 "ဝေါ",
                 "ေဝါ"
-            ],
-            [
+                ],
+                [
                 "kyaukkyi",
                 "Kyaukkyi",
                 "ကျောက်ကြီး",
                 "ေက်ာက္ႀကီး"
-            ],
-            [
+                ],
+                [
                 "oktwin",
                 "Oktwin",
                 "အုတ်တွင်း",
                 "အုတ္တြင္း"
-            ],
-            [
+                ],
+                [
                 "tantabin",
                 "Tantabin",
                 "ထန်းတပင်",
                 "ထန္းတပင္"
-            ],
-            [
+                ],
+                [
                 "taungoo",
                 "Taungoo",
                 "တောင်ငူ",
                 "ေတာင္ငူ"
-            ],
-            [
+                ],
+                [
                 "yedashe",
                 "Yedashe",
                 "ရေတာရှည်",
                 "ေရတာရွည္"
-            ],
-            [
+                ],
+                [
                 "padaung",
                 "Padaung",
                 "ပန်းတောင်း",
                 "ပန္းေတာင္း"
-            ],
-            [
+                ],
+                [
                 "paukkaung",
                 "Paukkaung",
                 "ပေါက်ခေါင်း",
                 "ေပါက္ေခါင္း"
-            ],
-            [
+                ],
+                [
                 "paungde",
                 "Paungde",
                 "ပေါင်းတည်",
                 "ေပါင္းတည္"
-            ],
-            [
+                ],
+                [
                 "pyay",
                 "Pyay",
                 "ပြည်",
                 "ျပည္"
-            ],
-            [
+                ],
+                [
                 "shwedaung",
                 "Shwedaung",
                 "ရွှေတောင်",
                 "ေ႐ႊေတာင္"
-            ],
-            [
+                ],
+                [
                 "thegon",
                 "Thegon",
                 "သဲကုန်း",
                 "သဲကုန္း"
-            ],
-            [
+                ],
+                [
                 "gyobingauk",
                 "Gyobingauk",
                 "ကြို့ပင်ကောက်",
                 "ႀကိဳ႕ပင္ေကာက္"
-            ],
-            [
+                ],
+                [
                 "letpadan",
                 "Letpadan",
                 "လက်ပံတန်း",
                 "လက္ပံတန္း"
-            ],
-            [
+                ],
+                [
                 "minhla-2",
                 "Minhla-2",
                 "မင်းလှ-2",
                 "မင္းလွ-2"
-            ],
-            [
+                ],
+                [
                 "monyo",
                 "Monyo",
                 "မိုးညို",
                 "မိုးညိဳ"
-            ],
-            [
+                ],
+                [
                 "okpho",
                 "Okpho",
                 "အုတ်ဖို",
                 "အုတ္ဖို"
-            ],
-            [
+                ],
+                [
                 "thayarwady",
                 "Thayarwady",
                 "သာယာဝတီ",
                 "သာယာဝတီ"
-            ],
-            [
+                ],
+                [
                 "nattalin",
                 "Nattalin",
                 "နတ်တလင်း",
                 "နတ္တလင္း"
-            ],
-            [
+                ],
+                [
                 "zigon",
                 "Zigon",
                 "ဇီးကုန်း",
                 "ဇီးကုန္း"
-            ],
-            [
+                ],
+                [
                 "falam",
                 "Falam",
                 "ဖလမ်း",
                 "ဖလမ္း"
-            ],
-            [
+                ],
+                [
                 "tiddim",
                 "Tiddim",
                 "တီးတိန်",
                 "တီးတိန္"
-            ],
-            [
+                ],
+                [
                 "hakha",
                 "Hakha",
                 "ဟားခါး",
                 "ဟားခါး"
-            ],
-            [
+                ],
+                [
                 "htantlang",
                 "Htantlang",
                 "ထန်တလန်",
                 "ထန္တလန္"
-            ],
-            [
+                ],
+                [
                 "kanpetlet",
                 "Kanpetlet",
                 "ကန်ပက်လက်",
                 "ကန္ပက္လက္"
-            ],
-            [
+                ],
+                [
                 "mindat",
                 "Mindat",
                 "မင်းတပ်",
                 "မင္းတပ္"
-            ],
-            [
+                ],
+                [
                 "paletwa",
                 "Paletwa",
                 "ပလက်ဝ",
                 "ပလက္ဝ"
-            ],
-            [
+                ],
+                [
                 "bhamo",
                 "Bhamo",
                 "ဗန်းမော်",
                 "ဗန္းေမာ္"
-            ],
-            [
+                ],
+                [
                 "mansi",
                 "Mansi",
                 "မံစီ",
                 "မံစီ"
-            ],
-            [
+                ],
+                [
                 "momauk",
                 "Momauk",
                 "မိုးမောက်",
                 "မိုးေမာက္"
-            ],
-            [
+                ],
+                [
                 "shwegu",
                 "Shwegu",
                 "ရွှေကူ",
                 "ေ႐ႊကူ"
-            ],
-            [
+                ],
+                [
                 "hpakan",
                 "Hpakan",
                 "ဖားကန့်",
                 "ဖားကန႔္"
-            ],
-            [
+                ],
+                [
                 "mogaung",
                 "Mogaung",
                 "မိုးကောင်း",
                 "မိုးေကာင္း"
-            ],
-            [
+                ],
+                [
                 "mohnyin",
                 "Mohnyin",
                 "မိုးညှင်း",
                 "မိုးညႇင္း"
-            ],
-            [
+                ],
+                [
                 "chipwi",
                 "Chipwi",
                 "ချီဗွေ",
                 "ခ်ီေဗြ"
-            ],
-            [
+                ],
+                [
                 "injangyang",
                 "Injangyang",
                 "အင်ဂျန်းယန်",
                 "အင္ဂ်န္းယန္"
-            ],
-            [
+                ],
+                [
                 "myitkyina",
                 "Myitkyina",
                 "မြစ်ကြီးနား",
                 "ျမစ္ႀကီးနား"
-            ],
-            [
+                ],
+                [
                 "tanai",
                 "Tanai",
                 "တနိုင်း",
                 "တႏိုင္း"
-            ],
-            [
+                ],
+                [
                 "waingmaw",
                 "Waingmaw",
                 "ဝိုင်းမော်",
                 "ဝိုင္းေမာ္"
-            ],
-            [
+                ],
+                [
                 "kawnglanghpu",
                 "Kawnglanghpu",
                 "ခေါင်လန်ဖူး",
                 "ေခါင္လန္ဖူး"
-            ],
-            [
+                ],
+                [
                 "machanbaw",
                 "Machanbaw",
                 "မချမ်းဘော",
                 "မခ်မ္းေဘာ"
-            ],
-            [
+                ],
+                [
                 "nogmung",
                 "Nogmung",
                 "‌နောင်မွန်း",
                 "‌ေနာင္မြန္း"
-            ],
-            [
+                ],
+                [
                 "puta-o",
                 "Puta-O",
                 "ပူတာအို",
                 "ပူတာအို"
-            ],
-            [
+                ],
+                [
                 "sumprabum",
                 "Sumprabum",
                 "ဆွမ်ပရာဘွမ်",
                 "ဆြမ္ပရာဘြမ္"
-            ],
-            [
+                ],
+                [
                 "bawlakhe",
                 "Bawlakhe",
                 "ဘော်လခဲ",
                 "ေဘာ္လခဲ"
-            ],
-            [
+                ],
+                [
                 "mese",
                 "Mese",
                 "မယ်စဲ့",
                 "မယ္စဲ့"
-            ],
-            [
+                ],
+                [
                 "demoso",
                 "Demoso",
                 "‌ဒီမောဆိုး",
                 "‌ဒီေမာဆိုး"
-            ],
-            [
+                ],
+                [
                 "hpruso",
                 "Hpruso",
                 "ဖရူးဆိုး",
                 "ဖ႐ူးဆိုး"
-            ],
-            [
+                ],
+                [
                 "loikaw",
                 "Loikaw",
                 "လွိုင်ကော်",
                 "လြိဳင္ေကာ္"
-            ],
-            [
+                ],
+                [
                 "shadaw",
                 "Shadaw",
                 "ရှားတော",
                 "ရွားေတာ"
-            ],
-            [
+                ],
+                [
                 "hpa-an",
                 "Hpa-An",
                 "ဘားအံ",
                 "ဘားအံ"
-            ],
-            [
+                ],
+                [
                 "thandaung",
                 "Thandaung",
                 "သံတောင်ကြီး",
                 "သံေတာင္ႀကီး"
-            ],
-            [
+                ],
+                [
                 "kawkareik",
                 "Kawkareik",
                 "ကော့ကရိတ်",
                 "ေကာ့ကရိတ္"
-            ],
-            [
+                ],
+                [
                 "myawaddy",
                 "Myawaddy",
                 "မြဝတီ",
                 "ျမဝတီ"
-            ],
-            [
+                ],
+                [
                 "chaungzon",
                 "Chaungzon",
                 "ချောင်းဆုံ",
                 "ေခ်ာင္းဆုံ"
-            ],
-            [
+                ],
+                [
                 "kyaikmaraw",
                 "Kyaikmaraw",
                 "ကျိုက်မရော",
                 "က်ိဳက္မေရာ"
-            ],
-            [
+                ],
+                [
                 "mawlamyine",
                 "Mawlamyine",
                 "မော်လမြိုင်",
                 "ေမာ္လၿမိဳင္"
-            ],
-            [
+                ],
+                [
                 "mudon",
                 "Mudon",
                 "မုဒုံ",
                 "မုဒုံ"
-            ],
-            [
+                ],
+                [
                 "thanbyuzayat",
                 "Thanbyuzayat",
                 "သံဖြူဇရပ်",
                 "သံျဖဴဇရပ္"
-            ],
-            [
+                ],
+                [
                 "ye",
                 "Ye",
                 "ရေး",
                 "ေရး"
-            ],
-            [
+                ],
+                [
                 "bilin",
                 "Bilin",
                 "ဘီးလင်း",
                 "ဘီးလင္း"
-            ],
-            [
+                ],
+                [
                 "kyaikto",
                 "Kyaikto",
                 "ကျိုက်ထို",
                 "က်ိဳက္ထို"
-            ],
-            [
+                ],
+                [
                 "paung",
                 "Paung",
                 "ပေါင်",
                 "ေပါင္"
-            ],
-            [
+                ],
+                [
                 "thaton",
                 "Thaton",
                 "သထုံ",
                 "သထုံ"
-            ],
-            [
+                ],
+                [
                 "ann",
                 "Ann",
                 "အမ်း",
                 "အမ္း"
-            ],
-            [
+                ],
+                [
                 "kyaukpyu",
                 "Kyaukpyu",
                 "ကျောက်ဖြူ",
                 "ေက်ာက္ျဖဴ"
-            ],
-            [
+                ],
+                [
                 "ramree",
                 "Ramree",
                 "ရမ်းဗြဲ",
                 "ရမ္းၿဗဲ"
-            ],
-            [
+                ],
+                [
                 "buthidaung",
                 "Buthidaung",
                 "ဘူးသီးတောင်",
                 "ဘူးသီးေတာင္"
-            ],
-            [
+                ],
+                [
                 "maungdaw",
                 "Maungdaw",
                 "မောင်တော",
                 "ေမာင္ေတာ"
-            ],
-            [
+                ],
+                [
                 "pauktaw",
                 "Pauktaw",
                 "ပေါက်တော",
                 "ေပါက္ေတာ"
-            ],
-            [
+                ],
+                [
                 "ponnagyun",
                 "Ponnagyun",
                 "ပုဏ္ဏားကျွန်း",
                 "ပုဏၰားကြၽန္း"
-            ],
-            [
+                ],
+                [
                 "rathedaung",
                 "Rathedaung",
                 "ရသေ့တောင်",
                 "ရေသ့ေတာင္"
-            ],
-            [
+                ],
+                [
                 "sittwe",
                 "Sittwe",
                 "စစ်တွေ",
                 "စစ္ေတြ"
-            ],
-            [
+                ],
+                [
                 "thandwe",
                 "Thandwe",
                 "သံတွဲ",
                 "သံတြဲ"
-            ],
-            [
+                ],
+                [
                 "toungup",
                 "Toungup",
                 "တောင်ကုတ်",
                 "ေတာင္ကုတ္"
-            ],
-            [
+                ],
+                [
                 "kyauktaw",
                 "Kyauktaw",
                 "ကျောက်တော်",
                 "ေက်ာက္ေတာ္"
-            ],
-            [
+                ],
+                [
                 "minbya",
                 "Minbya",
                 "မင်းပြား",
                 "မင္းျပား"
-            ],
-            [
+                ],
+                [
                 "mrauk-u",
                 "Mrauk-U",
                 "မြောက်ဦး",
                 "ေျမာက္ဦး"
-            ],
-            [
+                ],
+                [
                 "myebon",
                 "Myebon",
                 "မြေပုံ",
                 "ေျမပုံ"
-            ],
-            [
+                ],
+                [
                 "kengtung",
                 "Kengtung",
                 "ကျိုင်းတုံ",
                 "က်ိဳင္းတုံ"
-            ],
-            [
+                ],
+                [
                 "tachileik",
                 "Tachileik",
                 "တာချီလိတ်",
                 "တာခ်ီလိတ္"
-            ],
-            [
+                ],
+                [
                 "kunlong",
                 "Kunlong",
                 "ကွမ်းလုံ",
                 "ကြမ္းလုံ"
-            ],
-            [
+                ],
+                [
                 "hsipaw",
                 "Hsipaw",
                 "သီပေါ",
                 "သီေပါ"
-            ],
-            [
+                ],
+                [
                 "kyaukme",
                 "Kyaukme",
                 "ကျောက်မဲ",
                 "ေက်ာက္မဲ"
-            ],
-            [
+                ],
+                [
                 "namtu",
                 "Namtu",
                 "နမ္မတူ",
                 "နမၼတူ"
-            ],
-            [
+                ],
+                [
                 "nawnghkio",
                 "Nawnghkio",
                 "နောင်ချို",
                 "ေနာင္ခ်ိဳ"
-            ],
-            [
+                ],
+                [
                 "hseni",
                 "Hseni",
                 "သိန္ဓီ",
                 "သိႏၶီ"
-            ],
-            [
+                ],
+                [
                 "lashio",
                 "Lashio",
                 "လားရှိုး",
                 "လားရႈိး"
-            ],
-            [
+                ],
+                [
                 "mongyai",
                 "Mongyai",
                 "မိုင်းရယ်",
                 "မိုင္းရယ္"
-            ],
-            [
+                ],
+                [
                 "tangyan",
                 "Tangyan",
                 "တန်ယန်း",
                 "တန္ယန္း"
-            ],
-            [
+                ],
+                [
                 "kutkai",
                 "Kutkai",
                 "ကွတ်ခိုင်",
                 "ကြတ္ခိုင္"
-            ],
-            [
+                ],
+                [
                 "muse",
                 "Muse",
                 "မူဆယ်",
                 "မူဆယ္"
-            ],
-            [
+                ],
+                [
                 "mabein",
                 "Mabein",
                 "မဘိမ်း",
                 "မဘိမ္း"
-            ],
-            [
+                ],
+                [
                 "mongmit",
                 "Mongmit",
                 "မိုးမိတ်",
                 "မိုးမိတ္"
-            ],
-            [
+                ],
+                [
                 "laukkaing",
                 "Laukkaing",
                 "လောက်ကိုင်",
                 "ေလာက္ကိုင္"
-            ],
-            [
+                ],
+                [
                 "konkyan",
                 "Konkyan",
                 "ကုန်းကြမ်း",
                 "ကုန္းၾကမ္း"
-            ],
-            [
+                ],
+                [
                 "manton",
                 "Manton",
                 "မိုင်းတုံ",
                 "မိုင္းတုံ"
-            ],
-            [
+                ],
+                [
                 "hopang",
                 "Hopang",
                 "ဟိုပန်",
                 "ဟိုပန္"
-            ],
-            [
+                ],
+                [
                 "pangwaun",
                 "Pangwaun",
                 "ပန်ဝိုင်",
                 "ပန္ဝိုင္"
-            ],
-            [
+                ],
+                [
                 "matman",
                 "Matman",
                 "မက်မန်း",
                 "မက္မန္း"
-            ],
-            [
+                ],
+                [
                 "namphan",
                 "Namphan",
                 "နားဖန်း",
                 "နားဖန္း"
-            ],
-            [
+                ],
+                [
                 "pangsang",
                 "Panghsang",
                 "ပန်ဆန်း",
                 "ပၢင်သၢင်း"
-            ],
-            [
+                ],
+                [
                 "langkho",
                 "Langkho",
                 "လင်းခေး",
                 "လင္းေခး"
-            ],
-            [
+                ],
+                [
                 "mawkmai",
                 "Mawkmai",
                 "မောက်မယ်",
                 "ေမာက္မယ္"
-            ],
-            [
+                ],
+                [
                 "kunhing",
                 "Kunhing",
                 "ၵုၼ္ႁဵင္",
                 "ၵုၼ်ႁဵင်"
-            ],
-            [
+                ],
+                [
                 "kyethi",
                 "Kyethi",
                 "ကျေးသီး",
                 "ေက်းသီး"
-            ],
-            [
+                ],
+                [
                 "loilen",
                 "Loilen",
                 "လွိုင်လင်",
                 "လြိဳင္လင္"
-            ],
-            [
+                ],
+                [
                 "monghsu",
                 "Monghsu",
                 "မိုင်းရှူး",
                 "မိုင္းရႉး"
-            ],
-            [
+                ],
+                [
                 "nansang",
                 "Namsang",
                 "နမ့်စန်",
                 "နမ့္စန္"
-            ],
-            [
+                ],
+                [
                 "kalaw",
                 "Kalaw",
                 "ကလော",
                 "ကေလာ"
-            ],
-            [
+                ],
+                [
                 "lawksawk",
                 "Lawksawk",
                 "ရပ်စောက်",
                 "ရပ္ေစာက္"
-            ],
-            [
+                ],
+                [
                 "nyaungshwe",
                 "Nyaungshwe",
                 "ညောင်ရွှေ",
                 "ေညာင္ေ႐ႊ"
-            ],
-            [
+                ],
+                [
                 "pekon",
                 "Pekon",
                 "ဖယ်ခုံ",
                 "ဖယ္ခုံ"
-            ],
-            [
+                ],
+                [
                 "taunggyi",
                 "Taunggyi",
                 "တောင်ကြီး",
                 "ေတာင္ႀကီး"
-            ],
-            [
+                ],
+                [
                 "pindaya",
                 "Pindaya",
                 "ပင်းတယ",
                 "ပင္းတယ"
-            ],
-            [
+                ],
+                [
                 "ywangan",
                 "Ywangan",
                 "ရွာငံ",
                 "႐ြာငံ"
-            ],
-            [
+                ],
+                [
                 "hopong",
                 "Hopong",
                 "ဟိုပုံး",
                 "ဟိုပုံး"
-            ],
-            [
+                ],
+                [
                 "pinlaung",
                 "Pinlaung",
                 "ပင်လောင်း",
                 "ပင္ေလာင္း"
-            ],
-            [
+                ],
+                [
                 "hkamti",
                 "Hkamti",
                 "ခန်တီး",
                 "ခန္တီး"
-            ],
-            [
+                ],
+                [
                 "homalin",
                 "Homalin",
                 "ဟုမ္မလင်း",
                 "ဟုမၼလင္း"
-            ],
-            [
+                ],
+                [
                 "kanbalu",
                 "Kanbalu",
                 "ကန့်ဘလူ",
                 "ကန႔္ဘလူ"
-            ],
-            [
+                ],
+                [
                 "kyunhla",
                 "Kyun Hla",
                 "ကျွန်းလှ",
                 "ကြၽန္းလွ"
-            ],
-            [
+                ],
+                [
                 "kale",
                 "Kale",
                 "ကလေး",
                 "ကေလး"
-            ],
-            [
+                ],
+                [
                 "kalewa",
                 "Kalewa",
                 "ကလေး၀",
                 "ကေလး၀"
-            ],
-            [
+                ],
+                [
                 "mingin",
                 "Mingin",
                 "မင်းကင်း",
                 "မင္းကင္း"
-            ],
-            [
+                ],
+                [
                 "banmauk",
                 "Banmauk",
                 "ဗန်းမောက်",
                 "ဗန္းေမာက္"
-            ],
-            [
+                ],
+                [
                 "indaw",
                 "Indaw",
                 "အင်းတော်",
                 "အင္းေတာ္"
-            ],
-            [
+                ],
+                [
                 "katha",
                 "Katha",
                 "ကသာ",
                 "ကသာ"
-            ],
-            [
+                ],
+                [
                 "kawlin",
                 "Kawlin",
                 "ကောလင်း",
                 "ေကာလင္း"
-            ],
-            [
+                ],
+                [
                 "pinlebu",
                 "Pinlebu",
                 "ပင်လည်ဘူး",
                 "ပင္လည္ဘူး"
-            ],
-            [
+                ],
+                [
                 "tigyaing",
                 "Tigyaing",
                 "ထီးချိုင့်",
                 "ထီးခ်ိဳင့္"
-            ],
-            [
+                ],
+                [
                 "wuntho",
                 "Wuntho",
                 "ဝန်းသို",
                 "ဝန္းသို"
-            ],
-            [
+                ],
+                [
                 "mawlaik",
                 "Mawlaik",
                 "မော်လိုက်",
                 "ေမာ္လိုက္"
-            ],
-            [
+                ],
+                [
                 "paungbyin",
                 "Paungbyin",
                 "ဖေါင်းပြင်",
                 "ေဖါင္းျပင္"
-            ],
-            [
+                ],
+                [
                 "ayadaw",
                 "Ayadaw",
                 "အရာတော်",
                 "အရာေတာ္"
-            ],
-            [
+                ],
+                [
                 "budalin",
                 "Budalin",
                 "ဘုတလင်",
                 "ဘုတလင္"
-            ],
-            [
+                ],
+                [
                 "chaung-u",
                 "Chaung-U",
                 "ချောင်းဦး",
-                "ေခ်ာင္းဦး"
-            ],
-            [
+                "ေခ်ာင္းဦး"
+                ],
+                [
                 "monywa",
                 "Monywa",
                 "မုံရွာ",
                 "မံုရြာ"
-            ],
-            [
+                ],
+                [
                 "myaung",
                 "Myaung",
                 "မြောင်",
                 "ေျမာင္"
-            ],
-            [
+                ],
+                [
                 "myinmu",
                 "Myinmu",
                 "မြင်းမူ",
                 "ျမင္းမူ"
-            ],
-            [
+                ],
+                [
                 "sagaing",
                 "Sagaing",
                 "စစ်ကိုင်း",
                 "စစ္ကိုင္း"
-            ],
-            [
+                ],
+                [
                 "khin-u",
                 "Khin-U",
                 "ခင်ဦး",
-                "ခင္ဦး"
-            ],
-            [
+                "ခင္ဦး"
+                ],
+                [
                 "shwebo",
                 "Shwebo",
                 "ရွှေဘို",
                 "ေရြွဘို"
-            ],
-            [
+                ],
+                [
                 "wetlet",
                 "Wetlet",
                 "၀က်လက်",
                 "၀က္လက္"
-            ],
-            [
+                ],
+                [
                 "tabayin",
                 "Tabayin",
                 "ဒီပဲယင်း",
                 "ဒီပဲယင္း"
-            ],
-            [
+                ],
+                [
                 "tamu",
                 "Tamu",
                 "တမူး",
                 "တမူး"
-            ],
-            [
+                ],
+                [
                 "kani",
                 "Kani",
                 "ကနီ",
                 "ကနီ"
-            ],
-            [
+                ],
+                [
                 "pale",
                 "Pale",
                 "ပုလဲ",
                 "ပုလဲ"
-            ],
-            [
+                ],
+                [
                 "yinmabin",
                 "Yinmabin",
                 "ယင်းမာပင်",
                 "ယင္းမာပင္"
-            ],
-            [
+                ],
+                [
                 "lahe",
                 "Lahe",
                 "လဟယ်",
                 "လဟယ္"
-            ],
-            [
+                ],
+                [
                 "nanyun",
                 "Nanyun",
                 "နန်းယွန်း",
                 "နန္းယြန္း"
-            ],
-            [
+                ],
+                [
                 "dawei",
                 "Dawei",
                 "ထားဝယ်",
                 "ထား၀ယ္"
-            ],
-            [
+                ],
+                [
                 "launglon",
                 "Launglon",
                 "လောင်းလုံ",
                 "ေလာင္းလံု"
-            ],
-            [
+                ],
+                [
                 "thayetchaung",
                 "Thayetchaung",
                 "သရက်ချောင်း",
                 "သရက္ေခ်ာင္း"
-            ],
-            [
+                ],
+                [
                 "yebyu",
                 "Yebyu",
                 "ရေဖြူ",
                 "ေရျဖူ"
-            ],
-            [
+                ],
+                [
                 "bokpyin",
                 "Bokpyin",
                 "ဘုတ်ပြင်း",
                 "ဘုတ္ျပင္း"
-            ],
-            [
+                ],
+                [
                 "kawthoung",
                 "Kawthaung",
                 "ကော့သောင်း",
                 "ေကာ့ေသာင္း"
-            ],
-            [
+                ],
+                [
                 "kyunsu",
                 "Kyunsu",
                 "ကျွန်းစု",
                 "က်ြန္းစု"
-            ],
-            [
+                ],
+                [
                 "myeik",
                 "Myeik",
                 "မြိတ်",
                 "ျမိတ္"
-            ],
-            [
+                ],
+                [
                 "palaw",
                 "Palaw",
                 "ပုလော",
                 "ပုေလာ"
-            ],
-            [
+                ],
+                [
                 "tanintharyi",
                 "Tanintharyi",
                 "တနင်္သာရီ",
                 "တနသၤာရီ"
-            ],
-            [
+                ],
+                [
                 "hlegu",
                 "Hlegu",
                 "လှည်းကူး",
                 "လွည္းကူး"
-            ],
-            [
+                ],
+                [
                 "hmawbi",
                 "Hmawbi",
                 "မှော်ဘီ",
                 "ေမွာ္ဘီ"
-            ],
-            [
+                ],
+                [
                 "htantabin",
                 "Htantabin",
                 "ထန်းတပင်",
                 "ထန္းတပင္"
-            ],
-            [
+                ],
+                [
                 "taikkyi",
                 "Taikkyi",
                 "တိုက်ကြီး",
                 "တိုက္ျကီး"
-            ],
-            [
+                ],
+                [
                 "kawhmu",
                 "Kawhmu",
                 "ကော့မှူး",
                 "ေကာ့မွဴး"
-            ],
-            [
+                ],
+                [
                 "kayan",
                 "Kayan",
                 "ခရမ်း",
                 "ခရမ္း"
-            ],
-            [
+                ],
+                [
                 "kungyangon",
                 "Kungyangon",
                 "ကွမ်းခြံကုန်း",
                 "ကြမ္းၿခံကုန္း"
-            ],
-            [
+                ],
+                [
                 "kyauktan",
                 "Kyauktan",
                 "ကျောက်တန်း",
                 "ေက်ာက္တန္း"
-            ],
-            [
+                ],
+                [
                 "thanlyin",
                 "Thanlyin",
                 "သန်လျင်",
                 "သန္လ်င္"
-            ],
-            [
+                ],
+                [
                 "thongwa",
                 "Thongwa",
                 "သုံးခွ",
                 "သံုးခြ"
-            ],
-            [
+                ],
+                [
                 "tatkon",
                 "Tatkon",
                 "တပ်ကုန်း",
                 "တပ္ကုန္း"
-            ],
-            [
+                ],
+                [
                 "lewe",
                 "Lewe",
                 "လယ်ဝေး",
                 "လယ္ေ၀း"
-            ],
-            [
+                ],
+                [
                 "pyinmana",
                 "Pyinmana",
                 "ပျဉ်းမနား",
                 "ပ်ဥ္းမနား"
-            ],
-            [
+                ],
+                [
+                "oketarathiri",
+                "Oketarathiri",
+                "ဥတ္တရသီရိ",
+                "ပ်ဥ္းမနား"
+                ],
+                [
+                "pokebathiri",
+                "Pokebathiri",
+                "ပုဗ္ဗသီရိ",
+                "ပ်ဥ္းမနား"
+                ],
+                [
+                "zayarthiri",
+                "Zayarthiri",
+                "ဇေယျာသီရိ",
+                "ပ်ဥ္းမနား"
+                ],
+                [
+                "zabuthiri",
+                "Zabuthiri",
+                "ဇမ္ဗူသီရိ",
+                "ပ်ဥ္းမနား"
+                ],
+                [
+                "dekkhinathiri",
+                "Dekkhinathiri",
+                "ဒက္ခိဏသီရိ",
+                "ပ်ဥ္းမနား"
+                ],
+                [
                 "danubyu",
                 "Danubyu",
                 "ဓနုဖြူ",
                 "ဓနုျဖူ"
-            ],
-            [
+                ],
+                [
                 "kangyidaunt",
                 "Kangyidaunt",
                 "ကန်ကြီးထောင့်",
                 "ကန္ႀကီးေထာင့္"
-            ],
-            [
+                ],
+                [
                 "maubin",
                 "Maubin",
                 "မအူပင်",
                 "မအူပင္"
-            ],
-            [
+                ],
+                [
                 "myaungmya",
                 "Myaungmya",
                 "မြောင်းမြ",
                 "ေျမာင္းျမ"
-            ],
-            [
+                ],
+                [
                 "yegyi",
                 "Yegyi",
                 "ရေကြည်",
                 "ေရၾကည္"
-            ],
-            [
+                ],
+                [
                 "kyauktaga",
                 "Kyauktaga",
                 "ကျောက်တံခါး",
                 "ေက်ာက္တံခါး"
-            ],
-            [
+                ],
+                [
                 "phyu",
                 "Phyu",
                 "ဖြူး",
                 "ျဖူး"
-            ],
-            [
+                ],
+                [
                 "madupi",
                 "Madupi",
                 "မတူပီ",
                 "မတူပီ"
-            ],
-            [
+                ],
+                [
                 "tonzang",
                 "Tonzang",
                 "တွန်းဇံ",
                 "တြန္းဇံ"
-            ],
-            [
+                ],
+                [
                 "tsawlaw",
                 "Tsawlaw",
                 "ဆော့လော်",
                 "ေဆာ့ေလာ္"
-            ],
-            [
+                ],
+                [
                 "hpasawng",
                 "Hpasawng",
                 "ဖားဆောင်း",
                 "ဖားေဆာင္း"
-            ],
-            [
+                ],
+                [
                 "hlaingbwe",
                 "Hlaingbwe",
                 "လှိုင်းဘွဲ့",
                 "လွိုင္းဘဲြ့"
-            ],
-            [
+                ],
+                [
                 "kyainseikgyi",
                 "Kyainseikgyi",
                 "ကြာအင်းဆိပ်ကြီး",
                 "ျကာအင္းဆိပ္ျကီး"
-            ],
-            [
+                ],
+                [
                 "ngazun",
                 "Ngazun",
                 "ငါန်းဇွန်",
                 "ငါန္းဇြန္"
-            ],
-            [
+                ],
+                [
                 "taungtha",
                 "Taungtha",
                 "တောင်သာ",
                 "ေတာင္သာ"
-            ],
-            [
+                ],
+                [
                 "gwa",
                 "Gwa",
                 "ဂွ",
                 "ဂြ"
-            ],
-            [
+                ],
+                [
                 "munaung",
                 "Munaung",
                 "မာန်အောင်",
                 "မာန္ေအာင္"
-            ],
-            [
+                ],
+                [
                 "layshi",
                 "Layshi",
                 "လေရှီး",
                 "ေလရွီး"
-            ],
-            [
+                ],
+                [
                 "salin",
                 "Salin",
                 "စလင်း",
                 "စလင္း"
-            ],
-            [
+                ],
+                [
                 "monghpyak",
                 "Monghpyak",
                 "မိုင်းဖြတ်",
                 "မိုင္းျဖတ္"
-            ],
-            [
+                ],
+                [
                 "monghsat",
                 "Mong Hsat",
                 "မိုင်းဆတ်",
                 "မိုင္းဆတ္"
-            ],
-            [
+                ],
+                [
                 "mongkhet",
                 "Mongkhet",
                 "မိုင်းခတ်",
                 "မိုင္းခတ္"
-            ],
-            [
+                ],
+                [
                 "mongla",
                 "Mongla",
                 "မိုင်းလား",
                 "မိုင္းလား"
-            ],
-            [
+                ],
+                [
                 "mongping",
                 "Mongping",
                 "မိုင်းပြင်း",
                 "မိုင္းျပင္း"
-            ],
-            [
+                ],
+                [
                 "mongton",
                 "Mongton",
                 "မိုင်းတုံ",
                 "မိုင္းတုံ"
-            ],
-            [
+                ],
+                [
                 "mongyang",
                 "Mongyang",
                 "မိူင်းယၢင်း",
                 "မိူင္းယၢင္း"
-            ],
-            [
+                ],
+                [
                 "mongyawng",
                 "Mongyawng",
                 "မိုင်းယောင်း",
                 "မိုင္းေယာင္း"
-            ],
-            [
+                ],
+                [
                 "mongmao",
                 "Mongmao",
                 "မိုင်းမော",
                 "မိုင္းေမာ"
-            ],
-            [
+                ],
+                [
                 "namhsan",
                 "Namhsan",
                 "နမ့်ဆန်",
                 "နမ့္ဆန္"
-            ],
-            [
+                ],
+                [
                 "nanhkan",
                 "Nanhkan",
                 "နမ့်ခမ်း",
                 "နမ့္ခမ္း"
-            ],
-            [
+                ],
+                [
                 "hsihseng",
                 "Hsihseng",
                 "ဆီဆိုင်",
                 "ဆီဆိုင္"
-            ],
-            [
+                ],
+                [
                 "laihka",
                 "Laihka",
                 "လဲချား",
                 "လဲခ်ား"
-            ],
-            [
+                ],
+                [
                 "mongkaung",
                 "Mongkaung",
                 "မိုင်းကိုင်",
                 "မိုင္းကိုင္"
-            ],
-            [
+                ],
+                [
                 "mongnai",
                 "Mongnai",
                 "မိူင်းၼၢႆး",
                 "မိူင္းၼၢႆး"
-            ],
-            [
+                ],
+                [
                 "mongpan",
                 "Mongpan",
                 "မိူင်းပၼ်ႇ",
                 "မိူင္းပၼ္ႇ"
-            ],
-            [
+                ],
+                [
                 "twantay",
                 "Twantay",
                 "တွံတေး",
                 "တြံေတး"
-            ],
-            [
+                ],
+                [
                 "taze",
                 "Taze",
                 "တန့်ဆည်",
                 "တန႔္ဆည္"
-            ],
-            [
+                ],
+                [
                 "ye-u",
                 "Ye-U",
                 "ရေဦး",
-                "ေရဦး"
-            ]
-        ];
+                "ေရဦး"
+                ]
+            ];
         // var territory = [
         //     {
         //         'div': 'div-kachin',
@@ -4862,23 +4938,25 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
             }
         }
         function modeKhayines(zawPosActKyColor) {
-            disKhayines();
-            disTownships();
-            disDivisions();
-            showKhayines();
-            colorClassRemover();
-            for (i in zawPosActKyColor) {
-                var element = document.getElementById(zawPosActKyColor[i].name);
-                if(!toggle) {
-                    element.classList.add(cv_pos2[parseInt(zawPosActKyColor[i].color)-1]);
-                } else {
-                    element.classList.add(cv_pos_sus2[parseInt(zawPosActKyColor[i].color)-1]);
+                disKhayines();
+                disTownships();
+                disDivisions();
+                showKhayines();
+                colorClassRemover();
+                for (i in zawPosActKyColor) {
+                    if(zawPosActKyColor[i].name!='ky-naypyitaw') {
+                        var element = document.getElementById(zawPosActKyColor[i].name);
+                        if(!toggle) {
+                            element.classList.add(cv_pos2[parseInt(zawPosActKyColor[i].color)-1]);
+                        } else {
+                            element.classList.add(cv_pos_sus2[parseInt(zawPosActKyColor[i].color)-1]);
+                        }
+                    }
+                    //$('#' + covids_positives_combied_color_kharines_color[i].name).attr('style', 'fill:' + cv_pos[parseInt(covids_positives_combied_color_kharines_color[i].color)-1]);
                 }
-                //$('#' + covids_positives_combied_color_kharines_color[i].name).attr('style', 'fill:' + cv_pos[parseInt(covids_positives_combied_color_kharines_color[i].color)-1]);
+                //var element = document.getElementById(zawPosActKyColor[i].name);
+                //$('#ky-eyangon' + ' polyline').attr('style', 'fill:' + '#1a0033');
             }
-            //var element = document.getElementById(zawPosActKyColor[i].name);
-            //$('#ky-eyangon' + ' polyline').attr('style', 'fill:' + '#1a0033');
-        }
 
         function modeDivisions(zawPosActDivColor) {
             disKhayines();
@@ -4887,12 +4965,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
             showDivisions();
             colorClassRemover();
             for (i in zawPosActDivColor) {
-                var element = document.getElementById(zawPosActDivColor[i].name);
-                if(!toggle) {
-                    element.classList.add(cv_pos2[parseInt(zawPosActDivColor[i].color)-1]);
-                } else {
-                    element.classList.add(cv_pos_sus2[parseInt(zawPosActDivColor[i].color)-1]);
-                }
+                if(zawPosActDivColor[i].name != 'div-ebago') {
+					var element = document.getElementById(zawPosActDivColor[i].name);
+					if(!toggle) {
+						element.classList.add(cv_pos2[parseInt(zawPosActDivColor[i].color)-1]);
+					} else {
+						element.classList.add(cv_pos_sus2[parseInt(zawPosActDivColor[i].color)-1]);
+					}
+				}
                 //$('#' + covids_positives_combied_color_kharines_color[i].name).attr('style', 'fill:' + cv_pos[parseInt(covids_positives_combied_color_kharines_color[i].color)-1]);
             }
             // for (i in covids_positives_combied_color_divisions_mod_color) {
@@ -4932,28 +5012,29 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
             } else if(mode=='div') {
                 for(i in divisions) {
                     element = document.getElementById(divisions[i]);
-                    //elements[i].classList.removeClass('fce9e8');
-                    element.classList.remove('fce9e8');
-                    element.classList.remove('f9d4d2');
-                    element.classList.remove('f6bebb');
-                    element.classList.remove('f3a9a5');
-                    element.classList.remove('f0938e');
-                    element.classList.remove('ed7d78');
-                    element.classList.remove('ea6861');
-                    element.classList.remove('e8524a');
-                    element.classList.remove('e74c44');
-                    element.classList.remove('e53d34');
+					if(divisions[i] != 'div-ebago') {
+						element.classList.remove('fce9e8');
+						element.classList.remove('f9d4d2');
+						element.classList.remove('f6bebb');
+						element.classList.remove('f3a9a5');
+						element.classList.remove('f0938e');
+						element.classList.remove('ed7d78');
+						element.classList.remove('ea6861');
+						element.classList.remove('e8524a');
+						element.classList.remove('e74c44');
+						element.classList.remove('e53d34');
 
-                    element.classList.remove('ffd480');
-                    element.classList.remove('ffcc66');
-                    element.classList.remove('ffc34d');
-                    element.classList.remove('ffbb33');
-                    element.classList.remove('ffb31a');
-                    element.classList.remove('ffaa00');
-                    element.classList.remove('e69900');
-                    element.classList.remove('cc8800');
-                    element.classList.remove('b37700');
-                    element.classList.remove('cc96600');
+						element.classList.remove('ffd480');
+						element.classList.remove('ffcc66');
+						element.classList.remove('ffc34d');
+						element.classList.remove('ffbb33');
+						element.classList.remove('ffb31a');
+						element.classList.remove('ffaa00');
+						element.classList.remove('e69900');
+						element.classList.remove('cc8800');
+						element.classList.remove('b37700');
+						element.classList.remove('cc96600');
+					}
                 }
             }
 
@@ -6023,6 +6104,10 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၁၉-၄-၂၀�
                                 break;
                             }
                         }
+						if(undefine == 'div-wbago') {
+						info[0] = 'ပဲခူး တိုင်းဒေသကြီး';
+						}
+
                         $('.tooltipster-content').html(
                             '<p class="font-weight-bold mb-1">' +
                             info[0] +

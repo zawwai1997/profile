@@ -69,7 +69,7 @@ if (isset($_SESSION['email'])) {
                     <tr>
 
                         <th>#</th>
-                        <th style="width: 364px;">State / Region</th>
+                        <th style="width: 364px;" disabled>State / Region</th>
                         <th style="width: 364px;">Total PUI</th>
 
 

@@ -412,13 +412,27 @@ GROUP BY Hospitals.name order by $order";
     }
 
     public function update($table,$key,$value,$patient_id){
-        $query = "UPDATE `$table` SET `$key` = '$value' WHERE `Patients`.`id` = $patient_id;";
+        $query = "UPDATE `$table` SET `$key` = '$value' WHERE `$table`.`id` = $patient_id;";
+
         $stmt = $this->pdo->prepare($query);
 
         $stmt->execute();
 
         return $stmt->rowCount();
     }
+    public function updateSummary($status,$confirm,$pui,$die,$test,$cure,$recovered){
+        $query = "UPDATE `Summary` SET `status` = '$status' ,`confirm` = '$confirm', `pui` = '$pui', `die` = '$die', `test` = '$test', `cure` = '$cure', `recovered` = '$recovered' WHERE `Summary`.`id` = 7; ";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+
+
+
+
+
+
 
     public function delete($table,$id){
         $query = "DELETE FROM `$table` WHERE id = $id ";

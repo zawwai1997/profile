@@ -17,6 +17,8 @@ $States = $user->get('States');
 $Status = $user->get('Status');
 $Status = $Status[0]['status_name'];
 
+$Summary = $user->get('Summary');
+
 
 $townshipJson = $user->getTownshipJson();
 $districtJson = $user->getDistrictJson();
@@ -150,6 +152,18 @@ foreach ($regionJson as $key => $value) {
         }
     }
 
+    if( ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) > $value['lab_confirmed']){
+        $transfer_from = ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+    }else $transfer_from = 0;
+
+
+    if( $value['lab_confirmed']  > ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'])) {
+        $transfer_to = $value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+    }else $transfer_to =  0;
+
+
+
+    if($transfer_to < 0)  $transfer_to = 0;
     $oneRegion = array(
         "name" => $value['db_name'],
         "puinsuspect" => $value['puinsus'],
@@ -161,8 +175,8 @@ foreach ($regionJson as $key => $value) {
         "recovered" => $value['recovered'],
         "lab_confirmed" => $value['lab_confirmed'],
         "lab_confirmed_now" => $value['lab_confirmed_now'],
-        "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
-            $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
+        "transfer_from" => $transfer_from,
+        "transfer_to" => $transfer_to
     );
     array_push($regionAry, $oneRegion);
 }
@@ -270,13 +284,14 @@ $donutResult =array(
 //die();
 
 
+$total_test = $Summary[0]['test'] ;
+$total_puinsus = $Summary[0]['pui'] ;
+$total_die = $Summary[0]['die'] ;
 
-$total_test = 4919 ;
-$total_puinsus = 2089;
+$total_cure = $Summary[0]['cure'] ;
+$total_recovered = $Summary[0]['recovered'] ;
+$total_confirmed = $Summary[0]['confirm'] ;
 
-$total_cure = 109 ;
-
-$total_negative = 4800;
 
 
 $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀၂၀)ရက်နေ့၊ ည (၁၀:၀၀)အချိန်အထိ နောက်ဆုံး update လုပ်ထားသော အချက်အလက်များ စုဆောင်းတင်ပြထားခြင်းဖြစ်ပါသည်။"

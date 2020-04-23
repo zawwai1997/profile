@@ -67,15 +67,12 @@ if (isset($_SESSION['email'])) {
                 <table id="user_data" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>Hospital</th>
-                        <th>PUI</th>
-                        <th>Suspected</th>
-                        <th>Negative</th>
-                        <th>Pending</th>
-                        <th>Die</th>
-                        <th>Recovered</th>
-                        <th>Confirmed</th>
-                        <th>State</th>
+
+                        <th>State / Region</th>
+                        <th>Total PUI</th>
+                        <th>Total Suspected</th>
+                        <th>Total Recovered</th>
+
                     </tr>
                     </thead>
                 </table>
@@ -99,25 +96,24 @@ if (isset($_SESSION['email'])) {
 
             fetch_data();
 
-
             function fetch_data() {
                 var dataTable = $('#user_data').DataTable({
                     "processing": true,
                     "serverSide": true,
                     "order": [],
                     "ajax": {
-                        url: "process/get_hospital_data.php",
+                        url: "process/get_pui_state_data.php",
                         type: "POST"
                     }
                 });
             }
 
 
-            function update_data(hospital_id, suffer_type_id, value) {
+            function update_data(id, key, value) {
                 $.ajax({
-                    url: "process/update_hospital_data.php",
+                    url: "process/update_pui_state_data.php",
                     method: "POST",
-                    data: {hospital_id: hospital_id, suffer_type_id: suffer_type_id, value: value},
+                    data: {id: id, key: key, value: value},
                     success: function (data) {
                         $('#alert_message').html('<div class="alert alert-success">' + data + '</div>');
                         $('#user_data').DataTable().destroy();
@@ -126,17 +122,17 @@ if (isset($_SESSION['email'])) {
                 });
                 setInterval(function () {
                     $('#alert_message').html('');
-                }, 5000);
+                }, 7000);
             }
 
 
             $(document).on('blur', '.update', function () {
-                var hospital_id = $(this).data("id");
-                var suffer_type_id = $(this).data("column");
+                var id = $(this).data("id");
+                var key = $(this).data("column");
 
                 var value = $(this).text();
 
-                update_data(hospital_id, suffer_type_id, value);
+                update_data(id, key, value);
             });
 
 

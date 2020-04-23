@@ -290,6 +290,15 @@ order by Hospitals.id;";
         return $count;
     }
 
+    public function getCount($query){
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+
     public function getPatientRowCount(){
         $query = "SELECT Count(Patients.name) as count
  FROM Patients,Gender,Suffer_Type,Hospitals

@@ -26,10 +26,10 @@ $data = array();
 foreach ($puiStateData as $key => $row){
     $sub_array = array();
 
+    $sub_array[] = '<div  class="update" data-id="'.$row["id"].'" data-column="id">' . $row["id"] . '</div>';
     $sub_array[] = '<div  class="update" data-id="'.$row["id"].'" data-column="real_name">' . $row["real_name"] . '</div>';
     $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="count">' . $row["count"] . '</div>';
-    $sub_array[] = '<div class="update" data-id="'.$row["id"].'" data-column="count">' . 'coming soon' . '</div>';
-    $sub_array[] = '<div class="update" data-id="'.$row["id"].'" data-column="count">' . 'coming soon' . '</div>';
+
 
     $data[] = $sub_array;
 }

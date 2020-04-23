@@ -16,7 +16,7 @@ if (isset($_SESSION['email'])) {
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>PUI with States(တိုင်းဒေသကြီး/ပြည်နယ် အလိုက် ပြန်လည်စစ်ဆေးခြင်း)</title>
+        <title>Daily Chart(နေ့ရက်များအလိုက် ပြန်လည်စစ်ဆေးခြင်း)</title>
 
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -58,7 +58,7 @@ if (isset($_SESSION['email'])) {
         </div>
         <!-- /#sidebar-wrapper -->
         <div class="col-10">
-            <h4>PUI with States(တိုင်းဒေသကြီး/ပြည်နယ် အလိုက် ပြန်လည်စစ်ဆေးခြင်း)</h4>
+            <h4>Daily Chart(နေ့ရက်များအလိုက် ပြန်လည်စစ်ဆေးခြင်း)</h4>
             <div class="table-responsive">
                 <br/>
 
@@ -69,9 +69,9 @@ if (isset($_SESSION['email'])) {
                     <tr>
 
                         <th>#</th>
-                        <th style="width: 364px;">State / Region</th>
-                        <th style="width: 364px;">Total PUI</th>
-
+                        <th style="width: 364px;">Date</th>
+                        <th style="width: 364px;">Confirmed</th>
+                        <th style="width: 364px;">Die</th>
 
                     </tr>
                     </thead>
@@ -94,7 +94,7 @@ if (isset($_SESSION['email'])) {
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
 
-            fetch_data();
+                fetch_data();
 
             function fetch_data() {
                 var dataTable = $('#user_data').DataTable({
@@ -102,7 +102,7 @@ if (isset($_SESSION['email'])) {
                     "serverSide": true,
                     "order": [],
                     "ajax": {
-                        url: "process/get_pui_state_data.php",
+                        url: "process/get_daily_chart_data.php",
                         type: "POST"
                     }
                 });
@@ -113,7 +113,7 @@ if (isset($_SESSION['email'])) {
                 $.ajax({
                     url: "process/update_data.php",
                     method: "POST",
-                    data: {id: id, key: key, value: value,table:'Div_Pos'},
+                    data: {id: id, key: key, value: value,table:'Chart'},
                     success: function (data) {
                         $('#alert_message').html('<div class="alert alert-success">' + data + '</div>');
                         $('#user_data').DataTable().destroy();

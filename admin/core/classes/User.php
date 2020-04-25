@@ -1,7 +1,7 @@
 <?php
 
 /* error_reporting(0);
-ini_set('display_errors', 0); */
+ini_set('display_errors', 0);    */
 
 class User {
     protected $pdo;
@@ -53,7 +53,7 @@ class User {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function create($table, array $fields) {
+       public function create($table, array $fields) {
         $columns = implode(', ', array_keys($fields));
         $values = ':' . implode(', :', array_keys($fields));
         $query = "INSERT INTO {$table} ({$columns}) VALUES ($values);";

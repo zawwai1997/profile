@@ -4,8 +4,10 @@ require_once '../core/init.php';
 $columns = array('id','name','age','gender','suffer_type_id','hospital');
 $tok =$_SESSION['token'];
 
-$query = "SELECT Patients.id,Patients.name,Patients.age,Gender.type as gender,
- Suffer_Type.name as suffer,Hospitals.name as hospital
+$query = "SELECT Patients.id as p_id,Patients.name,Patients.age,Gender.type as gender,
+ Suffer_Type.name as suffer,
+ (SELECT Hospitals.name as first_hospital FROM Hospitals,Patients  WHERE  Patients.id = p_id AND  Patients.first_hospital_id = Hospitals.id) as first_hospital,
+  (SELECT Hospitals.name as last_hospital FROM Hospitals,Patients  WHERE  Patients.id = p_id AND  Patients.hospital_id = Hospitals.id) as last_hospital
  FROM Patients,Gender,Suffer_Type,Hospitals
  WHERE Patients.gender = Gender.id AND
  Patients.suffer_type_id = Suffer_Type.id AND
@@ -50,14 +52,15 @@ $data = array();
 
 foreach ($patientData as $key => $row){
     $sub_array = array();
-    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="id">' . $row["id"] . '</div>';
-    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="name">' . $row["name"] . '</div>';
-    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="age">' . $row["age"] . '</div>';
-    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="gender">' . $row["gender"] . '</div>';
-    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="suffer_type_id">' . $row["suffer"] . '</div>';
-    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["id"].'" data-column="hospital">' . $row["hospital"] . '</div>';
-    $sub_array[] = '<button type="button" name="delete" class="btn btn-danger btn-xs delete" id="'.$row["id"].'">Delete</button>';
-    $sub_array[] = '<a href="/admin/transfer.php?id='.$row['id'].'&&token='.$tok.'  " type="button" name="transfer" class="btn btn-info btn-xs transfer" id="'.$row["id"].'">Transfer</a>';
+    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["p_id"].'" data-column="id">' . $row["p_id"] . '</div>';
+    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["p_id"].'" data-column="name">' . $row["name"] . '</div>';
+    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["p_id"].'" data-column="age">' . $row["age"] . '</div>';
+    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["p_id"].'" data-column="gender">' . $row["gender"] . '</div>';
+    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["p_id"].'" data-column="suffer_type_id">' . $row["suffer"] . '</div>';
+    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["p_id"].'" data-column="hospital">' . $row["first_hospital"] . '</div>';
+    $sub_array[] = '<div contenteditable class="update" data-id="'.$row["p_id"].'" data-column="hospital">' . $row["last_hospital"] . '</div>';
+    $sub_array[] = '<button type="button" name="delete" class="btn btn-danger btn-xs delete" id="'.$row["p_id"].'">Delete</button>';
+    $sub_array[] = '<a href="transfer.php?id='.$row['p_id'].'&&token='.$tok.'  " type="button" name="transfer" class="btn btn-info btn-xs transfer" id="'.$row["p_id"].'">Transfer</a>';
     $data[] = $sub_array;
 }
 

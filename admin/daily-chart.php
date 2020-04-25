@@ -63,6 +63,9 @@ if (isset($_SESSION['email'])) {
                 <br/>
 
                 <br/>
+                <div align="right">
+                    <button type="button" name="add" id="add" class="btn btn-info">Add</button>
+                </div>
                 <div id="alert_message"></div>
                 <table id="user_data" class="table table-bordered table-striped">
                     <thead>
@@ -134,6 +137,50 @@ if (isset($_SESSION['email'])) {
 
                 update_data(id, key, value);
             });
+            $('#add').click(function(){
+                var html = '<tr>';
+                html += '<td id="data1"></td>';
+                html += '<td contenteditable id="data2"></td>';
+                html += '<td contenteditable id="data3"></td>';
+                html += '<td contenteditable id="data4"></td>';
+                html += '<td><button type="button" name="insert" id="insert" class="btn btn-success btn-xs">Insert</button></td>';
+                html += '</tr>';
+                $('#user_data tbody').prepend(html);
+            });
+            $(document).on('click', '#insert', function(){
+
+                var date = $('#data2').text();
+                var confirm = $('#data3').text();
+                var die = $('#data4').text();
+
+
+
+
+                if(date != '' && confirm != '' && die !='')
+                {
+
+              
+                    $.ajax({
+                        url:"process/add_chart.php",
+                        method:"POST",
+                        data:{date:date, confirm:confirm,die:die},
+                        success:function(data)
+                        {
+                            $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
+                            $('#user_data').DataTable().destroy();
+                            fetch_data();
+                        }
+                    });
+                    setInterval(function(){
+                        $('#alert_message').html('');
+                    }, 5000);
+                }
+                else
+                {
+                    alert("Both Fields is required");
+                }
+            });
+
 
 
         });

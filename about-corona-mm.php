@@ -74,7 +74,7 @@ $_SESSION['token'] = $token;
     <div class="container">
 
         <!-- Brand -->
-        <a class="navbar-brand logo-icon-btn">
+        <a class="navbar-brand logo-icon-btn" href="index.php">
             <img src="assets/img/corona-mm-logo.png" class="navbar-brand-img" alt="..." style="width:100px;">
         </a>
 

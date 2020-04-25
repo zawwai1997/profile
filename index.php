@@ -64,6 +64,8 @@ foreach ($States as $state => $sta) {
     array_push($stateData, $oneState);
 }
 $mandalayTownshipGp = 0;   //for m-?? townships
+$yangon_gp_transfer_from = 0;$yangon_gp_transfer_to = 0;
+$mandalay_gp_transfer_from = 0;$mandalay_gp_transfer_to = 0;
 foreach ($townshipJson as $key => $value) {
     if($value['s_id']!=14){  //Township is not for yangon
 
@@ -80,6 +82,90 @@ foreach ($townshipJson as $key => $value) {
         
        // if ($maxTsSus < $value['suspected'] + $value['pui']) $maxTsSus = $value['suspected'] + $value['pui'];
     }
+
+
+
+    $transfer_from = 0;$transfer_to =  0;
+    if($value['d_id'] ==92){
+
+      //  $yangon_gp_transfer_from +=($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+      //  $yangon_gp_transfer_to +=$value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+
+
+
+
+
+        if( ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) > $value['lab_confirmed']){
+            $yangon_gp_transfer_from+= ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+
+        }else $yangon_gp_transfer_from = $yangon_gp_transfer_from;
+
+
+        if( $value['lab_confirmed']  > ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'])) {
+            $yangon_gp_transfer_to+= $value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+
+        }else $yangon_gp_transfer_to =  $yangon_gp_transfer_to;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    else if($value['id'] == 32 or $value['id'] == 33 or $value['id'] == 34 or $value['id'] == 35 or $value['id'] == 37 )  {  //Mandalay m-?? Townships
+
+
+
+
+        if( ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) > $value['lab_confirmed']){
+            $mandalay_gp_transfer_from+= ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+
+        }else $mandalay_gp_transfer_from = $mandalay_gp_transfer_from;
+
+
+        if( $value['lab_confirmed']  > ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'])) {
+            $mandalay_gp_transfer_to+= $value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+
+        }else $mandalay_gp_transfer_to =  $mandalay_gp_transfer_to;
+
+
+
+
+
+
+    }else{
+        if( ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) > $value['lab_confirmed']){
+            $transfer_from = ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+            echo "tranfer from case ";
+            echo $value['db_name'] . "<br>";
+        }else $transfer_from = 0;
+
+
+        if( $value['lab_confirmed']  > ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'])) {
+            $transfer_to = $value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+            echo "tranfer to case ";
+            echo $value['db_name'] . "<br>";
+        }else $transfer_to =  0;
+    }
+
     $oneTownship = array(
         "name" => $value['db_name'],
         "puinsuspect" => $value['pui'] + $value['suspected'],
@@ -91,12 +177,16 @@ foreach ($townshipJson as $key => $value) {
         "recovered" => $value['recovered'],
         "lab_confirmed" => $value['lab_confirmed'],
         "lab_confirmed_now" => $value['lab_confirmed_now'],
+        "transfer_from" => $transfer_from,
+        "transfer_to" => $transfer_to,
         "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
             $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
     );
     array_push($townshipAry, $oneTownship);
 }
 
+
+ //die(json_encode($townshipAry));
 if($mandalayTownshipGp > $maxTsPos) {
     $maxTsPos = $mandalayTownshipGp; $maxTownshipName ="mandalay_gp";
 }
@@ -112,6 +202,14 @@ foreach ($districtJson as $key => $value) {
 //            $maxKyName = $value['db_name'];
 //        }
     }
+    if( ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) > $value['lab_confirmed']){
+        $transfer_from = ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+    }else $transfer_from = 0;
+
+
+    if( $value['lab_confirmed']  > ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'])) {
+        $transfer_to = $value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+    }else $transfer_to =  0;
 
 
     $oneDistrict = array(
@@ -125,11 +223,14 @@ foreach ($districtJson as $key => $value) {
         "recovered" => $value['recovered'],
         "lab_confirmed" => $value['lab_confirmed'],
         "lab_confirmed_now" => $value['lab_confirmed_now'],
+        "transfer_from" => $transfer_from,
+        "transfer_to" => $transfer_to,
         "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
             $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
     );
     array_push($districtAry, $oneDistrict);
 }
+
 
 foreach ($regionJson as $key => $value) {
     $total_pending += $value['lab_pending'];
@@ -176,7 +277,9 @@ foreach ($regionJson as $key => $value) {
         "lab_confirmed" => $value['lab_confirmed'],
         "lab_confirmed_now" => $value['lab_confirmed_now'],
         "transfer_from" => $transfer_from,
-        "transfer_to" => $transfer_to
+        "transfer_to" => $transfer_to,
+        "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
+            $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
     );
     array_push($regionAry, $oneRegion);
 }
@@ -294,7 +397,346 @@ $total_confirmed = $Summary[0]['confirm'] ;
 
 
 
-$Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀၂၀)ရက်နေ့၊ ည (၁၀:၀၀)အချိန်အထိ နောက်ဆုံး update လုပ်ထားသော အချက်အလက်များ စုဆောင်းတင်ပြထားခြင်းဖြစ်ပါသည်။"
+$Status = $Summary[0]['status'];
+?><?php
+require_once 'admin/core/init.php';
+
+$districtData = array();
+$hospitalData = array();
+$townshipData = array();
+$stateData = array();
+
+$townshipAry = array();
+$districtAry = array();
+$regionAry = array();
+
+$Hospitals = $user->get('Hospitals');
+$Districts = $user->get('District');
+$Townships = $user->get('Townships');
+$States = $user->get('States');
+$Status = $user->get('Status');
+$Status = $Status[0]['status_name'];
+
+$Summary = $user->get('Summary');
+
+
+$townshipJson = $user->getTownshipJson();
+$districtJson = $user->getDistrictJson();
+$regionJson = $user->getRegionJson();
+
+$dailyChart = $user->get('Chart');
+$query = "SELECT id,name,age,gender,suffer_type_id FROM `Patients` WHERE (Patients.suffer_type_id = 5 or Patients.suffer_type_id = 6 or Patients.suffer_type_id = 7) ";
+$dountChart = $user->getData($query);
+
+$maxDivPos = 0;
+$maxDivSus = 0;
+$maxKyPos = 0;
+$maxKySus = 0;
+$maxTsPos = 0;
+$maxTsSus = 0;
+
+$total_pending = 0;
+$total_die = 0;
+$total_puinsus = 0;
+$total_recovered = 0;
+$total_negative = 0;
+$total_confirmed = 0;
+
+
+foreach ($Districts as $district => $dist) {
+    $oneDisrict = array(
+        $dist['name'], $dist['real_name'], "unicode", "zawgyi"
+    );
+    array_push($districtData, $oneDisrict);
+}
+
+foreach ($Townships as $township => $town) {
+    $oneTownship = array(
+        $town['name'], $town['real_name'], "unicode", "zawgyi"
+    );
+    array_push($townshipData, $oneTownship);
+}
+
+foreach ($States as $state => $sta) {
+    $oneState = array(
+        $sta['name'], $sta['real_name'], "unicode", "zawgyi"
+    );
+    array_push($stateData, $oneState);
+}
+$mandalayTownshipGp = 0;   //for m-?? townships
+$yangon_gp_transfer_from = 0;$yangon_gp_transfer_to = 0;
+$mandalay_gp_transfer_from = 0;$mandalay_gp_transfer_to = 0;
+foreach ($townshipJson as $key => $value) {
+    if($value['s_id']!=14){  //Township is not for yangon
+
+        if($value['id'] == 32 or $value['id'] == 33 or $value['id'] == 34 or $value['id'] == 35 or $value['id'] == 37 )  {  //Mandalay m-?? Townships
+            $mandalayTownshipGp += $value['lab_confirmed'];
+
+        }
+        else{      //Township is not for Mandalay 
+            if ($maxTsPos < $value['lab_confirmed']) {
+                $maxTsPos = $value['lab_confirmed'];
+                $maxTownshipName = $value['db_name'];
+            } 
+        }
+        
+       // if ($maxTsSus < $value['suspected'] + $value['pui']) $maxTsSus = $value['suspected'] + $value['pui'];
+    }
+
+
+
+    $transfer_from = 0;$transfer_to =  0;
+    if($value['d_id'] ==92){
+
+        $yangon_gp_transfer_from +=($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+        $yangon_gp_transfer_to +=$value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+        }
+    else if($value['id'] == 32 or $value['id'] == 33 or $value['id'] == 34 or $value['id'] == 35 or $value['id'] == 37 )  {  //Mandalay m-?? Townships
+        $mandalay_gp_transfer_from +=($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+        $mandalay_gp_transfer_to +=$value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+
+    }else{
+        if( ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) > $value['lab_confirmed']){
+            $transfer_from = ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+        }else $transfer_from = 0;
+
+
+        if( $value['lab_confirmed']  > ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'])) {
+            $transfer_to = $value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+        }else $transfer_to =  0;
+    }
+
+    $oneTownship = array(
+        "name" => $value['db_name'],
+        "puinsuspect" => $value['pui'] + $value['suspected'],
+        "pui" => $value['pui'],
+        "suspected" => $value['suspected'],
+        "lab_negative" => $value['lab_negative'],
+        "lab_pending" => $value['lab_pending'],
+        "die" => $value['death'],
+        "recovered" => $value['recovered'],
+        "lab_confirmed" => $value['lab_confirmed'],
+        "lab_confirmed_now" => $value['lab_confirmed_now'],
+        "transfer_from" => $transfer_from,
+        "transfer_to" => $transfer_to,
+        "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
+            $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
+    );
+    array_push($townshipAry, $oneTownship);
+}
+
+//die(json_encode($townshipAry));
+if($mandalayTownshipGp > $maxTsPos) {
+    $maxTsPos = $mandalayTownshipGp; $maxTownshipName ="mandalay_gp";
+}
+
+foreach ($districtJson as $key => $value) {
+    if($value['s_id']!=14){
+        if ($maxKyPos < $value['lab_confirmed']) {
+            $maxKyPos = $value['lab_confirmed'];
+            $maxKyName = $value['db_name'];
+        }
+//        if ($maxKySus < $value['suspected'] + $value['pui']) {
+//            $maxKySus = $value['suspected'] + $value['pui'];
+//            $maxKyName = $value['db_name'];
+//        }
+    }
+    if( ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) > $value['lab_confirmed']){
+        $transfer_from = ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+    }else $transfer_from = 0;
+
+
+    if( $value['lab_confirmed']  > ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'])) {
+        $transfer_to = $value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+    }else $transfer_to =  0;
+
+
+    $oneDistrict = array(
+        "name" => $value['db_name'],
+        "pui" => $value['pui'],
+        "puinsuspect" => $value['pui'] + $value['suspected'],
+        "suspected" => $value['suspected'],
+        "lab_negative" => $value['lab_negative'],
+        "lab_pending" => $value['lab_pending'],
+        "die" => $value['death'],
+        "recovered" => $value['recovered'],
+        "lab_confirmed" => $value['lab_confirmed'],
+        "lab_confirmed_now" => $value['lab_confirmed_now'],
+        "transfer_from" => $transfer_from,
+        "transfer_to" => $transfer_to,
+        "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
+            $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
+    );
+    array_push($districtAry, $oneDistrict);
+}
+
+
+foreach ($regionJson as $key => $value) {
+    $total_pending += $value['lab_pending'];
+    $total_die += $value['death'];
+   // $total_puinsus += $value['pui'] + $value['suspected'];
+    $total_puinsus += $value['puinsus'];
+    $total_recovered += $value['recovered'];
+    $total_negative += $value['lab_negative'];
+    $total_confirmed += $value['lab_confirmed_now'] + $value['death'] + $value['recovered'];
+
+    if($value['s_id']!=14){   //not yangon
+        if ($maxDivPos < $value['lab_confirmed']) {
+            $maxDivPos = $value['lab_confirmed'];
+            $maxDivPosName = $value['db_name'];
+        }
+        if ($maxDivSus < $value['puinsus']) {
+            $maxDivSus = $value['puinsus'];
+            $maxDivSusName = $value['db_name'];
+
+        }
+    }
+
+    if( ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) > $value['lab_confirmed']){
+        $transfer_from = ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'] ) - $value['lab_confirmed'];
+    }else $transfer_from = 0;
+
+
+    if( $value['lab_confirmed']  > ($value['lab_confirmed_now'] + $value['death'] + $value['recovered'])) {
+        $transfer_to = $value['lab_confirmed'] - ($value['lab_confirmed_now'] + $value['death'] + $value['recovered']);
+    }else $transfer_to =  0;
+
+
+
+    if($transfer_to < 0)  $transfer_to = 0;
+    $oneRegion = array(
+        "name" => $value['db_name'],
+        "puinsuspect" => $value['puinsus'],
+        "pui" => $value['pui'],
+        "suspected" => $value['suspected'],
+        "lab_negative" => $value['lab_negative'],
+        "lab_pending" => $value['lab_pending'],
+        "die" => $value['death'],
+        "recovered" => $value['recovered'],
+        "lab_confirmed" => $value['lab_confirmed'],
+        "lab_confirmed_now" => $value['lab_confirmed_now'],
+        "transfer_from" => $transfer_from,
+        "transfer_to" => $transfer_to,
+        "total_cases" => $value['pui'] + $value['suspected'] + $value['lab_negative'] + $value['lab_pending'] +
+            $value['death'] + $value['recovered'] + $value['lab_confirmed_now']
+    );
+    array_push($regionAry, $oneRegion);
+}
+
+
+
+//die(json_encode($townshipAry));
+
+$dailyCaseAry = array();
+$dateAry = array();
+$dieCaseAry = array();
+$confirmCaseAry = array();
+
+
+
+$deathAgeNumAry = array();
+$deathGenderNumAry = array();
+$confirmAgeNumAry = array();
+$confirmGenderNumAry = array();
+
+$ageLabelAry = ["0-17နှစ်", "18နှစ်-44နှစ်", "45နှစ်-64နှစ်", "65နှစ်-74နှစ်", "75နှစ်အထက်"];
+$genderLabelAry =  ["ကျား","မ"];
+foreach($dailyChart as $key => $value){
+    $date = $value['date'];
+    $date = strtotime($date);
+    $day = intval(date('d',$date));
+    $month=date("F",$date);
+    $month = substr($month,0,3);
+    $result = $month." ".$day;
+    array_push($dateAry,$result);
+    array_push($confirmCaseAry,$value['confirmed']);
+    array_push($dieCaseAry,$value['die']);
+}
+
+$dead = array("date"=>$dateAry,"num"=>$dieCaseAry);
+$positive = array("date"=>$dateAry,"num"=>$confirmCaseAry);
+$dailyResult =array("dead"=>$dead,"positive"=>$positive);
+
+$maleDeath= 0;$femaleDeath = 0; $maleConfirmed = 0 ;$femaleConfirmed = 0;
+$d_gp1 = 0 ; $d_gp2 = 0 ; $d_gp3 = 0; $d_gp4 = 0; $d_gp5 = 0;
+$c_gp1 = 0 ; $c_gp2 = 0 ; $c_gp3 = 0; $c_gp4 = 0; $c_gp5 = 0;
+
+
+foreach($dountChart as $key => $value){
+
+    if($value['gender'] == 1)  $maleConfirmed++; else $femaleConfirmed++;
+
+    if     ($value['age'] < 18 ) $c_gp1++;
+    else if($value['age'] < 45 ) $c_gp2++;
+    else if($value['age'] < 65 ) $c_gp3++;
+    else if($value['age'] < 75)  $c_gp4++;
+    else                         $c_gp5++;
+
+
+    if($value['suffer_type_id'] == 5){      //die
+        if     ($value['age'] < 18 ) $d_gp1++;
+        else if($value['age'] < 45 ) $d_gp2++;
+        else if($value['age'] < 65 ) $d_gp3++;
+        else if($value['age'] < 75)  $d_gp4++;
+        else                         $d_gp5++;
+
+        if($value['gender'] == 1)  $maleDeath++; else  $femaleDeath++;
+
+    }
+
+
+
+}
+
+
+
+$donutResult =array(
+    "dead" => array(
+        "age" => array(
+            "label" => $ageLabelAry,
+            "num"   => [$d_gp1,$d_gp2,$d_gp3,$d_gp4,$d_gp5]
+        ),
+        "gender" => array(
+            "label" => $genderLabelAry,
+            "num"   =>[$maleDeath,$femaleDeath]
+        )
+    ),
+    "positive" => array(
+        "age" => array(
+            "label" => $ageLabelAry,
+            "num"   => [$c_gp1,$c_gp2,$c_gp3,$c_gp4,$c_gp5]
+        ),
+        "gender" => array(
+            "label" => $genderLabelAry,
+            "num"   =>[$maleConfirmed,$femaleConfirmed]
+        )
+    )
+
+);
+
+// die(json_encode($donutResult));
+// die(json_encode($dailyResult));
+//
+//echo "var maxDivPos = ".$maxDivPos."<br>";
+//echo "var maxKyPos = ".$maxKyPos."<br>";
+//echo "var maxTsPos = ".$maxTsPos."<br>";
+//echo "var maxDivSus = ".$maxDivSus."<br>";
+//echo "var maxKySus = ".$maxKySus."<br>";
+//echo "var maxTsSus = ".$maxTsSus."<br>";
+//die();
+
+
+  $total_test = $Summary[0]['test'] ;
+$total_puinsus = $Summary[0]['pui'] ;
+$total_die = $Summary[0]['die'] ;
+
+$total_cure = $Summary[0]['cure'] ;
+$total_recovered = $Summary[0]['recovered'] ;
+$total_confirmed = $Summary[0]['confirm'] ;
+
+
+
+$Status = $Summary[0]['status'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -516,7 +958,7 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
     <div class="container">
 
         <!-- Brand -->
-        <a class="navbar-brand logo-icon-btn">
+        <a class="navbar-brand logo-icon-btn" href="index.php">
             <img src="assets/img/corona-mm-logo.png" class="navbar-brand-img" alt="..." style="width:100px;">
         </a>
 
@@ -1132,7 +1574,7 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
         <div class="row" >
             <div class="col-12 col-sm-12 col-md-6 mb-4 mb-md-0">
                 <!-- Brand -->
-                <a class="navbar-brand logo-icon-btn" href="index.html">
+                <a class="navbar-brand logo-icon-btn" href="index.php">
                     <img src="assets/img/corona-mm-logo.png" class="navbar-brand-img" alt="..." style="width: 100px">
                 </a>
                 <br>
@@ -4875,6 +5317,11 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
         var maxDivSus = <?php  echo $maxDivSus; ?>;
         var maxKySus =  <?php  echo $maxKySus; ?>;
         var maxTsSus =  <?php  echo $maxTsSus; ?>;
+		
+		var yTraFr = 5;
+		var yTraTo = 0;
+		var mTraFr = 1;
+		var mTraTo = 0;
 
 
         function tsModeConfirm(zawvids_positives) {
@@ -5321,7 +5768,7 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                         for (i in zawvids_positives) {
                             if ( !(zawvids_positives[i].name.indexOf("m-") >= 0) && !(zawvids_positives[i].name.indexOf("y-") >= 0)) {
                                 covids_combied.push({"name": zawvids_positives[i].name, "number": zawvids_positives[i].lab_confirmed, "puinsuspect": zawvids_positives[i].puinsuspect, "pui": zawvids_positives[i].pui, "suspected": zawvids_positives[i].suspected, "lab_negative": zawvids_positives[i].lab_negative,
-                                    "lab_pending": zawvids_positives[i].lab_pending, "die": zawvids_positives[i].die, "recovered": zawvids_positives[i].recovered, "lab_confirmed": zawvids_positives[i].lab_confirmed, "lab_confirmed_now": zawvids_positives[i].lab_confirmed_now});
+                                    "lab_pending": zawvids_positives[i].lab_pending, "die": zawvids_positives[i].die, "recovered": zawvids_positives[i].recovered, "lab_confirmed": zawvids_positives[i].lab_confirmed, "lab_confirmed_now": zawvids_positives[i].lab_confirmed_now, "transfer_from": zawvids_positives[i].transfer_from, "transfer_to": zawvids_positives[i].transfer_to});
                             }
                         }
 
@@ -5572,9 +6019,10 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                     }
                 }
             }
+			console.log(info);
             $('#resultName').html(info[0]);
             $('#resultPuinsuspect').html(info[1]);
-            $('#resultLabnegative').html(info[2]);
+            $('#transferFrTo').html('+' + info[2] + '/ -' + info[3]);
             $('#resultLabpending').hide();
             $('#resultDie').html(info[4]);
             $('#resultRecovered').html(info[5]);
@@ -5590,17 +6038,34 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                     if (iD == covidsCombined[i].name) {
                         if(iD == 'yangon-gp') {
                             iD = 'yangon';
+							info.push(iD);
+							info.push(covidsCombined[i].puinsuspect);
+							info.push(yTraFr);
+							info.push(yTraTo);
+							info.push(covidsCombined[i].die);
+							info.push(covidsCombined[i].recovered);
+							info.push(covidsCombined[i].lab_confirmed);
+							info.push(covidsCombined[i].lab_confirmed_now);
                         } else if(iD == 'mandalay-gp') {
                             iD = 'mandalay';
-                        }
-                        info.push(iD);
-                        info.push(covidsCombined[i].puinsuspect);
-                        info.push(covidsCombined[i].lab_negative);
-                        info.push(covidsCombined[i].lab_pending);
-                        info.push(covidsCombined[i].die);
-                        info.push(covidsCombined[i].recovered);
-                        info.push(covidsCombined[i].lab_confirmed);
-                        info.push(covidsCombined[i].lab_confirmed_now);
+							info.push(iD);
+							info.push(covidsCombined[i].puinsuspect);
+							info.push(mTraFr);
+							info.push(mTraTo);
+							info.push(covidsCombined[i].die);
+							info.push(covidsCombined[i].recovered);
+							info.push(covidsCombined[i].lab_confirmed);
+							info.push(covidsCombined[i].lab_confirmed_now);
+                        } else {
+							info.push(iD);
+							info.push(covidsCombined[i].puinsuspect);
+							info.push(covidsCombined[i].transfer_from);
+							info.push(covidsCombined[i].transfer_to);
+							info.push(covidsCombined[i].die);
+							info.push(covidsCombined[i].recovered);
+							info.push(covidsCombined[i].lab_confirmed);
+							info.push(covidsCombined[i].lab_confirmed_now);
+						}
                         found = true;
                         break;
                     }
@@ -5629,8 +6094,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                         var iD = iD.substr(3);
                         info.push(iD);
                         info.push(covid_khayines[i].puinsuspect);
-                        info.push(covid_khayines[i].lab_negative);
-                        info.push(covid_khayines[i].lab_pending);
+                        info.push(covid_khayines[i].transfer_from);
+                        info.push(covid_khayines[i].transfer_to);
                         info.push(covid_khayines[i].die);
                         info.push(covid_khayines[i].recovered);
                         info.push(covid_khayines[i].lab_confirmed);
@@ -5658,8 +6123,8 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                         var iD = iD.substr(4);
                         info.push(iD);
                         info.push(covid_tines[i].puinsuspect);
-                        info.push(covid_tines[i].lab_negative);
-                        info.push(covid_tines[i].lab_pending);
+                        info.push(covid_tines[i].transfer_from);
+                        info.push(covid_tines[i].transfer_to);
                         info.push(covid_tines[i].die);
                         info.push(covid_tines[i].recovered);
                         info.push(covid_tines[i].lab_confirmed);
@@ -5755,8 +6220,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                                 '0' +
                                 '</span>' +
                                 '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
+                                'လူနာ ၀င်/ထွက်' +
+                                '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                '+0 / -0' +
+                                '</span>' +
+                                '</p>' +
                                 '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
-                                'စောင့်ကြည့်/သံသယ' +
+                                'စောင့်ကြည့်/သံသယ' +
                                 '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                 '0' +
                                 '</span>' +
@@ -5767,21 +6238,9 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                                 '0' +
                                 '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0" style="display:none" >' +
-                                'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
-                                '0' +
-                                '</span>' +
-                                '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
                                 'ပြန်လည်ကောင်းမွန်' +
                                 '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
-                                '0' +
-                                '</span>' +
-                                '</p>' +
-                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
-                                'စစ်ဆေး(မတွေ့)' +
-                                '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                 '0' +
                                 '</span>' +
                                 '</p>'
@@ -5825,8 +6284,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                                 info[7] +
                                 '</span>' +
                                 '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
+                                'လူနာ ၀င်/ထွက်' +
+                                '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                '+' + info[2] + ' / -' + info[3] +
+                                '</span>' +
+                                '</p>' +
                                 '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
-                                'စောင့်ကြည့်/သံသယ' +
+                                'စောင့်ကြည့်/သံသယ' +
                                 '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                 info[1] +
                                 '</span>' +
@@ -5887,8 +6352,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                                 '0' +
                                 '</span>' +
                                 '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
+                                'လူနာ ၀င်/ထွက်' +
+                                '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                '+0 / -0' +
+                                '</span>' +
+                                '</p>' +
                                 '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
-                                'စောင့်ကြည့်/သံသယ' +
+                                'စောင့်ကြည့်/သံသယ' +
                                 '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                 '0' +
                                 '</span>' +
@@ -5899,21 +6370,9 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                                 '0' +
                                 '</span>' +
                                 '</p>' +
-                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
-                                'စစ်ဆေး(စောင့်ဆိုင်း)' +
-                                '<span class="badge badge-rounded-circle badge-primary-soft" bis_skin_checked="1">' +
-                                '0' +
-                                '</span>' +
-                                '</p>' +
                                 '<p class="font-size-sm text-muted mb-0">' +
                                 'ပြန်လည်ကောင်းမွန်' +
                                 '<span class="badge badge-rounded-circle badge-secondary-soft" bis_skin_checked="1">' +
-                                '0' +
-                                '</span>' +
-                                '</p>' +
-                                '<p class="font-size-sm text-muted mb-0" style="display:none">' +
-                                'စစ်ဆေး(မတွေ့)' +
-                                '<span class="badge badge-rounded-circle badge-success-soft" bis_skin_checked="1">' +
                                 '0' +
                                 '</span>' +
                                 '</p>'
@@ -5957,8 +6416,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                                 info[7] +
                                 '</span>' +
                                 '</p>' +
+                                '<p class="font-size-sm text-muted mb-0">' +
+                                'လူနာ ၀င်/ထွက်' +
+                                '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                                '+' + info[2] + ' / -' + info[3] +
+                                '</span>' +
+                                '</p>' +
                                 '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
-                                'စောင့်ကြည့်/သံသယ' +
+                                'စောင့်ကြည့်/သံသယ' +
                                 '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                                 info[1] +
                                 '</span>' +
@@ -6016,8 +6481,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                             info[7] +
                             '</span>' +
                             '</p>' +
+                            '<p class="font-size-sm text-muted mb-0">' +
+                            'လူနာ ၀င်/ထွက်' +
+                            '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                            '+' + info[2] + ' / -' + info[3] +
+                            '</span>' +
+                            '</p>' +
                             '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus"> ' +
-                            'စောင့်ကြည့်/သံသယ' +
+                            'စောင့်ကြည့်/သံသယ' +
                             '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                             info[1] +
                             '</span>' +
@@ -6071,8 +6542,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                             info[7] +
                             '</span>' +
                             '</p>' +
+                            '<p class="font-size-sm text-muted mb-0">' +
+                            'လူနာ ၀င်/ထွက်' +
+                            '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                            '+' + info[2] + ' / -' + info[3] +
+                            '</span>' +
+                            '</p>' +
                             '<p class="font-size-sm text-muted mb-0" style="display:none;" id="z_puinsus">' +
-                            'စောင့်ကြည့်/သံသယ' +
+                            'စောင့်ကြည့်/သံသယ' +
                             '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                             info[1] +
                             '</span>' +
@@ -6132,8 +6609,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                             info[7] +
                             '</span>' +
                             '</p>' +
+                            '<p class="font-size-sm text-muted mb-0">' +
+                            'လူနာ ၀င်/ထွက်' +
+                            '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                            '+' + info[2] + ' / -' + info[3] +
+                            '</span>' +
+                            '</p>' +
                             '<p class="font-size-sm text-muted mb-0" style="display:block;" id="z_puinsus">' +
-                            'စောင့်ကြည့်/သံသယ' +
+                            'စောင့်ကြည့်/သံသယ' +
                             '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                             info[1] +
                             '</span>' +
@@ -6187,8 +6670,14 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
                             info[7] +
                             '</span>' +
                             '</p>' +
+                            '<p class="font-size-sm text-muted mb-0">' +
+                            'လူနာ ၀င်/ထွက်' +
+                            '<span class="badge badge-rounded-circle badge-danger-soft" bis_skin_checked="1">' +
+                            '+' + info[2] + ' / -' + info[3] +
+                            '</span>' +
+                            '</p>' +
                             '<p class="font-size-sm text-muted mb-0" style="display:block;" id="z_puinsus">' +
-                            'စောင့်ကြည့်/သံသယ' +
+                            'စောင့်ကြည့်/သံသယ' +
                             '<span class="badge badge-rounded-circle badge-warning-soft" bis_skin_checked="1">' +
                             info[1] +
                             '</span>' +
@@ -7245,7 +7734,7 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
             })();
 
 
-        var groupPercentInfo = {"dead":{"age":{"label":["0-17\u1014\u103e\u1005\u103a","18\u1014\u103e\u1005\u103a-44\u1014\u103e\u1005\u103a","45\u1014\u103e\u1005\u103a-64\u1014\u103e\u1005\u103a","65\u1014\u103e\u1005\u103a-74\u1014\u103e\u1005\u103a","75\u1014\u103e\u1005\u103a\u1021\u1011\u1000\u103a"],"num":[0,0,2,1,2]},"gender":{"label":["\u1000\u103b\u102c\u1038","\u1019"],"num":[4,1]}},"positive":{"age":{"label":["0-17\u1014\u103e\u1005\u103a","18\u1014\u103e\u1005\u103a-44\u1014\u103e\u1005\u103a","45\u1014\u103e\u1005\u103a-64\u1014\u103e\u1005\u103a","65\u1014\u103e\u1005\u103a-74\u1014\u103e\u1005\u103a","75\u1014\u103e\u1005\u103a\u1021\u1011\u1000\u103a"],"num":[6,70,31,7,6]},"gender":{"label":["\u1000\u103b\u102c\u1038","\u1019"],"num":[65,55]}}}
+        var groupPercentInfo = <?php echo json_encode($donutResult); ?>;
 
         // chart_htetoonaing
         "use strict";
@@ -7360,7 +7849,7 @@ $Status = "(၂၃-၃-၂၀၂၀)ရက်နေ့မှ (၂၂-၄-၂၀�
 
 
 
-        var dayByDayInfo = {"dead":{"date":["Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31","Apr 1","Apr 2","Apr 3","Apr 4","Apr 5","Apr 6","Apr 7","Apr 8","Apr 9","Apr 10","Apr 11","Apr 12","Apr 13","Apr 14","Apr 15","Apr 16","Apr 17","Apr 18","Apr 19","Apr 20","Apr 21"],"num":["0","0","0","0","0","0","0","0","1","0","0","0","0","0","0","0","2","0","0","0","1","0","0","0","0","0","1","0","0","0"]},"positive":{"date":["Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31","Apr 1","Apr 2","Apr 3","Apr 4","Apr 5","Apr 6","Apr 7","Apr 8","Apr 9","Apr 10","Apr 11","Apr 12","Apr 13","Apr 14","Apr 15","Apr 16","Apr 17","Apr 18","Apr 19","Apr 20","Apr 21"],"num":["2","1","0","2","3","0","2","4","1","1","4","0","1","0","1","0","0","1","5","10","3","12","21","11","0","9","13","4","8","2"]}};
+         var dayByDayInfo = <?php echo json_encode($dailyResult); ?> ;
 
         "use strict";
         !function () {

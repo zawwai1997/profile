@@ -73,9 +73,10 @@ if (isset($_SESSION['email'])) {
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Suffer Type</th>
-                        <th>Hospital</th>
-                        <th></th>
-                        <th></th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Delete</th>
+                        <th>Transfer</th>
                     </tr>
                     </thead>
                 </table>
